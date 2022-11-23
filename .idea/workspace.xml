@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6563b4a2-f6bd-4b69-a34c-97932ab585c4" name="Changes" comment="updates" />
+    <list default="true" id="6563b4a2-f6bd-4b69-a34c-97932ab585c4" name="Changes" comment="minors">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/it/unicam/ids/studenti/ll/utilities/TestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/it/unicam/ids/studenti/ll/utilities/TestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/studenti/ll/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/studenti/ll/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/studenti/ll/app/MessageUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/list/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/list/src/main/java/it/unicam/ids/studenti/ll/list/LinkedList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/list/src/test/java/it/unicam/ids/studenti/ll/list/LinkedListTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/src/main/java/it/unicam/ids/studenti/ll/utilities/JoinUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/src/main/java/it/unicam/ids/studenti/ll/utilities/SplitUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/src/main/java/it/unicam/ids/studenti/ll/utilities/StringUtils.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +73,9 @@
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "17",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -70,12 +88,12 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="TestConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestConnection" />
-      <module name="IDS_Project.Model.main" />
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.unicam.ids.studenti.ll.app.App" />
+      <module name="it.unicam.ids.studenti.ll.app.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="it.unicam.ids.studenti.ll.app.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -85,7 +103,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestConnection" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -98,8 +116,16 @@
       <option name="presentableId" value="Default" />
       <updated>1669213191089</updated>
       <workItem from="1669213191930" duration="54000" />
-      <workItem from="1669214256867" duration="1065000" />
+      <workItem from="1669214256867" duration="1380000" />
     </task>
+    <task id="LOCAL-00001" summary="minors">
+      <created>1669215359568</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669215359568</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,6 +144,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first real java commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first real java commit" />
+    <MESSAGE value="minors" />
+    <option name="LAST_COMMIT_MESSAGE" value="minors" />
   </component>
 </project>

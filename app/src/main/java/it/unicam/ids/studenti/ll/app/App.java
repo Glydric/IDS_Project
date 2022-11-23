@@ -3,19 +3,11 @@
  */
 package it.unicam.ids.studenti.ll.app;
 
-import it.unicam.ids.studenti.ll.list.LinkedList;
 
-import static it.unicam.ids.studenti.ll.utilities.StringUtils.join;
-import static it.unicam.ids.studenti.ll.utilities.StringUtils.split;
-import static it.unicam.ids.studenti.ll.app.MessageUtils.getMessage;
-
-import org.apache.commons.text.WordUtils;
+import it.unicam.ids.studenti.ll.utilities.TestConnection;
 
 public class App {
     public static void main(String[] args) {
-        LinkedList tokens;
-        tokens = split(getMessage());
-        String result = join(tokens);
-        System.out.println(WordUtils.capitalize(result));
+        System.out.println( TestConnection.hello());
     }
 }
