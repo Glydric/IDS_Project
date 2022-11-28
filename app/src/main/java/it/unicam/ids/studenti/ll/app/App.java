@@ -4,10 +4,8 @@
 package it.unicam.ids.studenti.ll.app;
 
 
-import it.unicam.ids.studenti.ll.utilities.TestConnection;
-
 public class App {
     public static void main(String[] args) {
-        System.out.println( TestConnection.hello());
+        System.out.println("Hello World!!");
     }
 }

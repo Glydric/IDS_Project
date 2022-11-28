@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6563b4a2-f6bd-4b69-a34c-97932ab585c4" name="Changes" comment="minors">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="6563b4a2-f6bd-4b69-a34c-97932ab585c4" name="Changes" comment="[modify] package name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/it/unicam/ids/studenti/ll/utilities/TestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/it/unicam/ids/studenti/ll/utilities/TestConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/studenti/ll/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/studenti/ll/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/studenti/ll/app/MessageUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/list/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/list/src/main/java/it/unicam/ids/studenti/ll/list/LinkedList.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/list/src/test/java/it/unicam/ids/studenti/ll/list/LinkedListTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilities/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilities/src/main/java/it/unicam/ids/studenti/ll/utilities/JoinUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilities/src/main/java/it/unicam/ids/studenti/ll/utilities/SplitUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilities/src/main/java/it/unicam/ids/studenti/ll/utilities/StringUtils.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,12 +59,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "jdk.selected.JAVA_MODULE": "17",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -116,7 +105,8 @@
       <option name="presentableId" value="Default" />
       <updated>1669213191089</updated>
       <workItem from="1669213191930" duration="54000" />
-      <workItem from="1669214256867" duration="1380000" />
+      <workItem from="1669214256867" duration="3863000" />
+      <workItem from="1669642325905" duration="411000" />
     </task>
     <task id="LOCAL-00001" summary="minors">
       <created>1669215359568</created>
@@ -125,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669215359568</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="[modify] package name">
+      <created>1669215864893</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669215864893</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +142,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first real java commit" />
     <MESSAGE value="minors" />
-    <option name="LAST_COMMIT_MESSAGE" value="minors" />
+    <MESSAGE value="[modify] package name" />
+    <option name="LAST_COMMIT_MESSAGE" value="[modify] package name" />
   </component>
 </project>
