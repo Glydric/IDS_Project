@@ -6,7 +6,8 @@ package it.unicam.ids.studenti.ll.model;
 import org.junit.jupiter.api.Test;
 
 class ClienteTest {
-    @Test void testConnection() {
+    @Test
+    void testConnection() {
         Persona c = new Cliente();
     }
 }
