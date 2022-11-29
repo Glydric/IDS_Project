@@ -1,27 +1,25 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.*;
-
 public class Cliente extends Persona {
-	private int identificativoTessera;
-	public String numeroTelefono;
-	private String email;
-	public boolean isFamily = false;
+    public String numeroTelefono;
+    public boolean isFamily = false;
+    private int identificativoTessera;
+    private String email;
 
-	public int getIdentificativoTessera() {
-		return this.identificativoTessera;
-	}
+    public int getIdentificativoTessera() {
+        return this.identificativoTessera;
+    }
 
-	public void setIdentificativoTessera(int identificativoTessera) {
-		this.identificativoTessera = identificativoTessera;
-	}
+    public void setIdentificativoTessera(int identificativoTessera) {
+        this.identificativoTessera = identificativoTessera;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }
