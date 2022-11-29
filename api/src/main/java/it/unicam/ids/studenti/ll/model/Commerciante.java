@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Commerciante implements Azienda {
 
+	Collection<Prodotto> listaProdotti;
 	/**
 	 * 
 	 * @param ragioneSociale
@@ -62,4 +63,5 @@ public class Commerciante implements Azienda {
 	public Persona getProprietario() {
 		return null;
 	}
+
 }

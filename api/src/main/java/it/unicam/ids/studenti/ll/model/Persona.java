@@ -4,13 +4,9 @@ import java.util.Date;
 
 class Persona {
 
-	private Date dataNascita;
+	final public Date dataNascita = new Date();
 	public String nome;
 	private String cognome;
-
-	public Date getDataNascita() {
-		return this.dataNascita;
-	}
 
 	public String getNome() {
 		return this.nome;
