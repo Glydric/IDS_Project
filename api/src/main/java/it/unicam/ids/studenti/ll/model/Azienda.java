@@ -1,24 +1,65 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-interface Azienda {
-    Date dataIscrizioneRegistroImprese = new Date();
+abstract class Azienda {
+    public final String ragioneSociale;
+    public Date dataIscrizioneRegistroImprese = new Date();
+    private String numeroTelefono;
+    private String email;
 
-    Collection<Dipendente> getListaDipendenti();
+    public Persona proprietario;
 
-    String getRagioneSociale();
+    public List<Dipendente> listaDipendenti = new ArrayList<>();
 
-    void setRagioneSociale(String ragioneSociale);
+    /**
+     * @param ragioneSociale
+     */
+    public Azienda(String ragioneSociale) {
+        this.ragioneSociale = ragioneSociale;
+    }
 
-    String getNumeroTelefono();
+    /**
+     * @param ragioneSociale
+     * @param dataIscrizione
+     */
+    public Azienda(String ragioneSociale, Date dataIscrizione) {
+        this(ragioneSociale);
+        setDate(dataIscrizione);
+    }
 
-    void setNumeroTelefono(String numeroTelefono);
+    /**
+     * @param dataIscrizione
+     */
+    private void setDate(Date dataIscrizione) {
+        if (dataIscrizione.after(new Date())) return;
 
-    String getEmail();
+        this.dataIscrizioneRegistroImprese = dataIscrizione;
+    }
 
-    void setEmail(String email);
+    public String getNumeroTelefono() {
+        return null;
+    }
 
-    Persona getProprietario();
+
+    public void setNumeroTelefono(String numeroTelefono) {
+
+    }
+
+    public String getEmail() {
+        return null;
+    }
+
+
+    public void setEmail(String email) {
+
+    }
+
+    public Persona getProprietario() {
+        return null;
+    }
+
 }
