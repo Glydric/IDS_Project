@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Commerciante extends Azienda {
 
-    public List<Prodotto> listaProdotti = new ArrayList<>();
+    public Magazzino magazzino = new Magazzino();
     public List<ProgrammaFedelta> listaProgrammi = new ArrayList<>();
 
     private final Map<Cliente, List<ProgrammaFedelta>> mapClienti = new HashMap<>();
@@ -25,9 +25,9 @@ public class Commerciante extends Azienda {
     }
 
     /**
-     * @param programma
+     * @param programma il nuovo programma
      */
-    public void addProgramma(ProgrammaFedelta programma) {
+    public void addNewProgramma(ProgrammaFedelta programma) {
         listaProgrammi.add(programma);
 
         getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma));
