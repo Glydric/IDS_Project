@@ -5,6 +5,10 @@ abstract class Dipendente extends Persona {
     private String password;
 	public Azienda lavoraIn;
 
+    public Dipendente(String nome, String cognome) {
+        super(nome, cognome);
+    }
+
     public int getIdentificativo() {
         return this.identificativo;
     }

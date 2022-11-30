@@ -6,6 +6,10 @@ public class Cliente extends Persona {
     private int identificativoTessera;
     private String email;
 
+    public Cliente(String nome, String cognome) {
+        super(nome, cognome);
+    }
+
     public int getIdentificativoTessera() {
         return this.identificativoTessera;
     }

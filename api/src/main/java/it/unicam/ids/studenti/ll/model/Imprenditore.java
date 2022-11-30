@@ -4,4 +4,7 @@ public class Imprenditore extends Persona {
 
 	Azienda proprietario;
 
+	public Imprenditore(String nome, String cognome) {
+		super(nome, cognome);
+	}
 }

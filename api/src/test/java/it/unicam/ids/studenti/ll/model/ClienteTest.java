@@ -8,6 +8,6 @@ import org.junit.jupiter.api.Test;
 class ClienteTest {
     @Test
     void testConnection() {
-        Persona c = new Cliente();
+        Persona c = new Cliente("Mario", "Rossi");
     }
 }
