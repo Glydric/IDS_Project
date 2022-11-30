@@ -12,7 +12,7 @@ public class CommercianteTest {
         Commerciante commerciante = new Commerciante("Xbox", new Date(Integer.MAX_VALUE));
         ProgrammaFedelta pf = new ProgrammaPunti();
 
-        commerciante.addProgramma(pf);
+        commerciante.addNewProgramma(pf);
 
         assert (commerciante.listaProgrammi.contains(pf));
     }
@@ -25,7 +25,7 @@ public class CommercianteTest {
         commerciante.addCliente(c1);
 
         ProgrammaFedelta pf = new ProgrammaPunti();
-        commerciante.addProgramma(pf);
+        commerciante.addNewProgramma(pf);
 
         Cliente c2 = new Cliente("Luigi", "Bianchi");
         commerciante.addCliente(c2);
@@ -46,7 +46,7 @@ public class CommercianteTest {
         Commerciante commerciante = new Commerciante("Xbox", new Date(Integer.MAX_VALUE));
 
         ProgrammaFedelta pf = new ProgrammaPunti();
-        commerciante.addProgramma(pf);
+        commerciante.addNewProgramma(pf);
 
         assertNotEquals(pf, commerciante.listaProgrammi.get(0));
     }
