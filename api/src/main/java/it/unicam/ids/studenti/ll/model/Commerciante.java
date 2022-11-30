@@ -2,66 +2,43 @@ package it.unicam.ids.studenti.ll.model;
 
 import java.util.*;
 
-public class Commerciante implements Azienda {
+public class Commerciante extends Azienda {
 
-	Collection<Prodotto> listaProdotti;
-	/**
-	 * 
-	 * @param ragioneSociale
-	 * @param dataIscrizione
-	 */
-	public Commerciante(String ragioneSociale, Date dataIscrizione) {
-		// TODO - implement Commerciante.Commerciante
-		throw new UnsupportedOperationException();
-	}
+    public List<Prodotto> listaProdotti = new ArrayList<>();
+    public List<ProgrammaFedelta> listaProgrammi = new ArrayList<>();
 
-	/**
-	 * 
-	 * @param dataIscrizione
-	 */
-	public Commerciante(Date dataIscrizione) {
-		// TODO - implement Commerciante.Commerciante
-		throw new UnsupportedOperationException();
-	}
+    private final Map<Cliente, List<ProgrammaFedelta>> mapClienti = new HashMap<>();
 
-	@Override
-	public Collection<Dipendente> getListaDipendenti() {
-		return null;
-	}
+    public Commerciante(String ragioneSociale) {
+        super(ragioneSociale);
+    }
 
-	@Override
-	public String getRagioneSociale() {
-		return null;
-	}
+    public Commerciante(String ragioneSociale, Date dataIscrizione) {
+        super(ragioneSociale, dataIscrizione);
+    }
 
-	@Override
-	public void setRagioneSociale(String ragioneSociale) {
+    /**
+     * @return la lista dei relativi clienti
+     */
+    public Set<Cliente> getClienti() {
+        return mapClienti.keySet();
+    }
 
-	}
+    /**
+     * @param programma
+     */
+    public void addProgramma(ProgrammaFedelta programma) {
+        listaProgrammi.add(programma);
 
-	@Override
-	public String getNumeroTelefono() {
-		return null;
-	}
+        getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma));
+        // TODO il programma aggiunto non deve avere lo stesso puntatore
+    }
 
-	@Override
-	public void setNumeroTelefono(String numeroTelefono) {
+    public void addCliente(Cliente cliente){
+        mapClienti.put(cliente, new ArrayList<>(listaProgrammi));
+    }
 
-	}
-
-	@Override
-	public String getEmail() {
-		return null;
-	}
-
-	@Override
-	public void setEmail(String email) {
-
-	}
-
-	@Override
-	public Persona getProprietario() {
-		return null;
-	}
-
+    public List<ProgrammaFedelta> getProgrammi(Cliente cliente){
+        return mapClienti.get(cliente);
+    }
 }

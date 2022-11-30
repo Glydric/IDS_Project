@@ -1,7 +1,6 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +11,8 @@ abstract class Azienda {
     private String email;
 
     public Persona proprietario;
-
     public List<Dipendente> listaDipendenti = new ArrayList<>();
+
 
     /**
      * @param ragioneSociale
@@ -31,6 +30,11 @@ abstract class Azienda {
         setDate(dataIscrizione);
     }
 
+    public Azienda(String ragioneSociale, Persona proprietario) {
+        this(ragioneSociale);
+        this.proprietario = proprietario;
+    }
+
     /**
      * @param dataIscrizione
      */
@@ -41,25 +45,20 @@ abstract class Azienda {
     }
 
     public String getNumeroTelefono() {
-        return null;
+        return numeroTelefono;
     }
 
-
     public void setNumeroTelefono(String numeroTelefono) {
-
+        // todo controllo del numero
+        this.numeroTelefono = numeroTelefono;
     }
 
     public String getEmail() {
-        return null;
+        return email;
     }
-
 
     public void setEmail(String email) {
-
+        // todo controllo del numero
+        this.email = email;
     }
-
-    public Persona getProprietario() {
-        return null;
-    }
-
 }
