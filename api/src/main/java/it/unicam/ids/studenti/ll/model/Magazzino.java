@@ -13,7 +13,7 @@ public class Magazzino {
         throw new UnsupportedOperationException();
     }
 
-    public float getQuantitaOf(Prodotto prodotto) {
+    public float getQuantitaProdotto(Prodotto prodotto) {
         return prodottiQuantita.get(prodotto);
     }
 
