@@ -1,13 +1,12 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Commerciante extends Azienda {
-
-    public Magazzino magazzino = new Magazzino();
     public List<ProgrammaFedelta> listaProgrammi = new ArrayList<>();
-
-    private final Map<Cliente, List<ProgrammaFedelta>> mapClienti = new HashMap<>();
+    public Coalizione gruppoAppartenza = new Coalizione(this);
 
     public Commerciante(String ragioneSociale) {
         super(ragioneSociale);
@@ -17,11 +16,8 @@ public class Commerciante extends Azienda {
         super(ragioneSociale, dataIscrizione);
     }
 
-    /**
-     * @return la lista dei relativi clienti
-     */
-    public Set<Cliente> getClienti() {
-        return mapClienti.keySet();
+    public List<ProgrammaFedelta> getListaProgrammi() {
+        return listaProgrammi;
     }
 
     /**
@@ -29,16 +25,22 @@ public class Commerciante extends Azienda {
      */
     public void addNewProgramma(ProgrammaFedelta programma) {
         listaProgrammi.add(programma);
-
-        getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma));
+        gruppoAppartenza.addProgrammaForEachCliente(programma);
         // TODO il programma aggiunto non deve avere lo stesso puntatore
     }
 
-    public void addCliente(Cliente cliente){
-        mapClienti.put(cliente, new ArrayList<>(listaProgrammi));
+
+    /// metodi di comodo
+
+    public List<Cliente> getClienti() {
+        return gruppoAppartenza.getClienti().stream().toList();
     }
 
-    public List<ProgrammaFedelta> getProgrammi(Cliente cliente){
-        return mapClienti.get(cliente);
+    public void addCliente(Cliente c2) {
+        gruppoAppartenza.addCliente(c2);
+    }
+
+    public List<ProgrammaFedelta> getProgress(Cliente c1) {
+        return gruppoAppartenza.getProgrammi(c1);
     }
 }

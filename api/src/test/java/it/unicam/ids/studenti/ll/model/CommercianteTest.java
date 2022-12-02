@@ -37,8 +37,8 @@ public class CommercianteTest {
 
         ((ProgrammaPunti) pf).setPunti(10);
 
-        assertNotEquals(commerciante.getProgrammi(c1).get(0), pf);
-        assertNotEquals(commerciante.getProgrammi(c2).get(0), pf);
+        assertNotEquals(commerciante.getProgress(c1).get(0), pf);
+        assertNotEquals(commerciante.getProgress(c2).get(0), pf);
 
     }
     @Test
