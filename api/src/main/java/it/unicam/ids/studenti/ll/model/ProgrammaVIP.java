@@ -1,10 +1,23 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public class ProgrammaVIP implements ProgrammaFedelta {
 
     public boolean isVip = false;
+
+    ProgrammaVIP() {
+    }
+
+    ProgrammaVIP(boolean isVip) {
+        this.isVip = isVip;
+    }
+
+    @Override
+    public ProgrammaFedelta clone() {
+        return new ProgrammaVIP(isVip);
+    }
 
     @Override
     public BiConsumer<ProgrammaFedelta, ProgrammaFedelta> getDefaultConsumer() {
@@ -14,5 +27,17 @@ public class ProgrammaVIP implements ProgrammaFedelta {
             ProgrammaVIP p2 = (ProgrammaVIP) pr2;
             p1.isVip = p1.isVip || p2.isVip;
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProgrammaVIP that)) return false;
+        return isVip == that.isVip;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isVip);
     }
 }

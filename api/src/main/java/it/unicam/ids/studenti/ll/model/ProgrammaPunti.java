@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public class ProgrammaPunti implements ProgrammaFedelta {
@@ -11,7 +12,19 @@ public class ProgrammaPunti implements ProgrammaFedelta {
     }
 
     public void setPunti(int punti) {
+        if(punti<0)
+            throw new IllegalArgumentException("Numero punti inseriti è inferiore a 0");
         this.punti = punti;
+    }
+
+    public ProgrammaPunti(){}
+    public ProgrammaPunti(int punti){
+        setPunti(punti);
+    }
+
+    @Override
+    public ProgrammaFedelta clone() {
+        return new ProgrammaPunti(punti);
     }
 
     @Override
@@ -22,5 +35,17 @@ public class ProgrammaPunti implements ProgrammaFedelta {
             ProgrammaPunti p2 = (ProgrammaPunti) pr2;
             p1.setPunti(p2.getPunti() + p1.getPunti());
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProgrammaPunti that)) return false;
+        return getPunti() == that.getPunti();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPunti());
     }
 }

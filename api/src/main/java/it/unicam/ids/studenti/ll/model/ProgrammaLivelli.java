@@ -1,9 +1,17 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public class ProgrammaLivelli implements ProgrammaFedelta {
     private short livello = 0;
+
+    public ProgrammaLivelli() {
+    }
+
+    public ProgrammaLivelli(short livello) {
+        setLivello(livello);
+    }
 
     public short getLivello() {
         return this.livello;
@@ -11,6 +19,12 @@ public class ProgrammaLivelli implements ProgrammaFedelta {
 
     public void setLivello(short livello) {
         this.livello = livello;
+    }
+
+    @Override
+    public ProgrammaFedelta clone() {
+//        short newLivello = livello;
+        return new ProgrammaLivelli(livello);
     }
 
     @Override
@@ -22,5 +36,17 @@ public class ProgrammaLivelli implements ProgrammaFedelta {
             short max = (short) Math.max(p1.getLivello(), p2.getLivello());
             p1.setLivello(max);
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProgrammaLivelli that)) return false;
+        return getLivello() == that.getLivello();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLivello());
     }
 }

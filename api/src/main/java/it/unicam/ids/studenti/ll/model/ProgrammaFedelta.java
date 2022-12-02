@@ -2,7 +2,7 @@ package it.unicam.ids.studenti.ll.model;
 
 import java.util.function.BiConsumer;
 
-public interface ProgrammaFedelta {
+public interface ProgrammaFedelta extends Cloneable {
     /**
      * @param otherProgramma l'altro programma fedelta
      * @param rule           come unire i programmi
@@ -18,6 +18,8 @@ public interface ProgrammaFedelta {
 
         rule.accept(otherProgramma, this);
     }
+
+    ProgrammaFedelta clone();
 
     BiConsumer<ProgrammaFedelta, ProgrammaFedelta> getDefaultConsumer();
 }
