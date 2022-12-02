@@ -7,6 +7,9 @@ public class Coalizione {
     private final Map<Cliente, List<ProgrammaFedelta>> mapClienti = new HashMap<>();
     public List<Commerciante> appartenenti = new ArrayList<>();
 
+    protected Coalizione() {
+    }
+
     public Coalizione(Commerciante commerciante) {
         appartenenti.add(commerciante);
     }
@@ -16,7 +19,16 @@ public class Coalizione {
     }
 
     public void addProgrammaForEachCliente(ProgrammaFedelta programma) {
-        getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma));
+        if (isProgramInCommons(programma))
+            getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma.clone()));
+    }
+
+    private boolean isProgramInCommons(ProgrammaFedelta programma) {
+        return getCommonPrograms()
+                .stream()
+                .map(Object::getClass)
+                .toList()
+                .contains(programma.getClass());
     }
 
     public void addCliente(Cliente cliente) {
@@ -29,12 +41,25 @@ public class Coalizione {
     public List<ProgrammaFedelta> getCommonPrograms() {
         List<ProgrammaFedelta> commons = new ArrayList<>(getAllPrograms());
 
-        appartenenti
+        System.out.println("new");
+        List<List<ProgrammaFedelta>> l = appartenenti
                 .stream()
                 .map(Commerciante::getListaProgrammi)
-                .forEach(commons::retainAll);
+                .toList();
 
-        return commons;
+        for (List<ProgrammaFedelta> listaFedelta : l) {
+            List<? extends Class<?>> list = listaFedelta
+                    .stream()
+                    .map(Object::getClass)
+                    .toList();
+
+            commons.removeIf(p -> !list.contains(p.getClass()));
+        }
+        return commons
+                .stream()
+                .distinct()
+//                .map(ProgrammaFedelta::clone)
+                .toList();
     }
 
     /**
@@ -42,11 +67,12 @@ public class Coalizione {
      *
      * @return la lista di tutti i programmi
      */
-    private List<ProgrammaFedelta> getAllPrograms() {
+    protected List<ProgrammaFedelta> getAllPrograms() {
         return appartenenti
                 .stream()
                 .map(Commerciante::getListaProgrammi)
                 .flatMap(List::stream)
+                .map(ProgrammaFedelta::clone)
                 .toList();
     }
 
