@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CommercianteTest {
     @Test
@@ -15,7 +14,7 @@ public class CommercianteTest {
 
         commerciante.addNewProgramma(pf);
 
-        assert (commerciante.listaProgrammi.contains(pf));
+        assert (commerciante.getListaProgrammi().contains(pf));
 
         Cliente c1 = new Cliente("Pippo", "Baudo");
         Cliente c2 = new Cliente("Mario", "Baudo");
@@ -23,8 +22,12 @@ public class CommercianteTest {
         commerciante.addCliente(c1);
         commerciante.addCliente(c2);
 
+        ((ProgrammaPunti) commerciante.getProgress(c1).get(0)).setPunti(10);
+
         assertEquals(1,commerciante.getCoalizione().getAllPrograms().size());
         assertNotEquals(commerciante.getProgress(c1).get(0), commerciante.getProgress(c2).get(0));
+
+        assertThrows(UnsupportedOperationException.class, () -> commerciante.getListaProgrammi().add(pf));
     }
 
     @Test
@@ -40,13 +43,14 @@ public class CommercianteTest {
         Cliente c2 = new Cliente("Luigi", "Bianchi");
         commerciante.addCliente(c2);
 
-        assert (commerciante.listaProgrammi.contains(pf));
+        assert (commerciante.getListaProgrammi().contains(pf));
 
         // Controlla l'esistenza del cliente
         assert (commerciante.getClienti().contains(c1));
         assert (commerciante.getClienti().contains(c2));
 
         /// Controlla che il programma sia stato inserito
+        pf.setPunti(5); // modifichiamo i punti cosi da assicurarci che l'oggetto sia diverso durante i prossimi controlli
 
         // la classe deve essere uguale
         assertEquals(commerciante.getProgress(c1).get(0).getClass(), ProgrammaPunti.class);
