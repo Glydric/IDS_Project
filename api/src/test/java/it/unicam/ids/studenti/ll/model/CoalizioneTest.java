@@ -6,6 +6,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CoalizioneTest {
     @Test
+    void getAllProgramsTest() {
+        Commerciante c1 = new Commerciante("Rolex");
+        Commerciante c2 = new Commerciante("Fendy");
+
+        ProgrammaLivelli pf1 = new ProgrammaLivelli();
+        ProgrammaVIP pf2 = new ProgrammaVIP();
+
+        c1.addNewProgramma(pf1);
+        c2.addNewProgramma(pf2);
+
+        c1.mergeGroups(c2);
+
+
+        assertEquals(2, c1.getCoalizione().getAllPrograms().size());
+
+        pf1.setLivello((short) 20);
+        c2.addNewProgramma(pf1);
+
+
+        assertEquals(3, c1.getCoalizione().getAllPrograms().size());
+
+        c1.addNewProgramma(pf2);
+
+        //I 2 programmi vip non vengono considerati come diversi (equals) e quindi la somma è 3 e non 4
+        assertEquals(3, c1.getCoalizione().getAllPrograms().size());
+
+        // Il numero di programmi non cambia perchè il programma inserito ora è uguale ad uno già inserito
+        c1.addNewProgramma(pf1);
+
+
+        assertEquals(3, c1.getCoalizione().getAllPrograms().size());
+
+    }
+
+    @Test
     void getCommonProgramsTest() {
         Commerciante c1 = new Commerciante("Rolex");
         Commerciante c2 = new Commerciante("Fendy");
@@ -16,7 +51,7 @@ public class CoalizioneTest {
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
 
-        c1.merge(c2);
+        c1.mergeGroups(c2);
 
         assertEquals(0, c1.getCoalizione().getCommonPrograms().size());
 
@@ -25,6 +60,11 @@ public class CoalizioneTest {
         pf1.setLivello((short) 40);
 
         // TODO try to remove equals in programmiFedelta to use default equals and check memory position
+        assertEquals(0, c1.getCoalizione().getCommonPrograms().size());
+
+        // dato che ora uno dei programmi è in comune tra entrambi i commercianti (in quanto abbiamo entrambi i
+        // programmi a livelli con un livello default di 0, esso diventa programma in comun
+        ((ProgrammaLivelli) c2.getListaProgrammi().get(1)).setLivello((short) 0);
         assertEquals(1, c1.getCoalizione().getCommonPrograms().size());
 
         c1.addNewProgramma(pf2);
@@ -36,6 +76,7 @@ public class CoalizioneTest {
     void addCliente() {
         Commerciante commerciante = new Commerciante("Xbox");
         Coalizione c = commerciante.getCoalizione();
+        ProgrammaFedelta pl = new ProgrammaVIP();
 
         Cliente c1 = new Cliente("Mario", "Draghi");
 
@@ -48,6 +89,11 @@ public class CoalizioneTest {
         assertTrue(c.getClienti().contains(c1));
         assertTrue(c.getClienti().contains(c2));
         assertEquals(2, c.getClienti().size());
+
+        commerciante.addNewProgramma(pl);
+
+        assert (commerciante.clientHaveProgram(c1, pl));
+        assert (commerciante.clientHaveProgram(c2, pl));
     }
 
     @Test
@@ -57,19 +103,22 @@ public class CoalizioneTest {
         Cliente c1 = new Cliente("Mario", "Rossi");
         commerciante.addCliente(c1);
 
-        ProgrammaPunti pl = new ProgrammaPunti(5);
-        commerciante.addNewProgramma(pl);
+        ProgrammaPunti punti = new ProgrammaPunti(5);
+        commerciante.addNewProgramma(punti);
 
-        Cliente c2 = new Cliente("Mario", "Rossi");
+        Cliente c2 = new Cliente("Mario", "Bianchi");
         commerciante.addCliente(c2);
 
-        ProgrammaCashback pc = new ProgrammaCashback();
-        commerciante.addNewProgramma(pc);
+        ProgrammaVIP vip = new ProgrammaVIP();
+        commerciante.addNewProgramma(vip);
 
-        assert (commerciante.getProgress(c1).contains(pl));
-        assert (commerciante.getProgress(c1).contains(pc));
-        assert (commerciante.getProgress(c2).contains(pl));
-        assert (commerciante.getProgress(c2).contains(pc));
+        punti.setPunti(10);
+
+        //Problema non funziona il getCommons
+        assert (commerciante.clientHaveProgram(c1, punti));
+        assert (commerciante.clientHaveProgram(c1, vip));
+        assert (commerciante.clientHaveProgram(c2, punti));
+        assert (commerciante.clientHaveProgram(c2, vip));
     }
 
     @Test
@@ -90,7 +139,7 @@ public class CoalizioneTest {
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
 
-        c1.merge(c2);
+        c1.mergeGroups(c2);
 
         assertEquals(c1.getCoalizione(), c2.getCoalizione());
         assertEquals(2, c1.getClienti().size());

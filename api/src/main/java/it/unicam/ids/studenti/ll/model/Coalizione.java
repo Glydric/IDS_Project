@@ -18,7 +18,9 @@ public class Coalizione {
         return mapClienti.keySet();
     }
 
-    public void addProgrammaForEachCliente(ProgrammaFedelta programma) {
+    protected void addProgrammaForEachCliente(ProgrammaFedelta programma) {
+        //dato che il programma è stato precedentemente aggiunto nel commerciante, lui verrà considerato tra i programmi in comune
+        // e se tutti i commercianti lo hanno definito come programma, questo sarà true e lo aggiungerà
         if (isProgramInCommons(programma))
             getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma.clone()));
     }
@@ -36,36 +38,26 @@ public class Coalizione {
     }
 
     /**
-     * @return i programmi in comune a tutti i programmi fedelta
+     * @return i programmi in comune a tutti i programmi fedelta basandosi su equals di ogni programma fedelta
+     * i programmi uguali ma con diverse impostazioni non sono considerati come uguali
      */
     public List<ProgrammaFedelta> getCommonPrograms() {
-        List<ProgrammaFedelta> commons = new ArrayList<>(getAllPrograms());
+        Set<ProgrammaFedelta> commons = new HashSet<>(getAllPrograms());
 
-        System.out.println("new");
-        List<List<ProgrammaFedelta>> l = appartenenti
+        appartenenti
                 .stream()
                 .map(Commerciante::getListaProgrammi)
-                .toList();
+                .forEach(listaFedelta ->
+                        commons.removeIf(p -> !listaFedelta.contains(p))
+                );
 
-        for (List<ProgrammaFedelta> listaFedelta : l) {
-            List<? extends Class<?>> list = listaFedelta
-                    .stream()
-                    .map(Object::getClass)
-                    .toList();
-
-            commons.removeIf(p -> !list.contains(p.getClass()));
-        }
-        return commons
-                .stream()
-                .distinct()
-//                .map(ProgrammaFedelta::clone)
-                .toList();
+        return new ArrayList<>(commons);
     }
 
     /**
      * Concettualmente parliamo di un OR logico
      *
-     * @return la lista di tutti i programmi
+     * @return la lista di tutti i programmi disponibili escludendo quelli con stessi parametri (equals)
      */
     protected List<ProgrammaFedelta> getAllPrograms() {
         return appartenenti
@@ -73,6 +65,7 @@ public class Coalizione {
                 .map(Commerciante::getListaProgrammi)
                 .flatMap(List::stream)
                 .map(ProgrammaFedelta::clone)
+                .distinct()
                 .toList();
     }
 
@@ -90,16 +83,17 @@ public class Coalizione {
             Coalizione altraCoalizione,
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
         for (Cliente c : altraCoalizione.getClienti()) {
+            // primo passo del merge è il merge dei clienti con i programmi
             List<ProgrammaFedelta> otherPrograms = altraCoalizione.getProgrammi(c);
 
             if (!getClienti().contains(c)) {
-                mapClienti.put(c, new ArrayList<>(otherPrograms));
+                // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione
+                mapClienti.put(c, otherPrograms);
             } else {
                 mergeProgrammi(mapClienti.get(c), otherPrograms, mergeRules);
             }
         }
         return this;
-        // TODO - test Coalizione.mergeCoalizioni
     }
 
     protected void mergeProgrammi(
