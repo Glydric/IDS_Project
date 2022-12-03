@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class ProgrammiTest {
+public class ProgrammaLivelliTest {
     @Test
     void ProgrammaLivelliClone(){
         ProgrammaLivelli pl = new ProgrammaLivelli();
@@ -15,4 +15,6 @@ public class ProgrammiTest {
         assertNotEquals(pl.getLivello(),clone.getLivello());
 
     }
+    //TODO add tests
+
 }
