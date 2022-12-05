@@ -6,7 +6,8 @@ import java.util.function.BiConsumer;
 public class ProgrammaCashback implements ProgrammaFedelta {
     private float cashback = 0;
 
-    public ProgrammaCashback() {}
+    public ProgrammaCashback() {
+    }
 
     public ProgrammaCashback(float initCashback) {
         cashback = initCashback;
@@ -28,9 +29,14 @@ public class ProgrammaCashback implements ProgrammaFedelta {
     }
 
     @Override
-    public ProgrammaFedelta clone() {
-        return new ProgrammaCashback(cashback);
+    public ProgrammaCashback clone() {
+        try {
+            return (ProgrammaCashback) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Override
     public BiConsumer<ProgrammaFedelta, ProgrammaFedelta> getDefaultConsumer() {

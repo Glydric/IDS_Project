@@ -15,8 +15,12 @@ public class ProgrammaVIP implements ProgrammaFedelta {
     }
 
     @Override
-    public ProgrammaFedelta clone() {
-        return new ProgrammaVIP(isVip);
+    public ProgrammaVIP clone() {
+        try {
+            return (ProgrammaVIP) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

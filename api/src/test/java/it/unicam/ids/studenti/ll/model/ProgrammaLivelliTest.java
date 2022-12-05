@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ProgrammaLivelliTest {
     @Test
-    void ProgrammaLivelliClone(){
+    void ProgrammaLivelliCloneTest(){
         ProgrammaLivelli pl = new ProgrammaLivelli();
-        ProgrammaLivelli clone = (ProgrammaLivelli) pl.clone();
+        ProgrammaLivelli clone = pl.clone();
 
         pl.setLivello((short) 10);
 

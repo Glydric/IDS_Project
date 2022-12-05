@@ -22,9 +22,12 @@ public class ProgrammaLivelli implements ProgrammaFedelta {
     }
 
     @Override
-    public ProgrammaFedelta clone() {
-//        short newLivello = livello;
-        return new ProgrammaLivelli(livello);
+    public ProgrammaLivelli clone() {
+        try {
+            return (ProgrammaLivelli) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

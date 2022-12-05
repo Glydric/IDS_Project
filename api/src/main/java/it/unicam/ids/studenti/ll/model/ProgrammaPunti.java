@@ -7,24 +7,30 @@ public class ProgrammaPunti implements ProgrammaFedelta {
 
     private int punti = 0;
 
+    public ProgrammaPunti() {
+    }
+
+    public ProgrammaPunti(int punti) {
+        setPunti(punti);
+    }
+
     public int getPunti() {
         return this.punti;
     }
 
     public void setPunti(int punti) {
-        if(punti<0)
+        if (punti < 0)
             throw new IllegalArgumentException("Numero punti inseriti è inferiore a 0");
         this.punti = punti;
     }
 
-    public ProgrammaPunti(){}
-    public ProgrammaPunti(int punti){
-        setPunti(punti);
-    }
-
     @Override
-    public ProgrammaFedelta clone() {
-        return new ProgrammaPunti(punti);
+    public ProgrammaPunti clone() {
+        try {
+            return (ProgrammaPunti) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
