@@ -32,6 +32,7 @@ public class Commerciante extends Azienda {
 
         getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma));
         // TODO il programma aggiunto non deve avere lo stesso puntatore
+        //  per ora i puntatori li ho fatti solo sul C.. dovremmo vederlo assieme magari.
     }
 
     public void addCliente(Cliente cliente){

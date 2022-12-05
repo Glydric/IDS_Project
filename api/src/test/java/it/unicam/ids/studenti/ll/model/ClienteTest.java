@@ -8,6 +8,14 @@ import org.junit.jupiter.api.Test;
 class ClienteTest {
     @Test
     void testConnection() {
-        Persona c = new Cliente("Mario", "Rossi");
+     //   Persona c = new Cliente("Mario", "Rossi");
+        // todo un test per controllare se possiamo creare un cliente utilizzando solo nome e cognome
+        //  ma non dataNascita, a cosa serve?
+        //  Un costruttore che non richede la data di nascita sarebbe utile solo se nome e cognome al momento
+        //  della registrazione sono campi obbligatori, mentre data di nascita non lo è e quindi abbiamo bisogno di più di un costruttore
+        //  Il problema principale qui è che la validation è uno degli ultimi passi di solito, quindi io lascerei
+        //  le questioni relative alla validation per il futuro, anche perchè se non siete sicuri sul tipo di validation
+        //  sicuramente ci dovtrmmo rimettere le mani in futuro
+        //  Sentiamo Antonio sul problema magari XD
     }
 }

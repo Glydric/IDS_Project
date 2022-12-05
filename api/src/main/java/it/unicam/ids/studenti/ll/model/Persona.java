@@ -13,8 +13,32 @@ class Persona {
         this.cognome = cognome;
         this.dataNascita = dataNascita;
     }
+    public String getNome(){
+        return this.nome;
+    }
 
-    short getEta() {
+    public LocalDate getDataNascita() {
+        return this.dataNascita;
+    }
+
+    public String getCognome() {
+        return this.cognome;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    public void setDataNascita(LocalDate dataNascita) {
+        this.dataNascita = dataNascita;
+    }
+
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public short getEta() {
+
     LocalDate oggi = LocalDate.now(); //ho istanziato il giorno corrente per poterlo usare.
     int eta = oggi.getYear() - this.dataNascita.getYear();// qui uso per rtovare l'eta'.
     return (short) eta;
