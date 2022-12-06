@@ -116,19 +116,23 @@ public class Coalizione {
             Set<ProgrammaFedelta> thisPrograms,
             Set<ProgrammaFedelta> otherPrograms,
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> rules) {
-        for (ProgrammaFedelta p1 : otherPrograms) {
-            if (!thisPrograms.contains(p1)) {
-                thisPrograms.add(p1);
+        for (ProgrammaFedelta programmaFedelta : otherPrograms) {
+            if (!thisPrograms.contains(programmaFedelta)) {
+                thisPrograms.add(programmaFedelta);
             } else {
-                ProgrammaFedelta p2 = thisPrograms
+                // Supponiamo che ci sia solo un elemento
+                List<ProgrammaFedelta> programmi = thisPrograms
                         .stream()
-                        .filter((p) -> p.getClass() == p1.getClass())
-                        .toList()
-                        .get(0);
+                        .filter(p1 -> p1.getClass() == programmaFedelta.getClass())
+                        .toList();
 
-                BiConsumer<ProgrammaFedelta, ProgrammaFedelta> c = rules.get(p2.getClass());
+                // Ci assicuriamo che sia cosi (anche se non ci sono motivi per cui non dovrebbe essere)
+                assert (programmi.size() == 1);
 
-                p1.mergeProgrammi(p2, c);
+                programmaFedelta.mergeProgrammi(
+                        programmi.get(0),
+                        rules.get(programmi.get(0).getClass())
+                );
             }
         }
     }
