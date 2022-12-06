@@ -56,8 +56,8 @@ public class Coalizione {
     }
 
     /**
-     * @return i programmi in comune a tutti i programmi fedelta basandosi su equals di ogni programma fedelta
-     * i programmi uguali ma con diverse impostazioni non sono considerati come uguali
+     * @return i programmi in comune a tutti i commercianti.
+     * È basato su equals per cui i programmi uguali ma con diversi attributi non sono considerati come uguali
      */
     public Set<ProgrammaFedelta> getCommonPrograms() {
         return getAllPrograms()
