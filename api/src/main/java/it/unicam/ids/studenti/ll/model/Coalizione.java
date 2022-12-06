@@ -1,6 +1,9 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -36,6 +39,13 @@ public class Coalizione {
 
     public void addCliente(Cliente cliente) {
         mapClienti.put(cliente, new HashSet<>(getCommonPrograms()));
+    }
+
+    public Set<Class<? extends ProgrammaFedelta>> getCommonProgramsType() {
+        return getCommonPrograms()
+                .stream()
+                .map(ProgrammaFedelta::getClass)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     /**
