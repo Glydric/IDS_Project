@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 public class Commerciante extends Azienda {
-    private final List<ProgrammaFedelta> listaProgrammi = new ArrayList<>();
+    private final Set<ProgrammaFedelta> listaProgrammi = new HashSet<>();
     private Coalizione gruppoAppartenza = new Coalizione(this);
 
     public Commerciante(String ragioneSociale) {
@@ -15,8 +15,11 @@ public class Commerciante extends Azienda {
         super(ragioneSociale, dataIscrizione);
     }
 
-    public List<ProgrammaFedelta> getListaProgrammi() {
-        return Collections.unmodifiableList(listaProgrammi);
+    protected List<ProgrammaFedelta> getListaProgrammi() {
+        return getProgrammi().stream().toList();
+    }
+    public Set<ProgrammaFedelta> getProgrammi() {
+        return Collections.unmodifiableSet(listaProgrammi);
     }
 
     /**
@@ -84,7 +87,10 @@ public class Commerciante extends Azienda {
         gruppoAppartenza.addCliente(cliente);
     }
 
-    public List<ProgrammaFedelta> getProgress(Cliente cliente) {
+    protected List<ProgrammaFedelta> getProgressAsList(Cliente cliente) {
+        return getProgress(cliente).stream().toList();
+    }
+    public Set<ProgrammaFedelta> getProgress(Cliente cliente) {
         return gruppoAppartenza.getProgrammi(cliente);
     }
 

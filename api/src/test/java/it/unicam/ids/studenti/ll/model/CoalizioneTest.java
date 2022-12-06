@@ -59,12 +59,18 @@ public class CoalizioneTest {
         c2.addNewProgramma(pf1);
         pf1.setLivello((short) 40);
 
-        // TODO try to remove equals in programmiFedelta to use default equals and check memory position
         assertEquals(0, c1.getCoalizione().getCommonPrograms().size());
 
         // dato che ora uno dei programmi è in comune tra entrambi i commercianti (in quanto abbiamo entrambi i
         // programmi a livelli con un livello default di 0, esso diventa programma in comun
-        ((ProgrammaLivelli) c2.getListaProgrammi().get(1)).setLivello((short) 0);
+        ((ProgrammaLivelli) c2.getProgrammi()
+                .stream()
+                .filter(p -> p.getClass() == ProgrammaLivelli.class)
+                .toList().get(0)).setLivello((short) 0);
+
+//        Dato che HashSet non ha un ordinamento specifico non possiamo fidarci dei get, per cui il seguente codice non è
+//        eseguibile correttamente
+//        ((ProgrammaLivelli) c2.getListaProgrammi().get(1)).setLivello((short) 0);
         assertEquals(1, c1.getCoalizione().getCommonPrograms().size());
 
         c1.addNewProgramma(pf2);

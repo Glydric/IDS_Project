@@ -2,10 +2,11 @@ package it.unicam.ids.studenti.ll.model;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class Coalizione {
-    private final Map<Cliente, List<ProgrammaFedelta>> mapClienti = new HashMap<>();
-    public List<Commerciante> appartenenti = new ArrayList<>();
+    private final Map<Cliente, Set<ProgrammaFedelta>> mapClienti = new HashMap<>();
+    public Set<Commerciante> appartenenti = new HashSet<>();
 
     protected Coalizione() {
     }
@@ -34,14 +35,14 @@ public class Coalizione {
     }
 
     public void addCliente(Cliente cliente) {
-        mapClienti.put(cliente, new ArrayList<>(getCommonPrograms()));
+        mapClienti.put(cliente, new HashSet<>(getCommonPrograms()));
     }
 
     /**
      * @return i programmi in comune a tutti i programmi fedelta basandosi su equals di ogni programma fedelta
      * i programmi uguali ma con diverse impostazioni non sono considerati come uguali
      */
-    public List<ProgrammaFedelta> getCommonPrograms() {
+    public Set<ProgrammaFedelta> getCommonPrograms() {
         Set<ProgrammaFedelta> commons = new HashSet<>(getAllPrograms());
 
         appartenenti
@@ -51,7 +52,7 @@ public class Coalizione {
                         commons.removeIf(p -> !listaFedelta.contains(p))
                 );
 
-        return new ArrayList<>(commons);
+        return commons;
     }
 
     /**
@@ -59,17 +60,16 @@ public class Coalizione {
      *
      * @return la lista di tutti i programmi disponibili escludendo quelli con stessi parametri (equals)
      */
-    protected List<ProgrammaFedelta> getAllPrograms() {
+    protected Set<ProgrammaFedelta> getAllPrograms() {
         return appartenenti
                 .stream()
-                .map(Commerciante::getListaProgrammi)
-                .flatMap(List::stream)
+                .map(Commerciante::getProgrammi)
+                .flatMap(Set::stream)
                 .map(ProgrammaFedelta::clone)
-                .distinct()
-                .toList();
+                .collect(Collectors.toUnmodifiableSet());
     }
 
-    public List<ProgrammaFedelta> getProgrammi(Cliente cliente) {
+    public Set<ProgrammaFedelta> getProgrammi(Cliente cliente) {
         return mapClienti.get(cliente);
     }
 
@@ -84,7 +84,7 @@ public class Coalizione {
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
         for (Cliente c : altraCoalizione.getClienti()) {
             // primo passo del merge è il merge dei clienti con i programmi
-            List<ProgrammaFedelta> otherPrograms = altraCoalizione.getProgrammi(c);
+            Set<ProgrammaFedelta> otherPrograms = altraCoalizione.getProgrammi(c);
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione
@@ -97,8 +97,8 @@ public class Coalizione {
     }
 
     protected void mergeProgrammi(
-            List<ProgrammaFedelta> thisPrograms,
-            List<ProgrammaFedelta> otherPrograms,
+            Set<ProgrammaFedelta> thisPrograms,
+            Set<ProgrammaFedelta> otherPrograms,
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> rules) {
         for (ProgrammaFedelta p1 : otherPrograms) {
             if (!thisPrograms.contains(p1)) {
