@@ -1,17 +1,17 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-abstract class Azienda{
+abstract class Azienda {
     public final String ragioneSociale;
-    public Date dataIscrizioneRegistroImprese = new Date();
+    public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
+    public Persona proprietario;
+    public Set<Dipendente> listaDipendenti = new HashSet<>();
     private String numeroTelefono;
     private String email;
-
-    public Persona proprietario;
-    public List<Dipendente> listaDipendenti = new ArrayList<>();
 
 
     /**
@@ -25,7 +25,7 @@ abstract class Azienda{
      * @param ragioneSociale
      * @param dataIscrizione
      */
-    public Azienda(String ragioneSociale, Date dataIscrizione) {
+    public Azienda(String ragioneSociale, LocalDate dataIscrizione) {
         this(ragioneSociale);
         setDate(dataIscrizione);
     }
@@ -38,8 +38,8 @@ abstract class Azienda{
     /**
      * @param dataIscrizione
      */
-    private void setDate(Date dataIscrizione) {
-        if (dataIscrizione.after(new Date())) return;
+    private void setDate(LocalDate dataIscrizione) {
+        if (dataIscrizione.isAfter(LocalDate.now())) return;
 
         this.dataIscrizioneRegistroImprese = dataIscrizione;
     }

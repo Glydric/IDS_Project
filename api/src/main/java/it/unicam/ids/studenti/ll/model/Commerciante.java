@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -11,7 +12,7 @@ public class Commerciante extends Azienda {
         super(ragioneSociale);
     }
 
-    public Commerciante(String ragioneSociale, Date dataIscrizione) {
+    public Commerciante(String ragioneSociale, LocalDate dataIscrizione) {
         super(ragioneSociale, dataIscrizione);
     }
 

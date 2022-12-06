@@ -1,12 +1,12 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Cliente extends Persona {
     public final int identificativoTessera;
-    public final List<Commerciante> listaCommercianti = new ArrayList<>();
+    public final Set<Coalizione> listaCommercianti = new HashSet<>();
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;

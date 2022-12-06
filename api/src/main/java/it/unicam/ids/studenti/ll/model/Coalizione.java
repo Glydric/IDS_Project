@@ -112,7 +112,7 @@ public class Coalizione {
         return this;
     }
 
-    protected void mergeProgrammi(
+    private void mergeProgrammi(
             Set<ProgrammaFedelta> thisPrograms,
             Set<ProgrammaFedelta> otherPrograms,
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> rules) {
