@@ -1,9 +1,6 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -49,20 +46,30 @@ public class Coalizione {
     }
 
     /**
+     * @return tutti i programmi per come vengono visti nella `base dati`
+     */
+    public List<List<ProgrammaFedelta>> getListsPrograms() {
+        return appartenenti
+                .stream()
+                .map(Commerciante::getListaProgrammi)
+                .toList();
+    }
+
+    /**
      * @return i programmi in comune a tutti i programmi fedelta basandosi su equals di ogni programma fedelta
      * i programmi uguali ma con diverse impostazioni non sono considerati come uguali
      */
     public Set<ProgrammaFedelta> getCommonPrograms() {
-        Set<ProgrammaFedelta> commons = new HashSet<>(getAllPrograms());
-
-        appartenenti
+        return getAllPrograms()
                 .stream()
-                .map(Commerciante::getListaProgrammi)
-                .forEach(listaFedelta ->
-                        commons.removeIf(p -> !listaFedelta.contains(p))
-                );
-
-        return commons;
+                .filter(programma ->
+                        getListsPrograms()
+                                .stream()
+                                .allMatch(programmi ->
+                                        programmi.contains(programma)
+                                )
+                )
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     /**
@@ -71,10 +78,9 @@ public class Coalizione {
      * @return la lista di tutti i programmi disponibili escludendo quelli con stessi parametri (equals)
      */
     protected Set<ProgrammaFedelta> getAllPrograms() {
-        return appartenenti
+        return getListsPrograms()
                 .stream()
-                .map(Commerciante::getProgrammi)
-                .flatMap(Set::stream)
+                .flatMap(Collection::stream)
                 .map(ProgrammaFedelta::clone)
                 .collect(Collectors.toUnmodifiableSet());
     }
