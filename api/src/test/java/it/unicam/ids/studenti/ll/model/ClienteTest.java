@@ -5,9 +5,11 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 class ClienteTest {
     @Test
     void testConnection() {
-        Persona c = new Cliente("Mario", "Rossi");
+        Persona c = new Cliente("Mario", "Rossi", LocalDate.now(), "3839257", "l@1.it");
     }
 }

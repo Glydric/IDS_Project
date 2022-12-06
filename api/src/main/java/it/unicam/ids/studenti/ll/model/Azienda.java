@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-abstract class Azienda {
+abstract class Azienda{
     public final String ragioneSociale;
     public Date dataIscrizioneRegistroImprese = new Date();
     private String numeroTelefono;
@@ -50,6 +50,10 @@ abstract class Azienda {
 
     public void setNumeroTelefono(String numeroTelefono) {
         // todo controllo del numero
+// Possiamo fare una regex che accetta solo numeri, spazi, e i segni +- perchè
+// potresti utilizzare il trattino per separare il numero, e il + serve per il prefisso.
+        // inoltre non possiamo avere la certezza che il numero è corretto se non facciamo sms validation
+
         this.numeroTelefono = numeroTelefono;
     }
 
@@ -58,7 +62,7 @@ abstract class Azienda {
     }
 
     public void setEmail(String email) {
-        // todo controllo del numero
+        // todo controllo del email
         this.email = email;
     }
 }

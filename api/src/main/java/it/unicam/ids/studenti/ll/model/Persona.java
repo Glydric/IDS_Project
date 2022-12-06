@@ -1,21 +1,30 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 class Persona {
-
-    final public Date dataNascita = new Date();
     public String nome;
     public String cognome;
+    private LocalDate dataNascita = LocalDate.now();
 
     public Persona(String nome, String cognome) {
         this.nome = nome;
         this.cognome = cognome;
     }
 
-    short getEta() {
-        // TODO - implement Persona.getEta
-        throw new UnsupportedOperationException();
+    public Persona(String nome, String cognome, LocalDate dataNascita) {
+        this(nome, cognome);
+        this.dataNascita = dataNascita;
+    }
+
+    public LocalDate getDataNascita() {
+        return this.dataNascita;
+    }
+
+    public short getEta() {
+        LocalDate oggi = LocalDate.now(); //ho istanziato il giorno corrente per poterlo usare.
+        int eta = oggi.getYear() - this.dataNascita.getYear();// qui uso per rtovare l'eta'.
+        return (short) eta;
     }
 
 }

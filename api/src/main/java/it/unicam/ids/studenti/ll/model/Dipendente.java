@@ -1,12 +1,15 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 abstract class Dipendente extends Persona {
     public int identificativo;
     private String password;
 	public Azienda lavoraIn;
 
-    public Dipendente(String nome, String cognome) {
-        super(nome, cognome);
+    public Dipendente(String nome, String cognome, LocalDate dataNascita) {
+        super(nome, cognome,dataNascita);
     }
 
     public int getIdentificativo() {
@@ -18,11 +21,13 @@ abstract class Dipendente extends Persona {
     }
 
     /**
-     * @param password
+     * @param password la password da controllare
      */
     public boolean isPasswordValid(String password) {
         // TODO - implement Dipendente.isPasswordValid
-        throw new UnsupportedOperationException();
+        return Objects.equals(password, this.password);
+//        throw new UnsupportedOperationException(); ????????????
+        
     }
 
 }

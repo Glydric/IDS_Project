@@ -1,21 +1,37 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente extends Persona {
-    public String numeroTelefono;
+    public final int identificativoTessera;
+    public final List<Commerciante> listaCommercianti = new ArrayList<>();
     public boolean isFamily = false;
-    private int identificativoTessera;
+    private String numeroTelefono;
     private String email;
 
-    public Cliente(String nome, String cognome) {
-        super(nome, cognome);
+    /**
+     * Un costruttore di test
+     *
+     */
+    protected Cliente(String nome, String cognome) {
+        super(nome, cognome, LocalDate.now());
+        identificativoTessera = 0;
     }
 
-    public int getIdentificativoTessera() {
-        return this.identificativoTessera;
+    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, boolean isFamily) {
+        this(nome, cognome, dataNascita, numeroTelefono, email);
+        this.isFamily = isFamily;
+        // todo identificativo Tessera deve essere un ID, come lo creiamo?
     }
 
-    public void setIdentificativoTessera(int identificativoTessera) {
-        this.identificativoTessera = identificativoTessera;
+    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
+        super(nome, cognome, dataNascita);
+        setNumeroTelefono(numeroTelefono);
+        setEmail(email);
+        this.identificativoTessera = 0;
+        // todo identificativo Tessera deve essere un ID, come lo creiamo?
     }
 
     public String getEmail() {
@@ -26,4 +42,12 @@ public class Cliente extends Persona {
         this.email = email;
     }
 
+    public String getNumeroTelefono() {
+        return numeroTelefono;
+    }
+
+    public void setNumeroTelefono(String numeroTelefono) {
+        // todo usare regex magari
+        this.numeroTelefono = numeroTelefono;
+    }
 }
