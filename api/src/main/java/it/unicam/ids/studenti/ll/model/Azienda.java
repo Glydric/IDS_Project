@@ -1,15 +1,13 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 abstract class Azienda {
     public final String ragioneSociale;
+    public final Map<Dipendente, Set<Permesso>> mapDipendenti = new HashMap<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
     public Persona proprietario;
-    public Set<Dipendente> listaDipendenti = new HashSet<>();
     private String numeroTelefono;
     private String email;
 
@@ -64,5 +62,21 @@ abstract class Azienda {
     public void setEmail(String email) {
         // todo controllo del email
         this.email = email;
+    }
+
+    public void addDipendente(Dipendente dipendente) {
+        if (mapDipendenti.containsKey(dipendente))
+            throw new IllegalArgumentException("Il dipendente è già inserito");
+        mapDipendenti.put(dipendente, new HashSet<>());
+    }
+
+    public void addPermesso(Dipendente dipendente, Permesso permesso) {
+        if (!mapDipendenti.containsKey(dipendente))
+            addDipendente(dipendente);
+        mapDipendenti.get(dipendente).add(permesso);
+    }
+
+    public List<Permesso> getPermessi(Dipendente dipendente) {
+        return mapDipendenti.get(dipendente).stream().toList();
     }
 }
