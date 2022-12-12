@@ -63,7 +63,7 @@ public class CoalizioneTest {
 
         // dato che ora uno dei programmi è in comune tra entrambi i commercianti (in quanto abbiamo entrambi i
         // programmi a livelli con un livello default di 0, esso diventa programma in comun
-        ((ProgrammaLivelli) c2.getProgrammi()
+        ((ProgrammaLivelli) c2.getProgressi()
                 .stream()
                 .filter(p -> p.getClass() == ProgrammaLivelli.class)
                 .toList().get(0)).setLivello((short) 0);
