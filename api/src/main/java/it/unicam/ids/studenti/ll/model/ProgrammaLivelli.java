@@ -5,6 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ProgrammaLivelli implements ProgrammaFedelta {
     private short livello = 0;
+    BiConsumer<ProgrammaLivelli, Float> rule = (pf, value) -> pf.increaseLivello((short) 1);
 
     public ProgrammaLivelli() {
     }
@@ -19,6 +20,15 @@ public class ProgrammaLivelli implements ProgrammaFedelta {
 
     public void setLivello(short livello) {
         this.livello = livello;
+    }
+
+    public void increaseLivello(short livello) {
+        setLivello((short) Math.min(Short.MAX_VALUE, this.livello + livello));
+    }
+
+    @Override
+    public void aggiornaProgramma(float value) {
+        rule.accept(this, value);
     }
 
     @Override
