@@ -10,8 +10,16 @@ public class IdentificatoreTest {
     void IDtest() {
         assert (Identificatore.isAvailable("mariorossi"));
 
-        Identificatore d = Identificatore.fromString("mariorossi");
-        assertEquals("mariorossi", d.getIdentificativo());
+        Identificatore id = Identificatore.fromString("mariorossi");
+        assertEquals("mariorossi", id.getIdentificativo());
+
+        Identificatore id1 = Identificatore.fromString("mario.rossi");
+        assertEquals("mario.rossi", id1.getIdentificativo());
+
+        Identificatore id2 = Identificatore.fromString("Mario.Rossi");
+        assertEquals("mario.rossi", id2.getIdentificativo());
+
+        assertThrows(IllegalArgumentException.class,()->Identificatore.fromString("Mario Rossi"));
 
         assertThrows(
                 IllegalArgumentException.class,

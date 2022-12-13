@@ -33,7 +33,9 @@ public class Identificatore {
     private void setIdentificativo(String identificativo) {
         if (!isAvailable(identificativo))
             throw new IllegalArgumentException("Identificativo già presente nel sistema");
-        this.identificativo = identificativo;
+        if (identificativo.contains(" "))
+            throw new IllegalArgumentException("Non è possibile inserire spazi nell'ID");
+        this.identificativo = identificativo.toLowerCase();
     }
 
     @Override

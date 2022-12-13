@@ -13,7 +13,7 @@ public abstract class UtenteConPrivilegi extends Persona {
     }
 
     public UtenteConPrivilegi(String nome, String cognome, LocalDate dataNascita) {
-        this(nome, cognome, nome + cognome, dataNascita);
+        this(nome, cognome, nome + "." + cognome, dataNascita);
     }
 
     public String getIdentificativo() {
