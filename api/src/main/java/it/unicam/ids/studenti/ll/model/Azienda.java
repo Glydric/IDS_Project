@@ -5,7 +5,7 @@ import java.util.*;
 
 abstract class Azienda {
     public final String ragioneSociale;
-    public final Map<Dipendente, Set<Permesso>> mapDipendenti = new HashMap<>();
+    public final Set<Dipendente> mapDipendenti = new HashSet<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
     public Persona proprietario;
     private String numeroTelefono;
@@ -13,15 +13,15 @@ abstract class Azienda {
 
 
     /**
-     * @param ragioneSociale
+     * @param ragioneSociale il nome dell'azienda
      */
     public Azienda(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
     }
 
     /**
-     * @param ragioneSociale
-     * @param dataIscrizione
+     * @param ragioneSociale il nome dell'azienda
+     * @param dataIscrizione la data d'iscrizione al registro imprese
      */
     public Azienda(String ragioneSociale, LocalDate dataIscrizione) {
         this(ragioneSociale);
@@ -34,7 +34,7 @@ abstract class Azienda {
     }
 
     /**
-     * @param dataIscrizione
+     * @param dataIscrizione la data d'iscrizione al registro imprese
      */
     private void setDate(LocalDate dataIscrizione) {
         if (dataIscrizione.isAfter(LocalDate.now())) return;
@@ -65,18 +65,8 @@ abstract class Azienda {
     }
 
     public void addDipendente(Dipendente dipendente) {
-        if (mapDipendenti.containsKey(dipendente))
+        if (mapDipendenti.contains(dipendente))
             throw new IllegalArgumentException("Il dipendente è già inserito");
-        mapDipendenti.put(dipendente, new HashSet<>());
-    }
-
-    public void addPermesso(Dipendente dipendente, Permesso permesso) {
-        if (!mapDipendenti.containsKey(dipendente))
-            addDipendente(dipendente);
-        mapDipendenti.get(dipendente).add(permesso);
-    }
-
-    public List<Permesso> getPermessi(Dipendente dipendente) {
-        return mapDipendenti.get(dipendente).stream().toList();
+        mapDipendenti.add(dipendente);
     }
 }
