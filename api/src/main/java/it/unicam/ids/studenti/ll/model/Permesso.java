@@ -5,5 +5,6 @@ package it.unicam.ids.studenti.ll.model;
  */
 @FunctionalInterface
 public interface Permesso extends Runnable {
+    @Override
     void run();
 }
