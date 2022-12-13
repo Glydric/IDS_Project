@@ -3,9 +3,6 @@ package it.unicam.ids.studenti.ll.model;
 import java.util.function.BiConsumer;
 
 public interface ProgrammaFedelta extends Cloneable {
-    //TODO aggiungere dei Runnable per definire le regole di aggiornamento
-
-    void aggiornaProgramma(float value);
 
     /**
      * @param otherProgramma l'altro programma fedelta

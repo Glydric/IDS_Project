@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public class ProgrammaVIP implements ProgrammaFedelta {
-
     public boolean isVip = false;
 
     ProgrammaVIP() {
