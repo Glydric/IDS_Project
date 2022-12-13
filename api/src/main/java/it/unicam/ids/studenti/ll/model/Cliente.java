@@ -10,10 +10,10 @@ public class Cliente extends Persona {
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
+    private String password;
 
     /**
      * Un costruttore di test
-     *
      */
     protected Cliente(String nome, String cognome) {
         super(nome, cognome, LocalDate.now());
