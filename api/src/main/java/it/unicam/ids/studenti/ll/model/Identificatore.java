@@ -8,7 +8,7 @@ public class Identificatore {
     private String identificativo;
 
     private Identificatore(UtenteConPrivilegi utente) {
-        String id = utente.nome + '.' + utente.cognome;
+        String id = (utente.nome + '.' + utente.cognome).toLowerCase();
         setIdentificativo(id);
         listaID.put(id, utente);
     }
@@ -44,7 +44,7 @@ public class Identificatore {
      */
     public void updateIdentificativo(String identificativo) {
         setIdentificativo(identificativo);
-        listaID.replace(this.identificativo, listaID.get(identificativo));
+        listaID.replace(identificativo, listaID.get(this.identificativo));
     }
 
     @Override
