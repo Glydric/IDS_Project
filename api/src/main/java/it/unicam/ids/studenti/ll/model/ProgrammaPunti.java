@@ -18,10 +18,14 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
         return this.punti;
     }
 
-    public void setPunti(int punti) {
+    protected void setPunti(int punti) {
         if (punti < 0)
             throw new IllegalArgumentException("Numero punti inseriti è inferiore a 0");
         this.punti = punti;
+    }
+
+    public void addPunti(int punti) {
+        setPunti(punti + this.punti);
     }
 
     @Override
@@ -59,4 +63,5 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
     public int hashCode() {
         return Objects.hash(getPunti());
     }
+
 }
