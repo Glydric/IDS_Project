@@ -9,7 +9,6 @@ public class IdentificatoreTest {
     void updateTest() {
         Dipendente d = new Dipendente("gianny", "monti");
         new Dipendente("Maria", "monti");
-        //TODO check lowercase instantiation of id
 
         assertThrows(
                 IllegalArgumentException.class,

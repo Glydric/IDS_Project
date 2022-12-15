@@ -163,8 +163,6 @@ public class CoalizioneTest {
 
         //I programmi scelti da due commercianti sono diversi (hanno classi diverse) quindi non sono in comune
         assertEquals(0, c1.getCoalizione().getCommonPrograms().size());
-        //TODO  complete
-
     }
 
 

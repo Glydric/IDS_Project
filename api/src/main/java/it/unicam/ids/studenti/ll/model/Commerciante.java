@@ -32,7 +32,6 @@ public class Commerciante extends Azienda {
             return;
         listaProgrammi.add(programma.clone());
         gruppoAppartenza.addProgrammaForEachCliente(programma);
-        // TODO il programma aggiunto non deve avere lo stesso puntatore
     }
 
     /**
