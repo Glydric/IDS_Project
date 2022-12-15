@@ -14,6 +14,9 @@ class Persona {
 
     public Persona(String nome, String cognome, LocalDate dataNascita) {
         this(nome, cognome);
+        if (dataNascita.getYear() > LocalDate.now().getYear()){
+            throw new IllegalArgumentException("Non vini dal futuro, vero?");
+        }
         this.dataNascita = dataNascita;
     }
 

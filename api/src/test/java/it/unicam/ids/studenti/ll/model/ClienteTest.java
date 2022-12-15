@@ -7,9 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class ClienteTest {
     @Test
     void testConnection() {
-        Persona c = new Cliente("Mario", "Rossi", LocalDate.now(), "3839257", "l@1.it");
+        assertThrows (IllegalArgumentException.class,()-> new Cliente("Tizio", "Cajo", LocalDate.of(3000,12,31), "342156578", "asdzxu@gmail.com"));
+
     }
 }
+
