@@ -1,31 +1,30 @@
 package it.unicam.ids.studenti.ll.model;
 
+import java.util.UUID;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class ProgrammaReferral implements ProgrammaFedelta {
-    private final String codiceInvito;
+    public final String codiceInvito = UUID.randomUUID().toString();
+    private final Runnable function;
 
     /**
-     * Nel costruttore di un programma referral possiamo inserire come paramentro un'altro programma per definire il vantaggio
+     * Nel costruttore di un programma referral possiamo inserire come parametro
+     * una funzione con un altro parametro da incrementare una volta che il referral è stato usato da un utente
      *
-     * @param consumer
-     * @param codiceInvito
+     * @param function la 'funzione'
      */
-    public ProgrammaReferral(Consumer<ProgrammaFedelta> consumer, String codiceInvito) {
-        this.codiceInvito = codiceInvito;
-        // TODO - implement ProgrammaReferral.ProgrammaReferral
-        throw new UnsupportedOperationException();
+    public ProgrammaReferral(Runnable function) {
+        this.function = function;
     }
 
-    public String getCodiceInvito() {
-        return this.codiceInvito;
+    public void useCode() {
+        function.run();
     }
 
     @Override
-    public ProgrammaFedelta clone() {
+    public ProgrammaReferral clone() {
         try {
-            return (ProgrammaPunti) super.clone();
+            return (ProgrammaReferral) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -34,8 +33,6 @@ public class ProgrammaReferral implements ProgrammaFedelta {
     @Override
     public BiConsumer<ProgrammaFedelta, ProgrammaFedelta> getDefaultConsumer() {
         return (pr1, pr2) -> {
-            ProgrammaReferral p1 = (ProgrammaReferral) pr1;
-            ProgrammaReferral p2 = (ProgrammaReferral) pr2;
         };
     }
 }
