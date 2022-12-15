@@ -30,6 +30,10 @@ public class Identificatore {
         return identificativo;
     }
 
+    public void updateIdentificativo(String identificativo){
+        setIdentificativo(identificativo);
+        listaID.remove(identificativo);
+    }
     private void setIdentificativo(String identificativo) {
         if (!isAvailable(identificativo))
             throw new IllegalArgumentException("Identificativo già presente nel sistema");
