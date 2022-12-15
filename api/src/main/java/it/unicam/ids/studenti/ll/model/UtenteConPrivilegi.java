@@ -5,13 +5,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+//TODO rename to UtenteIdentificabile
 public abstract class UtenteConPrivilegi extends Persona {
     private final Identificatore identificativo = Identificatore.fromString(super.nome + "." + super.cognome);
     public Set<Permesso> listaPermessi = new HashSet<>();
     private String password;
 
     /**
-     * comodity method
+     * commodity method
      *
      * @param nome    il nome del dipendente
      * @param cognome il cognome del dipendente

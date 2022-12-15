@@ -19,7 +19,6 @@ public class Identificatore {
      */
     public static Identificatore fromString(String identificativo) {
         return new Identificatore(identificativo);
-        // TODO - test Identificatore.createIdentificatoreFromString
     }
 
     public static boolean isAvailable(String identificativo) {
