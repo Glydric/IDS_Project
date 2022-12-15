@@ -1,7 +1,8 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 abstract class Azienda {
     public final String ragioneSociale;
@@ -68,5 +69,6 @@ abstract class Azienda {
         if (mapDipendenti.contains(dipendente))
             throw new IllegalArgumentException("Il dipendente è già inserito");
         mapDipendenti.add(dipendente);
+        dipendente.lavoraIn = this;
     }
 }
