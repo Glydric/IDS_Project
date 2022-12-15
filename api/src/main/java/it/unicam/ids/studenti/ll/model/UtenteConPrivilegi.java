@@ -7,7 +7,7 @@ import java.util.Set;
 
 //TODO rename to UtenteIdentificabile
 public abstract class UtenteConPrivilegi extends Persona {
-    private final Identificatore identificativo = Identificatore.fromString(super.nome + "." + super.cognome);
+    private final Identificatore identificativo = Identificatore.fromUtente(this);
     public Set<Permesso> listaPermessi = new HashSet<>();
     private String password;
 

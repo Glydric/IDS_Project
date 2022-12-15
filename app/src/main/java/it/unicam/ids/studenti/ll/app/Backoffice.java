@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.app;
 
+import it.unicam.ids.studenti.ll.model.Identificatore;
 import it.unicam.ids.studenti.ll.model.Proprietario;
 
 /**
@@ -9,11 +10,9 @@ import it.unicam.ids.studenti.ll.model.Proprietario;
 public class Backoffice {
     public Proprietario proprietario;
 
-    public Backoffice(Proprietario proprietario, String password) {
-        if(proprietario.isPasswordValid(password))
+    public Backoffice(String identificatore, String password) {
+        proprietario = (Proprietario) Identificatore.getUtenteFrom(identificatore);
+        if (proprietario.isPasswordValid(password))
             throw new IllegalArgumentException("Login errato");
-
-
     }
-
 }

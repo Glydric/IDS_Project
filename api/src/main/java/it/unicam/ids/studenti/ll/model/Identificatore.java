@@ -1,44 +1,50 @@
 package it.unicam.ids.studenti.ll.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Identificatore {
-    private static final Set<String> listaID = new HashSet<>();
+    private static final Map<String, UtenteConPrivilegi> listaID = new HashMap<>();
     private String identificativo;
 
-    private Identificatore(String identificativo) {
-        setIdentificativo(identificativo);
-        listaID.add(identificativo);
+    private Identificatore(UtenteConPrivilegi utente) {
+        String id = utente.nome + '.' + utente.cognome;
+        setIdentificativo(id);
+        listaID.put(id, utente);
     }
 
-    /**
-     * factory method to create an identificatore using a string
-     *
-     * @return L'identificatore creato
-     */
-    public static Identificatore fromString(String identificativo) {
-        return new Identificatore(identificativo);
+    public static Identificatore fromUtente(UtenteConPrivilegi utente) {
+        return new Identificatore(utente);
+    }
+
+    public static UtenteConPrivilegi getUtenteFrom(String identificativo) {
+        return listaID.get(identificativo);
     }
 
     public static boolean isAvailable(String identificativo) {
-        return !listaID.contains(identificativo);
+        return !listaID.containsKey(identificativo);
     }
 
     public String getIdentificativo() {
         return identificativo;
     }
 
-    public void updateIdentificativo(String identificativo){
-        setIdentificativo(identificativo);
-        listaID.remove(identificativo);
-    }
     private void setIdentificativo(String identificativo) {
         if (!isAvailable(identificativo))
             throw new IllegalArgumentException("Identificativo già presente nel sistema");
         if (identificativo.contains(" "))
             throw new IllegalArgumentException("Non è possibile inserire spazi nell'ID");
         this.identificativo = identificativo.toLowerCase();
+    }
+
+    /**
+     * Usato per aggiornare l'identificativo corrente
+     *
+     * @param identificativo il nuovo id per questo identificatore
+     */
+    public void updateIdentificativo(String identificativo) {
+        setIdentificativo(identificativo);
+        listaID.replace(this.identificativo, listaID.get(identificativo));
     }
 
     @Override
