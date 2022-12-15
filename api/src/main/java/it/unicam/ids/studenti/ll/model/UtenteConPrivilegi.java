@@ -21,6 +21,12 @@ public abstract class UtenteConPrivilegi extends Persona {
     }
 
     public void setPassword(String password) {
+        if(password == ""){
+            throw new IllegalArgumentException("Password vuota!");
+        }
+        if(password.length() < 8){
+            throw new IllegalArgumentException("Password troppo corta, non e' sicura.");
+        }
         this.password = password;
     }
 
