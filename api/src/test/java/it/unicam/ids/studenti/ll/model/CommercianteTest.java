@@ -3,7 +3,6 @@ package it.unicam.ids.studenti.ll.model;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +24,7 @@ public class CommercianteTest {
 
         ((ProgrammaPunti) commerciante.getProgressAsList(c1).get(0)).setPunti(10);
 
-        assertEquals(1,commerciante.getCoalizione().getAllPrograms().size());
+        assertEquals(1, commerciante.getCoalizione().getAllPrograms().size());
         assertNotEquals(commerciante.getProgressAsList(c1).get(0), commerciante.getProgressAsList(c2).get(0));
 
         assertThrows(UnsupportedOperationException.class, () -> commerciante.getListaProgrammi().add(pf));
@@ -71,5 +70,15 @@ public class CommercianteTest {
         Coalizione c = new Coalizione();
 
         assertEquals(co.getCoalizione(), co.setCoalizione(c));
+    }
+
+    @Test
+    void addDipendente() {
+        Commerciante c = new Commerciante("Sony");
+        Dipendente d = new Dipendente("Gianny", "Manny");
+
+        c.addDipendente(d);
+        assert (c.mapDipendenti.contains(d));
+        assertThrows(IllegalArgumentException.class, () -> c.addDipendente(d));
     }
 }
