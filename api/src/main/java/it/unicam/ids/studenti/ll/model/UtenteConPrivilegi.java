@@ -7,7 +7,7 @@ import java.util.Set;
 
 //TODO rename to UtenteIdentificabile
 public abstract class UtenteConPrivilegi extends Persona {
-    private final Identificatore identificativo = Identificatore.fromUtente(this);
+    public final Identificatore identificativo = Identificatore.fromUtente(this);
     public Set<Permesso> listaPermessi = new HashSet<>();
     private String password;
 
@@ -39,11 +39,6 @@ public abstract class UtenteConPrivilegi extends Persona {
 
     public void addPermesso(Permesso permesso) {
         listaPermessi.add(permesso);
-    }
-
-    //todo check necessity
-    public String getIdentificativo() {
-        return identificativo.toString();
     }
 
     public void setPassword(String password) {
