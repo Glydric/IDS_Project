@@ -17,6 +17,12 @@ class Persona {
         if (dataNascita.getYear() > LocalDate.now().getYear()){
             throw new IllegalArgumentException("Non vini dal futuro, vero?");
         }
+        if ((LocalDate.now().getYear() - dataNascita.getYear()) > 120 ){
+            throw new IllegalArgumentException("Hai piu' di 120 anni?");
+        }
+        if ((LocalDate.now().getYear() - dataNascita.getYear()) < 18 ){
+            throw new IllegalArgumentException("Hemm...chiama i tuoi genitori, grazie.");
+        }
         this.dataNascita = dataNascita;
     }
 
