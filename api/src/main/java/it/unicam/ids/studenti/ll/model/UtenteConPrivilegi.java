@@ -32,7 +32,7 @@ public abstract class UtenteConPrivilegi extends Persona {
         super(nome, cognome, dataNascita);
     }
 
-    public UtenteConPrivilegi(String nome, String cognome, String identificativo, LocalDate dataNascita) {
+    public UtenteConPrivilegi(String nome, String cognome, LocalDate dataNascita, String identificativo) {
         this(nome, cognome, dataNascita);
         this.identificativo.updateIdentificativo(identificativo);
     }

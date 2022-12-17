@@ -13,7 +13,7 @@ class Dipendente extends UtenteConPrivilegi {
         super(nome, cognome, dataNascita);
     }
 
-    public Dipendente(String nome, String cognome, String identificativo, LocalDate dataNascita) {
-        super(nome, cognome, identificativo, dataNascita);
+    public Dipendente(String nome, String cognome, LocalDate dataNascita, String identificativo) {
+        super(nome, cognome, dataNascita,identificativo);
     }
 }

@@ -15,7 +15,7 @@ public class BackofficeTest {
         p.setPassword("bimario");
         Commerciante c = new Commerciante("xbox", LocalDate.MIN, p);
 
-        assertThrows(IllegalArgumentException.class,()->new Backoffice(p.identificativo,"wrongPassword"));
+        assertThrows(IllegalArgumentException.class, () -> new Backoffice(p.identificativo, "wrongPassword"));
         Backoffice b = new Backoffice(p.identificativo, "bimario");
 
     }
