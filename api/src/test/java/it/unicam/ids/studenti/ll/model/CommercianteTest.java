@@ -2,8 +2,6 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CommercianteTest {
@@ -32,7 +30,7 @@ public class CommercianteTest {
 
     @Test
     void progressiClientiTest() {
-        Commerciante commerciante = new Commerciante("Xbox", LocalDate.MAX);
+        Commerciante commerciante = new Commerciante("Xbox");
 
         Cliente c1 = new Cliente("Andrea", "Bianchi");
         commerciante.addCliente(c1);
