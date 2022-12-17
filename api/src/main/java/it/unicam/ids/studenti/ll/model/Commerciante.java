@@ -12,6 +12,10 @@ public class Commerciante extends Azienda {
         super(ragioneSociale);
     }
 
+    public Commerciante(String ragioneSociale, LocalDate dataIscrizione) {
+        super(ragioneSociale, dataIscrizione);
+    }
+
     public Commerciante(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
         super(ragioneSociale, dataIscrizione, proprietario);
     }

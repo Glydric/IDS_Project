@@ -8,7 +8,12 @@ abstract class Azienda {
     public final String ragioneSociale;
     public final Set<Dipendente> mapDipendenti = new HashSet<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
-    private Proprietario proprietario;
+    /**
+     * Il proprietario può essere null, benchè nel mondo reale non ha senso come elemento
+     * nel nostro modello il proprietario è si chi possiede l'azienda ma è soprattutto il suo admin
+     * ed il nostro interesse è proprio nel fatto che lui può controllare tutti gli aspetti dell'azienda senza limiti
+     */
+    protected Proprietario proprietario;
     private String numeroTelefono;
     private String email;
 
@@ -34,12 +39,21 @@ abstract class Azienda {
         setProprietario(proprietario);
     }
 
-    public void setProprietario(Proprietario proprietario) {
-        if (this.proprietario != null) {
-            this.proprietario.azienda = null;
+    /**
+     * Rimuove quest'azienda dal vecchio proprietario e la aggiunge al nuovo.
+     * Il proprietario può essere nullo ma solo alla creazione e quando il proprietario viene licenziato,
+     * in questo metodo non ha senso impostare un proprietario come null, piuttosto definirlo come licenziato dal metodo
+     * apposito Proprietario.licenzia()
+     *
+     * @param newProprietario il nuovo proprietario da aggiungere a quest'azienda
+     */
+    public void setProprietario(Proprietario newProprietario) {
+        if (newProprietario == null) {
+            throw new IllegalArgumentException("L'azienda deve avere un proprietario, non sono accettati valori null");
         }
-        proprietario.azienda = this;
-        this.proprietario = proprietario;
+        this.proprietario.licenzia();
+        this.proprietario = newProprietario;
+        newProprietario.setAzienda(this);
     }
 
     /**
