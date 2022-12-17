@@ -30,7 +30,7 @@ public class Commerciante extends Azienda {
     public void addNewProgramma(ProgrammaFedelta programma) {
         // Se la classe è già presente
         if (listaProgrammi.stream().map(Object::getClass).toList().contains(programma.getClass()))
-            return;
+            throw new IllegalArgumentException("Programma già presente");
         listaProgrammi.add(programma.clone());
         gruppoAppartenza.addProgrammaForEachCliente(programma);
     }
