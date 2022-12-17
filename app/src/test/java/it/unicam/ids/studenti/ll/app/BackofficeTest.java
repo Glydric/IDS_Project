@@ -11,9 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BackofficeTest {
     @Test
     void loginProprietarioTest() {
-        Proprietario p = new Proprietario("Mario", "Bianchini", LocalDate.now());
+
+        Proprietario p = new Proprietario(
+                "Mario",
+                "Bianchini",
+                LocalDate.now(),
+                new Commerciante("xbox", LocalDate.MIN));
         p.setPassword("bimario");
-        Commerciante c = new Commerciante("xbox", LocalDate.MIN, p);
 
         assertThrows(IllegalArgumentException.class, () -> new Backoffice(p.identificativo, "wrongPassword"));
         Backoffice b = new Backoffice(p.identificativo, "bimario");
