@@ -41,7 +41,9 @@ public abstract class UtenteConPrivilegi extends Persona {
         listaPermessi.add(permesso);
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws IllegalArgumentException {
+        if(password.contains(" "))
+            throw new IllegalArgumentException("La password non può avere spazi");
         this.password = password;
     }
 
