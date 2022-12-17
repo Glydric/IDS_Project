@@ -8,26 +8,23 @@ import it.unicam.ids.studenti.ll.model.Proprietario;
  * La classe che definisce il backoffice ed il relativo accesso, fornisce a questo proprietario tutti i permessi
  * sulla propria azienda
  */
-public class Backoffice {
-    public Proprietario proprietario;
-
+public class Backoffice extends Office {
     public Backoffice(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
     }
 
     public Backoffice(String identificatore, String password) {
-        proprietario = (Proprietario) Identificatore.getUtenteFrom(identificatore);
-        if (proprietario.getAzienda() == null)
-            throw new IllegalArgumentException("Non possedete alcuna azienda");
+        super(identificatore, password);
 
-        if (!proprietario.isPasswordValid(password))
-            throw new IllegalArgumentException("Login errato");
+        if (((Proprietario) super.utente).getAzienda() == null)
+            throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
     /**
      * @return il commerciante di cui si è proprietari
      */
+    @Override
     public Commerciante getCommerciante() {
-        return (Commerciante) proprietario.getAzienda();
+        return (Commerciante) ((Proprietario) super.utente).getAzienda();
     }
 }
