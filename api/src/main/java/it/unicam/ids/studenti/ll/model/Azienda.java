@@ -8,7 +8,7 @@ abstract class Azienda {
     public final String ragioneSociale;
     public final Set<Dipendente> mapDipendenti = new HashSet<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
-    public Persona proprietario;
+    private Proprietario proprietario;
     private String numeroTelefono;
     private String email;
 
@@ -16,7 +16,7 @@ abstract class Azienda {
     /**
      * @param ragioneSociale il nome dell'azienda
      */
-    public Azienda(String ragioneSociale) {
+    protected Azienda(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
     }
 
@@ -29,8 +29,16 @@ abstract class Azienda {
         setDate(dataIscrizione);
     }
 
-    public Azienda(String ragioneSociale, Persona proprietario) {
-        this(ragioneSociale);
+    public Azienda(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
+        this(ragioneSociale, dataIscrizione);
+        setProprietario(proprietario);
+    }
+
+    public void setProprietario(Proprietario proprietario) {
+        if (this.proprietario != null) {
+            this.proprietario.azienda = null;
+        }
+        proprietario.azienda = this;
         this.proprietario = proprietario;
     }
 
