@@ -38,6 +38,10 @@ public class Coalizione {
         mapClienti.put(cliente, new HashSet<>(getCommonPrograms()));
     }
 
+    /**
+     *
+     * @return i programmi in comune come classi
+     */
     public Set<Class<? extends ProgrammaFedelta>> getCommonProgramsType() {
         return getCommonPrograms()
                 .stream()
