@@ -7,7 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cliente extends Persona {
-    public int identificativoTessera; //String è meglio secondo me, perchè Integer è grande 10 cifre (2147483647) e serve per farci i calcoli.
+    public int identificativoTessera;
+    //String è meglio secondo me, perchè Integer è grande 10 cifre (2147483647) e serve per farci i calcoli.
+
     public Set<Coalizione> listaCommercianti = new HashSet<>();
     public boolean isFamily = false;
     private String numeroTelefono;
