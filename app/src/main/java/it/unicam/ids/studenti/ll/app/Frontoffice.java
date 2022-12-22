@@ -22,7 +22,6 @@ public class Frontoffice extends Office {
     }
 
     /**
-     *
      * @return il commerciante in cui si lavora
      */
     @Override
