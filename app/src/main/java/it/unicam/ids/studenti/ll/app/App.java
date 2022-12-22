@@ -4,7 +4,14 @@
 package it.unicam.ids.studenti.ll.app;
 
 
+import it.unicam.ids.studenti.ll.model.Cliente;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class App {
+    public Set<Cliente> clienti = new HashSet<>();
+
     public static void main(String[] args) {
         System.out.println("Hello World!!");
     }

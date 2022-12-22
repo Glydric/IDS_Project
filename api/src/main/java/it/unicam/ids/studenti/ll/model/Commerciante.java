@@ -8,7 +8,7 @@ public class Commerciante extends Azienda {
     private final Set<ProgrammaFedelta> listaProgrammi = new HashSet<>();
     private Coalizione gruppoAppartenza = new Coalizione(this);
 
-    public Commerciante(String ragioneSociale) {
+    protected Commerciante(String ragioneSociale) {
         super(ragioneSociale);
     }
 
@@ -16,9 +16,14 @@ public class Commerciante extends Azienda {
         super(ragioneSociale, dataIscrizione);
     }
 
+    public Commerciante(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
+        super(ragioneSociale, dataIscrizione, proprietario);
+    }
+
     protected List<ProgrammaFedelta> getListaProgrammi() {
         return getProgressi().stream().toList();
     }
+
     public Set<ProgrammaFedelta> getProgressi() {
         return Collections.unmodifiableSet(listaProgrammi);
     }
@@ -29,10 +34,9 @@ public class Commerciante extends Azienda {
     public void addNewProgramma(ProgrammaFedelta programma) {
         // Se la classe è già presente
         if (listaProgrammi.stream().map(Object::getClass).toList().contains(programma.getClass()))
-            return;
+            throw new IllegalArgumentException("Programma già presente");
         listaProgrammi.add(programma.clone());
         gruppoAppartenza.addProgrammaForEachCliente(programma);
-        // TODO il programma aggiunto non deve avere lo stesso puntatore
     }
 
     /**
@@ -91,6 +95,7 @@ public class Commerciante extends Azienda {
     protected List<ProgrammaFedelta> getProgressAsList(Cliente cliente) {
         return getProgress(cliente).stream().toList();
     }
+
     public Set<ProgrammaFedelta> getProgress(Cliente cliente) {
         return gruppoAppartenza.getProgrammi(cliente);
     }

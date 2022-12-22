@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ProgrammaPunti implements UpdatableProgrammaFedelta {
     private int punti = 0;
-    public BiConsumer<ProgrammaPunti, Float> rule = (pf, value) -> pf.setPunti(value.intValue());
+    public BiConsumer<ProgrammaPunti, Float> rule = (programma, value) -> programma.setPunti(value.intValue());
 
     public ProgrammaPunti() {
     }
@@ -18,10 +18,14 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
         return this.punti;
     }
 
-    public void setPunti(int punti) {
+    protected void setPunti(int punti) {
         if (punti < 0)
             throw new IllegalArgumentException("Numero punti inseriti è inferiore a 0");
         this.punti = punti;
+    }
+
+    public void addPunti(int punti) {
+        setPunti(punti + this.punti);
     }
 
     @Override
@@ -59,4 +63,5 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
     public int hashCode() {
         return Objects.hash(getPunti());
     }
+
 }

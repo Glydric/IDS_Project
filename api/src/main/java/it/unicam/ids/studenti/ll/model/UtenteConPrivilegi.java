@@ -1,29 +1,49 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+//TODO rename to UtenteIdentificabile
 public abstract class UtenteConPrivilegi extends Persona {
-    private final Identificatore identificativo;
+    public final Identificatore identificativo = Identificatore.fromUtente(this);
+    public Set<Permesso> listaPermessi = new HashSet<>();
     private String password;
 
-    public UtenteConPrivilegi(String nome, String cognome, String identificativo, LocalDate dataNascita) {
-        super(nome, cognome, dataNascita);
-        this.identificativo = Identificatore.fromString(identificativo);
+    /**
+     * commodity method
+     *
+     * @param nome    il nome del dipendente
+     * @param cognome il cognome del dipendente
+     */
+    protected UtenteConPrivilegi(String nome, String cognome) {
+        super(nome, cognome);
     }
 
+    /**
+     * un costruttore che crea un utente con ID, in cui l'ID è formato da nome.cognome
+     *
+     * @param nome        il nome del dipendente
+     * @param cognome     il cognome del dipendente
+     * @param dataNascita la data di nascita
+     */
     public UtenteConPrivilegi(String nome, String cognome, LocalDate dataNascita) {
-        this(nome, cognome, nome + "." + cognome, dataNascita);
+        super(nome, cognome, dataNascita);
     }
 
-    public String getIdentificativo() {
-        return identificativo.toString();
+    public UtenteConPrivilegi(String nome, String cognome, LocalDate dataNascita, String identificativo) {
+        this(nome, cognome, dataNascita);
+        this.identificativo.updateIdentificativo(identificativo);
     }
 
-    public void setPassword(String password) {
-        if(password == ""){
-            throw new IllegalArgumentException("Password vuota!");
-        }
+    public void addPermesso(Permesso permesso) {
+        listaPermessi.add(permesso);
+    }
+
+    public void setPassword(String password) throws IllegalArgumentException {
+        if(password.contains(" "))
+            throw new IllegalArgumentException("La password non può avere spazi");
         if(password.length() < 8){
             throw new IllegalArgumentException("Password troppo corta, non e' sicura.");
         }

@@ -1,13 +1,19 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 abstract class Azienda {
     public final String ragioneSociale;
     public final Set<Dipendente> mapDipendenti = new HashSet<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
-    public Persona proprietario;
+    /**
+     * Il proprietario può essere null, benchè nel mondo reale non ha senso come elemento
+     * nel nostro modello il proprietario è si chi possiede l'azienda ma è soprattutto il suo admin
+     * ed il nostro interesse è proprio nel fatto che lui può controllare tutti gli aspetti dell'azienda senza limiti
+     */
+    protected Proprietario proprietario;
     private String numeroTelefono;
     private String email;
 
@@ -15,7 +21,7 @@ abstract class Azienda {
     /**
      * @param ragioneSociale il nome dell'azienda
      */
-    public Azienda(String ragioneSociale) {
+    protected Azienda(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
     }
 
@@ -28,9 +34,26 @@ abstract class Azienda {
         setDate(dataIscrizione);
     }
 
-    public Azienda(String ragioneSociale, Persona proprietario) {
-        this(ragioneSociale);
-        this.proprietario = proprietario;
+    public Azienda(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
+        this(ragioneSociale, dataIscrizione);
+        setProprietario(proprietario);
+    }
+
+    /**
+     * Rimuove quest'azienda dal vecchio proprietario e la aggiunge al nuovo.
+     * Il proprietario può essere nullo ma solo alla creazione e quando il proprietario viene licenziato,
+     * in questo metodo non ha senso impostare un proprietario come null, piuttosto definirlo come licenziato dal metodo
+     * apposito Proprietario.licenzia()
+     *
+     * @param newProprietario il nuovo proprietario da aggiungere a quest'azienda
+     */
+    public void setProprietario(Proprietario newProprietario) {
+        if (newProprietario == null) {
+            throw new IllegalArgumentException("L'azienda deve avere un proprietario, non sono accettati valori null");
+        }
+        this.proprietario.licenzia();
+        this.proprietario = newProprietario;
+        newProprietario.setAzienda(this);
     }
 
     /**
@@ -68,5 +91,6 @@ abstract class Azienda {
         if (mapDipendenti.contains(dipendente))
             throw new IllegalArgumentException("Il dipendente è già inserito");
         mapDipendenti.add(dipendente);
+        dipendente.lavoraIn = this;
     }
 }

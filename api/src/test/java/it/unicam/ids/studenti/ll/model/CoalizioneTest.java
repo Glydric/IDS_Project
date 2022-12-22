@@ -2,6 +2,8 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CoalizioneTest {
@@ -33,10 +35,27 @@ public class CoalizioneTest {
         assertEquals(3, c1.getCoalizione().getAllPrograms().size());
 
         // Il numero di programmi non cambia perchè il programma inserito ora è uguale ad uno già inserito
-        c1.addNewProgramma(pf1);
+        assertThrows(IllegalArgumentException.class, () -> c1.addNewProgramma(pf1));
 
 
         assertEquals(3, c1.getCoalizione().getAllPrograms().size());
+
+    }
+
+    @Test
+    void getCommonProgramsTypeTest() {
+        Commerciante c1 = new Commerciante("Unicredit");
+        Commerciante c2 = new Commerciante("Xbox");
+        c1.addNewProgramma(new ProgrammaPunti(10));
+        c1.addNewProgramma(new ProgrammaCashback());
+
+        c2.addNewProgramma(new ProgrammaPunti(10));
+
+        c1.mergeGroups(c2);
+        Set<Class<? extends ProgrammaFedelta>> programs = c1.getCoalizione().getCommonProgramsType();
+
+        assert (programs.size() == 1);
+        assert (programs.contains(ProgrammaPunti.class));
 
     }
 
@@ -163,8 +182,6 @@ public class CoalizioneTest {
 
         //I programmi scelti da due commercianti sono diversi (hanno classi diverse) quindi non sono in comune
         assertEquals(0, c1.getCoalizione().getCommonPrograms().size());
-        //TODO  complete
-
     }
 
 
