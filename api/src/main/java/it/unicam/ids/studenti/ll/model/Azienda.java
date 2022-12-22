@@ -1,6 +1,5 @@
 package it.unicam.ids.studenti.ll.model;
 
-import javax.validation.constraints.Email; //aggiunta librerie per la convalidazione dell'email
 import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -87,7 +86,7 @@ abstract class Azienda {
 
     public void setEmail(String email) {
         // todo fatto
-        Pattern emailx = Pattern.compile(".*@.*");
+        Pattern emailx = Pattern.compile("(.*\\S)@(.*\\S\\..*\\S)");
         Matcher controllore = emailx.matcher(email);
         if (!controllore.find()){
             throw new IllegalArgumentException("Email non valida");

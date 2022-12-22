@@ -5,19 +5,25 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AziendaTest {
     @Test
-    void testConnection() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> new Azienda("Unicum & CO.",LocalDate.of(2000,10,25))
-        );
-        Azienda azienda = new Azienda("Unicum & CO.",LocalDate.of(2000,10,25));
-        azienda.setEmail("antonio.gassner@gmail.com");
+    void setEmailTest() {
+        Azienda az = new Commerciante("Unicum & CO.");
+        for (String email : List.of("dasd@ ds", "sfd@ awd", "ssajk@. ds", "ssajk@ . ds", "@ksjf.ds"))
+            assertThrows(IllegalArgumentException.class, () -> az.setEmail(email));
+        az.setEmail("antonio.gassner@gmail.com");
+    }
+
+    @Test
+    void setNumeroTelefono() {
+        Azienda az = new Commerciante("Unicum & CO.");
+        assertThrows(IllegalArgumentException.class, () -> az.setNumeroTelefono(""));
+        assertThrows(IllegalArgumentException.class, () -> az.setNumeroTelefono("231"));
+        az.setNumeroTelefono("8493785092");
     }
 }
 
