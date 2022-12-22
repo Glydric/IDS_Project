@@ -3,7 +3,6 @@ package it.unicam.ids.studenti.ll.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 abstract class Azienda {
@@ -72,12 +71,10 @@ abstract class Azienda {
     }
 
     public void setNumeroTelefono(String numeroTelefono) {
-        // todo fatto
-        Pattern numTelx = Pattern.compile("[0-9]{10}");
-        Matcher controllore = numTelx.matcher(numeroTelefono);
-        if (!controllore.find()) {
+        String text = "[0-9]{10}";
+        if (!Pattern.compile(text).matcher(numeroTelefono).find())
             throw new IllegalArgumentException("Numero non valida.");
-        }
+
         this.numeroTelefono = numeroTelefono;
     }
 
@@ -86,12 +83,10 @@ abstract class Azienda {
     }
 
     public void setEmail(String email) {
-        // todo fatto
-        Pattern emailx = Pattern.compile("(.*\\S)@(.*\\S\\..*\\S)");
-        Matcher controllore = emailx.matcher(email);
-        if (!controllore.find()) {
+        String text = "(.*\\S)@(.*\\S\\..*\\S)";
+        if (!Pattern.compile(text).matcher(email).find())
             throw new IllegalArgumentException("Email non valida");
-        }
+
         this.email = email;
     }
 
