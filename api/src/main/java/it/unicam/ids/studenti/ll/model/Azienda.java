@@ -1,7 +1,8 @@
 package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,7 +75,7 @@ abstract class Azienda {
         // todo fatto
         Pattern numTelx = Pattern.compile("[0-9]{10}");
         Matcher controllore = numTelx.matcher(numeroTelefono);
-        if (!controllore.find()){
+        if (!controllore.find()) {
             throw new IllegalArgumentException("Numero non valida.");
         }
         this.numeroTelefono = numeroTelefono;
@@ -88,7 +89,7 @@ abstract class Azienda {
         // todo fatto
         Pattern emailx = Pattern.compile("(.*\\S)@(.*\\S\\..*\\S)");
         Matcher controllore = emailx.matcher(email);
-        if (!controllore.find()){
+        if (!controllore.find()) {
             throw new IllegalArgumentException("Email non valida");
         }
         this.email = email;
