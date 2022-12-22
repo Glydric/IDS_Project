@@ -54,7 +54,7 @@ public abstract class UtenteConPrivilegi extends Persona {
      * @param password la password da controllare
      */
     public boolean isPasswordValid(String password) {
-        // TODO - test Dipendente.isPasswordValid
+        // TODO - fatto :)
         return Objects.equals(password, this.password);
 //        throw new UnsupportedOperationException(); ????????????
 

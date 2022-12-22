@@ -1,8 +1,10 @@
 package it.unicam.ids.studenti.ll.model;
 
+import javax.validation.constraints.Email; //aggiunta librerie per la convalidazione dell'email
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 abstract class Azienda {
     public final String ragioneSociale;
@@ -70,11 +72,12 @@ abstract class Azienda {
     }
 
     public void setNumeroTelefono(String numeroTelefono) {
-        // todo controllo del numero
-// Possiamo fare una regex che accetta solo numeri, spazi, e i segni +- perchè
-// potresti utilizzare il trattino per separare il numero, e il + serve per il prefisso.
-        // inoltre non possiamo avere la certezza che il numero è corretto se non facciamo sms validation
-
+        // todo fatto
+        Pattern numTelx = Pattern.compile("[0-9]{10}");
+        Matcher controllore = numTelx.matcher(numeroTelefono);
+        if (!controllore.find()){
+            throw new IllegalArgumentException("Numero non valida.");
+        }
         this.numeroTelefono = numeroTelefono;
     }
 
@@ -83,7 +86,12 @@ abstract class Azienda {
     }
 
     public void setEmail(String email) {
-        // todo controllo del email
+        // todo fatto
+        Pattern emailx = Pattern.compile(".*@.*");
+        Matcher controllore = emailx.matcher(email);
+        if (!controllore.find()){
+            throw new IllegalArgumentException("Email non valida");
+        }
         this.email = email;
     }
 
