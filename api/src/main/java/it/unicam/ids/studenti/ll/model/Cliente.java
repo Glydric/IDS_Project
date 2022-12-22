@@ -16,7 +16,7 @@ public class Cliente extends Persona {
      * Un costruttore di test
      */
     protected Cliente(String nome, String cognome) {
-        super(nome, cognome, LocalDate.now());
+        super(nome, cognome);
         identificativoTessera = 0;
     }
 
