@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class FrontofficeTest {
+public class FrontOfficeTest {
     @Test
     void loginProprietarioTest() {
         Dipendente d = new Dipendente(
@@ -21,9 +21,9 @@ public class FrontofficeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Frontoffice(d.identificativo, "wrongPassword")
+                () -> new FrontOffice(d.identificativo, "wrongPassword")
         );
-        new Frontoffice(d.identificativo, "bimario");
+        new FrontOffice(d.identificativo, "bimario");
 
     }
 }

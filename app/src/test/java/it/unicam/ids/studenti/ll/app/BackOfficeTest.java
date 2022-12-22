@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class BackofficeTest {
+public class BackOfficeTest {
     @Test
     void loginProprietarioTest() {
 
@@ -19,8 +19,8 @@ public class BackofficeTest {
                 new Commerciante("xbox", LocalDate.MIN));
         p.setPassword("bimario");
 
-        assertThrows(IllegalArgumentException.class, () -> new Backoffice(p.identificativo, "wrongPassword"));
-        Backoffice b = new Backoffice(p.identificativo, "bimario");
+        assertThrows(IllegalArgumentException.class, () -> new BackOffice(p.identificativo, "wrongPassword"));
+        new BackOffice(p.identificativo, "bimario");
 
     }
 }

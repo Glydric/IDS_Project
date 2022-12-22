@@ -8,13 +8,13 @@ import it.unicam.ids.studenti.ll.model.Identificatore;
  * La classe che definisce il frontoffice ed il relativo accesso di un dipendente, fornisce a questo dipendente i permessi
  * concordati con il proprietario sulla relativa azienda
  */
-public class Frontoffice extends Office {
+public class FrontOffice extends Office {
 
-    Frontoffice(Identificatore identificatore, String password) {
+    FrontOffice(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
     }
 
-    Frontoffice(String identificatore, String password) {
+    FrontOffice(String identificatore, String password) {
         super(identificatore, password);
 
         if (((Dipendente) super.utente).getAzienda() == null)

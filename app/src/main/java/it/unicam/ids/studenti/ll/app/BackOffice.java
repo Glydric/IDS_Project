@@ -8,12 +8,12 @@ import it.unicam.ids.studenti.ll.model.Proprietario;
  * La classe che definisce il backoffice ed il relativo accesso, fornisce a questo proprietario tutti i permessi
  * sulla propria azienda
  */
-public class Backoffice extends Office {
-    public Backoffice(Identificatore identificatore, String password) {
+public class BackOffice extends Office {
+    public BackOffice(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
     }
 
-    public Backoffice(String identificatore, String password) {
+    public BackOffice(String identificatore, String password) {
         super(identificatore, password);
 
         if (((Proprietario) super.utente).getAzienda() == null)
