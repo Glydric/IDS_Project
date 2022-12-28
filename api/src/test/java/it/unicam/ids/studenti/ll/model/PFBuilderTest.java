@@ -27,6 +27,13 @@ public class PFBuilderTest {
 
     @Test
     void BuildReferral() {
-        assertThrows(IllegalArgumentException.class, () -> PFBuilder.buildProgramma("Referral"));
+        assertThrows(IllegalArgumentException.class, () -> PFBuilder.buildProgramma("referral"));
+        PFBuilder.setReferralFunction(() -> System.out.println("Referral function"));
+        assert ProgrammaReferral.class == PFBuilder.buildProgramma("referral").getClass();
+    }
+
+    @Test
+    void BuildError() {
+        assertThrows(IllegalArgumentException.class, () -> PFBuilder.buildProgramma("qualcosa"));
     }
 }
