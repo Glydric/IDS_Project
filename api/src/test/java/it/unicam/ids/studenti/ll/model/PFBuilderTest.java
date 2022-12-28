@@ -2,39 +2,37 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PFBuilderTest {
     @Test
     void BuildCashback() {
-        assertSame(ProgrammaCashback.class, ProgrammaFedelta.create("Cashback").getClass());
+        assertInstanceOf(ProgrammaCashback.class, ProgrammaFedelta.create("Cashback"));
     }
 
     @Test
     void BuildLivelli() {
-        assertSame(ProgrammaLivelli.class, ProgrammaFedelta.create("Livelli").getClass());
+        assertInstanceOf(ProgrammaLivelli.class, ProgrammaFedelta.create("Livelli"));
     }
 
     @Test
     void BuildPunti() {
-        assertSame(ProgrammaPunti.class, ProgrammaFedelta.create("Punti").getClass());
+        assertInstanceOf(ProgrammaPunti.class, ProgrammaFedelta.create("Punti"));
     }
 
     @Test
     void BuildVIP() {
-        assertSame(ProgrammaVIP.class, ProgrammaFedelta.create("VIP").getClass());
+        assertInstanceOf(ProgrammaVIP.class, ProgrammaFedelta.create("VIP"));
     }
 
     @Test
     void BuildReferral() {
         assertThrows(IllegalArgumentException.class, () -> ProgrammaFedelta.create("referral"));
-        assertSame(ProgrammaFedelta
+        assertInstanceOf(ProgrammaReferral.class, ProgrammaFedelta
                 .create()
                 .setReferralFunction(() -> System.out.println("Referral function"))
                 .setType("referral")
-                .build()
-                .getClass(), ProgrammaReferral.class);
+                .build());
     }
 
     @Test

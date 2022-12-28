@@ -51,12 +51,12 @@ public class CommercianteTest {
         pf.setPunti(5); // modifichiamo i punti cosi da assicurarci che l'oggetto sia diverso durante i prossimi controlli
 
         // la classe deve essere uguale
-        assertEquals(commerciante.getProgressAsList(c1).get(0).getClass(), ProgrammaPunti.class);
+        assertInstanceOf(ProgrammaPunti.class,commerciante.getProgressAsList(c1).get(0));
         // ma l'oggetto deve essere diverso
         assertNotEquals(commerciante.getProgressAsList(c1).get(0), pf);
 
         // la classe deve essere uguale
-        assertEquals(commerciante.getProgressAsList(c2).get(0).getClass(), ProgrammaPunti.class);
+        assertInstanceOf(ProgrammaPunti.class,commerciante.getProgressAsList(c2).get(0));
         // ma l'oggetto deve essere diverso
         assertNotEquals(commerciante.getProgressAsList(c2).get(0), pf);
 
