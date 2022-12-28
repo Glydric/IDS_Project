@@ -13,7 +13,9 @@ public class ProgrammaReferral implements ProgrammaFedelta {
      *
      * @param function la 'funzione'
      */
-    public ProgrammaReferral(Runnable function) {
+    public ProgrammaReferral(Runnable function) throws IllegalArgumentException{
+        if(function==null)
+            throw new IllegalArgumentException("Function can't be null");
         this.function = function;
     }
 
