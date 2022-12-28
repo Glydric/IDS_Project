@@ -2,38 +2,43 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PFBuilderTest {
     @Test
     void BuildCashback() {
-        assert ProgrammaCashback.class == PFBuilder.buildProgramma("Cashback").getClass();
+        assertSame(ProgrammaCashback.class, ProgrammaFedelta.create("Cashback").getClass());
     }
 
     @Test
     void BuildLivelli() {
-        assert ProgrammaLivelli.class == PFBuilder.buildProgramma("Livelli").getClass();
+        assertSame(ProgrammaLivelli.class, ProgrammaFedelta.create("Livelli").getClass());
     }
 
     @Test
     void BuildPunti() {
-        assert ProgrammaPunti.class == PFBuilder.buildProgramma("Punti").getClass();
+        assertSame(ProgrammaPunti.class, ProgrammaFedelta.create("Punti").getClass());
     }
 
     @Test
     void BuildVIP() {
-        assert ProgrammaVIP.class == PFBuilder.buildProgramma("VIP").getClass();
+        assertSame(ProgrammaVIP.class, ProgrammaFedelta.create("VIP").getClass());
     }
 
     @Test
     void BuildReferral() {
-        assertThrows(IllegalArgumentException.class, () -> PFBuilder.buildProgramma("referral"));
-        PFBuilder.setReferralFunction(() -> System.out.println("Referral function"));
-        assert ProgrammaReferral.class == PFBuilder.buildProgramma("referral").getClass();
+        assertThrows(IllegalArgumentException.class, () -> ProgrammaFedelta.create("referral"));
+        assertSame(ProgrammaFedelta
+                .create()
+                .setReferralFunction(() -> System.out.println("Referral function"))
+                .setType("referral")
+                .build()
+                .getClass(), ProgrammaReferral.class);
     }
 
     @Test
     void BuildError() {
-        assertThrows(IllegalArgumentException.class, () -> PFBuilder.buildProgramma("qualcosa"));
+        assertThrows(IllegalArgumentException.class, () -> ProgrammaFedelta.create("qualcosa"));
     }
 }

@@ -12,7 +12,7 @@ public class CoalizioneTest {
         Commerciante c1 = new Commerciante("Rolex");
         Commerciante c2 = new Commerciante("Fendy");
 
-        ProgrammaLivelli pf1 = (ProgrammaLivelli) PFBuilder.buildProgramma("Livelli");
+        ProgrammaLivelli pf1 = (ProgrammaLivelli) ProgrammaFedelta.create("Livelli");
         ProgrammaVIP pf2 = new ProgrammaVIP();
 
         c1.addNewProgramma(pf1);
