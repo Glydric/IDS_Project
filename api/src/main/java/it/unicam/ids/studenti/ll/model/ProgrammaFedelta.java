@@ -58,7 +58,11 @@ public interface ProgrammaFedelta extends Cloneable {
             return this;
         }
 
-
+        /**
+         * This method is used only with construction of ProgrammaReferral
+         * @param function, the function to pass to ProgrammaReferral on Build
+         * @return this object
+         */
         public Builder setReferralFunction(Runnable function) {
             Builder.function = function;
             return this;
