@@ -7,7 +7,7 @@ import it.unicam.ids.studenti.ll.model.UtenteConPrivilegi;
 abstract class Office {
     public UtenteConPrivilegi utente;
 
-    Office(Identificatore identificatore, String password){
+    Office(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
     }
 
@@ -17,8 +17,9 @@ abstract class Office {
         if (!utente.isPasswordValid(password))
             throw new IllegalArgumentException("Login errato");
     }
+
     /**
      * @return il relativo commerciante
      */
-     abstract Commerciante getCommerciante();
+    abstract Commerciante getCommerciante();
 }

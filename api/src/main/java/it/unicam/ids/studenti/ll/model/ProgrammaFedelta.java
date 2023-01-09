@@ -53,6 +53,17 @@ public interface ProgrammaFedelta extends Cloneable {
             };
         }
 
+        // TODO controllare la necessità di usare elementi statici,
+        //  questi possono creare problemi nel momento in cui creiamo elementi successivi,
+        //  inoltre questo rende vano il return,
+        //  usare lo static è errato
+
+        /**
+         * Consente di impostare il tipo degli elementi da creare
+         *
+         * @param type, il tipo come stringa
+         * @return questo builder
+         */
         public Builder setType(String type) {
             Builder.type = type;
             return this;
@@ -60,6 +71,7 @@ public interface ProgrammaFedelta extends Cloneable {
 
         /**
          * This method is used only with construction of ProgrammaReferral
+         *
          * @param function, the function to pass to ProgrammaReferral on Build
          * @return this object
          */
