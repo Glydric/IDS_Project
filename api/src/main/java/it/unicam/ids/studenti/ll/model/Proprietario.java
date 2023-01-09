@@ -2,7 +2,7 @@ package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
 
-public class Proprietario extends UtenteConPrivilegi {
+public class Proprietario extends UtenteIdentificabile {
     private Azienda azienda;
 
     /**

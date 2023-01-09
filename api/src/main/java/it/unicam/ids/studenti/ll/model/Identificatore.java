@@ -4,20 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Identificatore {
-    private static final Map<String, UtenteConPrivilegi> listaID = new HashMap<>();
+    private static final Map<String, UtenteIdentificabile> listaID = new HashMap<>();
     private String identificativo;
 
-    private Identificatore(UtenteConPrivilegi utente) {
+    private Identificatore(UtenteIdentificabile utente) {
         String id = (utente.nome + '.' + utente.cognome).toLowerCase();
         setIdentificativo(id);
         listaID.put(id, utente);
     }
 
-    public static Identificatore fromUtente(UtenteConPrivilegi utente) {
+    public static Identificatore fromUtente(UtenteIdentificabile utente) {
         return new Identificatore(utente);
     }
 
-    public static UtenteConPrivilegi getUtenteFrom(String identificativo) {
+    public static UtenteIdentificabile getUtenteFrom(String identificativo) {
         return listaID.get(identificativo);
     }
 

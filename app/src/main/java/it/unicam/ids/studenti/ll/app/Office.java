@@ -2,10 +2,10 @@ package it.unicam.ids.studenti.ll.app;
 
 import it.unicam.ids.studenti.ll.model.Commerciante;
 import it.unicam.ids.studenti.ll.model.Identificatore;
-import it.unicam.ids.studenti.ll.model.UtenteConPrivilegi;
+import it.unicam.ids.studenti.ll.model.UtenteIdentificabile;
 
 abstract class Office {
-    public UtenteConPrivilegi utente;
+    public UtenteIdentificabile utente;
 
     Office(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
