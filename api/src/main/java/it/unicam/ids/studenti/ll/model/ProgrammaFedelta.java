@@ -33,8 +33,8 @@ public interface ProgrammaFedelta extends Cloneable {
     BiConsumer<ProgrammaFedelta, ProgrammaFedelta> getDefaultConsumer();
 
     class Builder {
-        private static Runnable function;
-        private static String type;
+        private Runnable function;
+        private String type;
 
         private Builder() {
         }
@@ -53,11 +53,6 @@ public interface ProgrammaFedelta extends Cloneable {
             };
         }
 
-        // TODO controllare la necessità di usare elementi statici,
-        //  questi possono creare problemi nel momento in cui creiamo elementi successivi,
-        //  inoltre questo rende vano il return,
-        //  usare lo static è errato
-
         /**
          * Consente di impostare il tipo degli elementi da creare
          *
@@ -65,7 +60,7 @@ public interface ProgrammaFedelta extends Cloneable {
          * @return questo builder
          */
         public Builder setType(String type) {
-            Builder.type = type;
+            this.type = type;
             return this;
         }
 
@@ -76,7 +71,7 @@ public interface ProgrammaFedelta extends Cloneable {
          * @return this object
          */
         public Builder setReferralFunction(Runnable function) {
-            Builder.function = function;
+            this.function = function;
             return this;
         }
     }
