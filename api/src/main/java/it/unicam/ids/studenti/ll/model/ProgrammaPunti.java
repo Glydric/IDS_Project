@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ProgrammaPunti implements UpdatableProgrammaFedelta {
     private int punti = 0;
-    public BiConsumer<ProgrammaPunti, Float> rule = (programma, value) -> programma.setPunti(value.intValue());
+    public BiConsumer<ProgrammaPunti, Float> rule = DefaultRule.programmaPunti;
 
     public ProgrammaPunti() {
     }

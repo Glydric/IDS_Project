@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ProgrammaLivelli implements UpdatableProgrammaFedelta {
     private short livello = 0;
-    public BiConsumer<ProgrammaLivelli, Float> rule = (programma, value) -> programma.increaseLivello((short) 1);
+    public BiConsumer<ProgrammaLivelli, Float> rule = DefaultRule.programmaLivelli;
 
     public ProgrammaLivelli() {
     }
