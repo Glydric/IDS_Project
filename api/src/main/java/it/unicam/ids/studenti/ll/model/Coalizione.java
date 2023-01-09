@@ -93,6 +93,29 @@ public class Coalizione {
         return mapClienti.get(cliente);
     }
 
+
+    /**
+     * Ottiene i clienti dalla propria coalizione
+     *
+     * @param message il messaggio
+     */
+    public void sendMessageToAll(String message) {
+        SingletonSMS.getEntity().inviaMessaggio(
+                getClienti(),
+                message
+        );
+    }
+
+    /**
+     *
+     * @param cliente il cliente della coalizione a cui inviare il messaggio
+     * @param message il messaggio
+     */
+    public void sendMessage(Cliente cliente, String message) {
+        if (mapClienti.containsKey(cliente))
+            SingletonSMS.getEntity().inviaMessaggio(cliente, message);
+    }
+
     /**
      * Esegue il merge delle informazioni per ogni utente,
      * aggiungendo le informazioni contenute nella coalizione fornita in questa
