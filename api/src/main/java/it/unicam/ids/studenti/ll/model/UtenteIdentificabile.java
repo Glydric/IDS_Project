@@ -53,9 +53,6 @@ public abstract class UtenteIdentificabile extends Persona {
      * @param password la password da controllare
      */
     public boolean isPasswordValid(String password) {
-        // TODO - fatto :)
         return Objects.equals(password, this.password);
-//        throw new UnsupportedOperationException(); ????????????
-
     }
 }
