@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ProgrammaCashback implements UpdatableProgrammaFedelta {
     private float cashback = 0;
-    public BiConsumer<ProgrammaCashback, Float> rule = ProgrammaCashback::addCashback;
+    public BiConsumer<ProgrammaCashback, Float> rule = DefaultRule.programmaCashback;
 
     public ProgrammaCashback() {
     }

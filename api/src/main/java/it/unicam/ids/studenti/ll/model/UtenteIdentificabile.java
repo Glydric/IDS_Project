@@ -5,8 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-//TODO rename to UtenteIdentificabile
-public abstract class UtenteConPrivilegi extends Persona {
+public abstract class UtenteIdentificabile extends Persona {
     public final Identificatore identificativo = Identificatore.fromUtente(this);
     public Set<Permesso> listaPermessi = new HashSet<>();
     private String password;
@@ -17,7 +16,7 @@ public abstract class UtenteConPrivilegi extends Persona {
      * @param nome    il nome del dipendente
      * @param cognome il cognome del dipendente
      */
-    protected UtenteConPrivilegi(String nome, String cognome) {
+    protected UtenteIdentificabile(String nome, String cognome) {
         super(nome, cognome);
     }
 
@@ -28,11 +27,11 @@ public abstract class UtenteConPrivilegi extends Persona {
      * @param cognome     il cognome del dipendente
      * @param dataNascita la data di nascita
      */
-    public UtenteConPrivilegi(String nome, String cognome, LocalDate dataNascita) {
+    public UtenteIdentificabile(String nome, String cognome, LocalDate dataNascita) {
         super(nome, cognome, dataNascita);
     }
 
-    public UtenteConPrivilegi(String nome, String cognome, LocalDate dataNascita, String identificativo) {
+    public UtenteIdentificabile(String nome, String cognome, LocalDate dataNascita, String identificativo) {
         this(nome, cognome, dataNascita);
         this.identificativo.updateIdentificativo(identificativo);
     }
@@ -54,9 +53,6 @@ public abstract class UtenteConPrivilegi extends Persona {
      * @param password la password da controllare
      */
     public boolean isPasswordValid(String password) {
-        // TODO - fatto :)
         return Objects.equals(password, this.password);
-//        throw new UnsupportedOperationException(); ????????????
-
     }
 }

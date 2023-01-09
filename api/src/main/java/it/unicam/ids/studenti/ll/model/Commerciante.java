@@ -3,9 +3,11 @@ package it.unicam.ids.studenti.ll.model;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.regex.Pattern;
 
 public class Commerciante extends Azienda {
     private final Set<ProgrammaFedelta> listaProgrammi = new HashSet<>();
+    private String linkEsterno;
     private Coalizione gruppoAppartenza = new Coalizione(this);
 
     protected Commerciante(String ragioneSociale) {
@@ -106,5 +108,24 @@ public class Commerciante extends Azienda {
                 .map(Object::getClass)
                 .toList()
                 .contains(pf.getClass());
+    }
+
+    public String getLinkEsterno() {
+        return linkEsterno;
+    }
+
+    /**
+     * La possibilità di aggiungere un link esterno per il negozio (ex. Google my business)
+     *
+     * @param link da inserire
+     */
+    public void setLinkEsterno(String link) {
+        if (!Pattern
+                .compile("(https?://)(w{3}\\.)?([^(w{3})]\\w*\\.\\w*[^.\\s])")
+                .matcher(link)
+                .find())
+            throw new IllegalArgumentException("Link " + link + "non valido");
+
+        this.linkEsterno = link;
     }
 }

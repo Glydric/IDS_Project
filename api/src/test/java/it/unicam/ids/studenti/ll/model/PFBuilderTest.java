@@ -2,31 +2,41 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PFBuilderTest {
     @Test
     void BuildCashback() {
-        assert ProgrammaCashback.class == PFBuilder.buildProgramma("Cashback").getClass();
+        assertInstanceOf(ProgrammaCashback.class, ProgrammaFedelta.create("Cashback"));
     }
 
     @Test
     void BuildLivelli() {
-        assert ProgrammaLivelli.class == PFBuilder.buildProgramma("Livelli").getClass();
+        assertInstanceOf(ProgrammaLivelli.class, ProgrammaFedelta.create("Livelli"));
     }
 
     @Test
     void BuildPunti() {
-        assert ProgrammaPunti.class == PFBuilder.buildProgramma("Punti").getClass();
+        assertInstanceOf(ProgrammaPunti.class, ProgrammaFedelta.create("Punti"));
     }
 
     @Test
     void BuildVIP() {
-        assert ProgrammaVIP.class == PFBuilder.buildProgramma("VIP").getClass();
+        assertInstanceOf(ProgrammaVIP.class, ProgrammaFedelta.create("VIP"));
     }
 
     @Test
     void BuildReferral() {
-        assertThrows(IllegalArgumentException.class, () -> PFBuilder.buildProgramma("Referral"));
+        assertThrows(IllegalArgumentException.class, () -> ProgrammaFedelta.create("referral"));
+        assertInstanceOf(ProgrammaReferral.class, ProgrammaFedelta
+                .create()
+                .setReferralFunction(() -> System.out.println("Referral function"))
+                .setType("referral")
+                .build());
+    }
+
+    @Test
+    void BuildError() {
+        assertThrows(IllegalArgumentException.class, () -> ProgrammaFedelta.create("qualcosa"));
     }
 }

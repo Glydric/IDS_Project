@@ -2,7 +2,7 @@ package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
 
-public class Dipendente extends UtenteConPrivilegi {
+public class Dipendente extends UtenteIdentificabile {
     protected Azienda lavoraIn;
 
     /**

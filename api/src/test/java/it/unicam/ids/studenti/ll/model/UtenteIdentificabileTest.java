@@ -2,11 +2,9 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class UtenteConPrivilegiTest {
+public class UtenteIdentificabileTest {
     @Test
     public void passwordTest(){
         Dipendente tizio = new Dipendente("Nomex","Cognomex");
