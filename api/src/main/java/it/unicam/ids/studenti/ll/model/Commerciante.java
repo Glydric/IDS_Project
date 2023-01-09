@@ -117,7 +117,7 @@ public class Commerciante extends Azienda {
     /**
      * La possibilità di aggiungere un link esterno per il negozio (ex. Google my business)
      *
-     * @param link
+     * @param link da inserire
      */
     public void setLinkEsterno(String link) {
         if (!Pattern
@@ -126,9 +126,6 @@ public class Commerciante extends Azienda {
                 .find())
             throw new IllegalArgumentException("Link " + link + "non valido");
 
-        //TODO controlla che il link sia valido
         this.linkEsterno = link;
     }
-
-
 }
