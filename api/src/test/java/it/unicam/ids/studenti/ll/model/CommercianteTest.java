@@ -2,6 +2,8 @@ package it.unicam.ids.studenti.ll.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CommercianteTest {
@@ -73,10 +75,10 @@ public class CommercianteTest {
     @Test
     void addDipendente() {
         Commerciante c = new Commerciante("Sony");
-        Dipendente d = new Dipendente("Gianny", "Manny");
+        Persona d = new Persona("Gianny", "Manny", LocalDate.of(2000, 10, 10));
 
         c.addDipendente(d);
-        assert (c.mapDipendenti.contains(d));
+        assert (c.mapDipendenti.size() == 1);
         assertThrows(IllegalArgumentException.class, () -> c.addDipendente(d));
     }
 
@@ -90,7 +92,7 @@ public class CommercianteTest {
             assertThrows(
                     IllegalArgumentException.class,
                     () -> c.setLinkEsterno(link),
-                    link+" not wrong"
+                    link + " not wrong"
             );
         }
     }

@@ -7,20 +7,17 @@ public class Dipendente extends UtenteIdentificabile {
 
     /**
      * Metodo di test
-     * @param nome nome
+     *
+     * @param nome    nome
      * @param cognome cognome
      */
     protected Dipendente(String nome, String cognome) {
         super(nome, cognome);
     }
 
-    public Dipendente(String nome, String cognome, LocalDate dataNascita, Azienda azienda) {
+    protected Dipendente(String nome, String cognome, LocalDate dataNascita, Azienda azienda) {
         super(nome, cognome, dataNascita);
         assumiIn(azienda);
-    }
-
-    public Dipendente(String nome, String cognome, LocalDate dataNascita, Azienda azienda, String identificativo) {
-        super(nome, cognome, dataNascita,identificativo);
     }
 
     public Azienda getAzienda() {
@@ -28,13 +25,11 @@ public class Dipendente extends UtenteIdentificabile {
     }
 
     /**
-     *
      * @param azienda non nulla
      */
-    public void assumiIn(Azienda azienda) {
+    private void assumiIn(Azienda azienda) {
         if (azienda == null)
-            throw new IllegalArgumentException("Un proprietario non può essere istaziato senza azienda, manca di ragione");
-        azienda.addDipendente(this);
+            throw new IllegalArgumentException("Un proprietario non può essere instaziato senza azienda, manca di ragione");
         this.lavoraIn = azienda;
     }
 }

@@ -2,7 +2,7 @@ package it.unicam.ids.studenti.ll.model;
 
 import java.time.LocalDate;
 
-class Persona {
+public class Persona {
     public String nome;
     public String cognome;
     private LocalDate dataNascita = LocalDate.now();

@@ -11,18 +11,6 @@ public abstract class UtenteIdentificabile extends Persona {
     private String password = "";
 
 
-    protected String getActualMethod(){
-        return getPreviousMethodOf(2);
-    }
-    protected String getPreviousMethodOf(int i) {
-        return new Throwable()
-                .getStackTrace()[i]
-                .getMethodName();
-    }
-    public Boolean haveAuthorization(){
-        return listaPermessi.contains(getPreviousMethodOf(2));
-    }
-
     /**
      * commodity method
      *
@@ -47,6 +35,18 @@ public abstract class UtenteIdentificabile extends Persona {
     public UtenteIdentificabile(String nome, String cognome, LocalDate dataNascita, String identificativo) {
         this(nome, cognome, dataNascita);
         this.identificativo.updateIdentificativo(identificativo);
+    }
+
+    protected String getPreviousMethodOf(int i) {
+        return new Throwable()
+                .getStackTrace()[i]
+                .getMethodName();
+    }
+
+    public Boolean haveAuthorization() {
+        return listaPermessi.contains(getPreviousMethodOf(2))
+                || listaPermessi.contains("ALL")
+                || listaPermessi.contains("all");
     }
 
     /**

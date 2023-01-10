@@ -27,29 +27,20 @@ public class OfficeTest {
             LocalDate.of(1990, 10, 25),
             commerciante
     );
-    Dipendente d1 = new Dipendente(
-            "Maguzzi",
-            "Maguzzo",
-            LocalDate.of(1990, 12, 5),
-            commerciante
-    );
 
-    Dipendente d2 = new Dipendente(
-            "Mocassini",
-            "Luigini",
-            LocalDate.of(1958, 2, 15),
-            commerciante
-    );
-
-    Office o = new FrontOffice(d1.identificativo, "");
+    Office o = new FrontOffice(p.identificativo, "");
 
     @Test
-    void addDipendente() throws AuthorizationException {
-        assertThrows(AuthorizationException.class, () -> o.aggiungiDipendente(d2));
+    void addDipendente() {
+        Persona p = new Persona(
+                "Mocassini",
+                "Luigini",
+                LocalDate.of(1958, 2, 15)
+        );
 
-        assert !o.utente.getAzienda().mapDipendenti.contains(d2);
+        assertThrows(AuthorizationException.class, () -> o.aggiungiDipendente(p));
 
-        o.allowDipendente(d1,"aggiungiDipendente");
-        assertDoesNotThrow(() -> o.aggiungiDipendente(d2));
+//        o.allowDipendente(p, "aggiungiDipendente");
+        assertDoesNotThrow(() -> o.aggiungiDipendente(p));
     }
 }

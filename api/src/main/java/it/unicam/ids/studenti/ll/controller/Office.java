@@ -1,9 +1,6 @@
 package it.unicam.ids.studenti.ll.controller;
 
-import it.unicam.ids.studenti.ll.model.AuthorizationException;
-import it.unicam.ids.studenti.ll.model.Dipendente;
-import it.unicam.ids.studenti.ll.model.Identificatore;
-import it.unicam.ids.studenti.ll.model.UtenteIdentificabile;
+import it.unicam.ids.studenti.ll.model.*;
 
 public abstract class Office {
 
@@ -23,15 +20,15 @@ public abstract class Office {
             throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
-    public void aggiungiDipendente(Dipendente dipendente) throws AuthorizationException {
-        if (!dipendente.haveAuthorization())
+    public void aggiungiDipendente(Persona persona) throws AuthorizationException {
+        if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
 
-        utente.getAzienda().addDipendente(dipendente);
+        utente.getAzienda().addDipendente(persona);
     }
 
     public void allowDipendente(Dipendente dipendente, String permesso) throws AuthorizationException {
-        if (!dipendente.haveAuthorization())
+        if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
 
         utente.getAzienda().addPermessoDipendente(dipendente, permesso);

@@ -90,19 +90,27 @@ public abstract class Azienda {
         this.email = email;
     }
 
-    public void addDipendente(Dipendente dipendente) {
-        if (dipendente == null)
+    public void addDipendente(Persona persona) {
+        if (persona == null)
             throw new IllegalArgumentException("Il dipendente non può essere nullo");
-        if (mapDipendenti.contains(dipendente))
+
+        Dipendente d = new Dipendente(
+                persona.nome,
+                persona.cognome,
+                persona.getDataNascita(),
+                this
+        );
+
+        if (mapDipendenti.contains(d))
             throw new IllegalArgumentException("Il dipendente è già inserito");
-        mapDipendenti.add(dipendente);
-        dipendente.lavoraIn = this;
+        mapDipendenti.add(d);
     }
 
     /**
      * consente di aggiungere un permesso ad un dipendente di questa azienda
+     *
      * @param dipendente il nostro dipendente
-     * @param permesso il permesso
+     * @param permesso   il permesso
      */
     public void addPermessoDipendente(Dipendente dipendente, String permesso) {
         if (mapDipendenti.contains(dipendente))
