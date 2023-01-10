@@ -9,35 +9,26 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OfficeTest {
-    Azienda azienda = new Commerciante("Sony",
-            LocalDate.of(1970, 2, 6)
-    );
+    Azienda azienda = new Commerciante("Sony", LocalDate.of(1970, 2, 6));
 
-    Proprietario proprietario = new Proprietario(
-            "Mariooo",
-            "Mazzolini",
-            LocalDate.of(1990, 10, 25),
-            azienda
-    );
+    Proprietario proprietario = new Proprietario("Mariooo", "Mazzolini", LocalDate.of(1990, 10, 25), azienda);
 
     @Test
-    void addDipendentePermissionTest() {
-
-        Persona persona = new Persona(
-                "Mocassini",
-                "Luigini",
-                LocalDate.of(1958, 2, 15)
-        );
+    void addDipendentePermissionTest() throws AuthorizationException {
+        Persona persona = new Persona("Mocassini", "Luigini", LocalDate.of(1958, 2, 15));
 
         azienda.addDipendente(persona);
-        Office o = new FrontOffice(
-                Identificatore.getUtenteFrom("Mocassini.Luigini").identificativo,
-                ""
-        );
+        Dipendente d = (Dipendente) Identificatore.getUtenteFrom("Mocassini.Luigini");
 
-        assertThrows(AuthorizationException.class, () -> o.aggiungiDipendente(persona));
+        Office front = new FrontOffice(d.identificativo, "");
+        Office back = new BackOffice(proprietario.identificativo, "");
 
-//        o.allowDipendente(p, "aggiungiDipendente");
-        assertDoesNotThrow(() -> o.aggiungiDipendente(persona));
+        Persona p2 = new Persona("Macciccio", "Luigone", LocalDate.of(1958, 2, 15));
+
+        assertThrows(AuthorizationException.class, () -> front.aggiungiDipendente(p2));
+
+        back.allowDipendente(d, "aggiungiDipendente");
+
+        assertDoesNotThrow(() -> front.aggiungiDipendente(p2));
     }
 }
