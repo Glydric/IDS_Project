@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app;
+package it.unicam.ids.studenti.ll.controller;
 
 import it.unicam.ids.studenti.ll.model.Commerciante;
 import it.unicam.ids.studenti.ll.model.Identificatore;
