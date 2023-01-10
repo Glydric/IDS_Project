@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-abstract class Azienda {
+public abstract class Azienda {
     public final String ragioneSociale;
     public final Set<Dipendente> mapDipendenti = new HashSet<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
@@ -91,6 +91,8 @@ abstract class Azienda {
     }
 
     public void addDipendente(Dipendente dipendente) {
+        if (dipendente == null)
+            throw new IllegalArgumentException("Il dipendente non può essere nullo");
         if (mapDipendenti.contains(dipendente))
             throw new IllegalArgumentException("Il dipendente è già inserito");
         mapDipendenti.add(dipendente);

@@ -14,7 +14,7 @@ public class FrontOfficeTest {
         Dipendente d = new Dipendente(
                 "Mario",
                 "Giulli",
-                LocalDate.of(2000,12,4),
+                LocalDate.of(2000, 12, 4),
                 new Commerciante("xbox", LocalDate.MIN));
 
         d.setPassword("bimariomaria");

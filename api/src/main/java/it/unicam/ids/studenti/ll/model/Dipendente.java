@@ -19,7 +19,7 @@ public class Dipendente extends UtenteIdentificabile {
         assumiIn(azienda);
     }
 
-    public Dipendente(String nome, String cognome, LocalDate dataNascita, String identificativo) {
+    public Dipendente(String nome, String cognome, LocalDate dataNascita, Azienda azienda, String identificativo) {
         super(nome, cognome, dataNascita,identificativo);
     }
 
