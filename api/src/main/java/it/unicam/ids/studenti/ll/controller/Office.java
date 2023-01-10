@@ -23,20 +23,17 @@ public abstract class Office {
             throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
+    public void aggiungiDipendente(Dipendente dipendente) throws AuthorizationException {
+        if (!dipendente.haveAuthorization())
+            throw new AuthorizationException("L'utente non ha i permessi");
 
-    private String getActualMethodName() {
-        return new Throwable()
-                .getStackTrace()[1]
-                .getMethodName();
+        utente.getAzienda().addDipendente(dipendente);
     }
 
-    public void aggiungiDipendente(Dipendente dipendente) throws AuthorizationException {
-
-        String nameofCurrMethod = getActualMethodName();
-        System.out.println(nameofCurrMethod);
-
-        if (!utente.listaPermessi.contains(getActualMethodName()))
+    public void allowDipendente(Dipendente dipendente, String permesso) throws AuthorizationException {
+        if (!dipendente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
-        utente.getAzienda().addDipendente(dipendente);
+
+        utente.getAzienda().addPermessoDipendente(dipendente, permesso);
     }
 }

@@ -15,6 +15,7 @@ public class Proprietario extends UtenteIdentificabile {
      */
     public Proprietario(String nome, String cognome, LocalDate dataNascita, Azienda azienda) {
         super(nome, cognome, dataNascita);
+        super.listaPermessi.add("ALL");
         setAzienda(azienda);
     }
 

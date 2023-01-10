@@ -98,4 +98,14 @@ public abstract class Azienda {
         mapDipendenti.add(dipendente);
         dipendente.lavoraIn = this;
     }
+
+    /**
+     * consente di aggiungere un permesso ad un dipendente di questa azienda
+     * @param dipendente il nostro dipendente
+     * @param permesso il permesso
+     */
+    public void addPermessoDipendente(Dipendente dipendente, String permesso) {
+        if (mapDipendenti.contains(dipendente))
+            dipendente.listaPermessi.add(permesso);
+    }
 }

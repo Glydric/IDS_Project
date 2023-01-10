@@ -7,8 +7,21 @@ import java.util.Set;
 
 public abstract class UtenteIdentificabile extends Persona {
     public final Identificatore identificativo = Identificatore.fromUtente(this);
-    public Set<Permesso> listaPermessi = new HashSet<>();
-    private String password;
+    protected final Set<String> listaPermessi = new HashSet<>();
+    private String password = "";
+
+
+    protected String getActualMethod(){
+        return getPreviousMethodOf(2);
+    }
+    protected String getPreviousMethodOf(int i) {
+        return new Throwable()
+                .getStackTrace()[i]
+                .getMethodName();
+    }
+    public Boolean haveAuthorization(){
+        return listaPermessi.contains(getPreviousMethodOf(2));
+    }
 
     /**
      * commodity method
@@ -36,14 +49,15 @@ public abstract class UtenteIdentificabile extends Persona {
         this.identificativo.updateIdentificativo(identificativo);
     }
 
-    public void addPermesso(Permesso permesso) {
-        listaPermessi.add(permesso);
-    }
+    /**
+     * @return l'azienda in cui questo utente può identificarsi
+     */
+    public abstract Azienda getAzienda();
 
     public void setPassword(String password) throws IllegalArgumentException {
-        if(password.contains(" "))
+        if (password.contains(" "))
             throw new IllegalArgumentException("La password non può avere spazi");
-        if(password.length() < 8){
+        if (password.length() < 8) {
             throw new IllegalArgumentException("Password troppo corta, non e' sicura.");
         }
         this.password = password;
