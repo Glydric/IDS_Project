@@ -4,7 +4,7 @@ import it.unicam.ids.studenti.ll.model.Commerciante;
 import it.unicam.ids.studenti.ll.model.Identificatore;
 import it.unicam.ids.studenti.ll.model.UtenteIdentificabile;
 
-abstract class Office {
+public abstract class Office {
     public UtenteIdentificabile utente;
 
     Office(Identificatore identificatore, String password) {
