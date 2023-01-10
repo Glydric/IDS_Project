@@ -18,7 +18,7 @@ public class Identificatore {
     }
 
     public static UtenteIdentificabile getUtenteFrom(String identificativo) {
-        return listaID.get(identificativo);
+        return listaID.get(identificativo.toLowerCase());
     }
 
     public static boolean isAvailable(String identificativo) {

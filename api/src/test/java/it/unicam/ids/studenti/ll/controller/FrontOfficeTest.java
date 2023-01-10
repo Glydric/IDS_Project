@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FrontOfficeTest {
     @Test
-    void loginProprietarioTest() {
+    void loginTest() {
         Commerciante c = new Commerciante("xbox", LocalDate.MIN);
         c.addDipendente(
                 new Persona(
@@ -30,4 +30,6 @@ public class FrontOfficeTest {
         );
         new FrontOffice(uid.identificativo, "bimariomaria");
     }
+
+
 }

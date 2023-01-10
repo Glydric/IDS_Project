@@ -9,38 +9,35 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OfficeTest {
-    Azienda commerciante = new Commerciante("Sony",
+    Azienda azienda = new Commerciante("Sony",
             LocalDate.of(1970, 2, 6)
     );
 
-    /*Dipendente d = Dipendente.Builder
-            .getInstance()
-            .addNome("Maguzzi")
-            .addCognome("Maguzzo")
-            .addDate(LocalDate.of(1990, 12, 5))
-            .addCommerciante(commerciante)
-            .build();*/
-
-    Proprietario p = new Proprietario(
+    Proprietario proprietario = new Proprietario(
             "Mariooo",
             "Mazzolini",
             LocalDate.of(1990, 10, 25),
-            commerciante
+            azienda
     );
 
-    Office o = new FrontOffice(p.identificativo, "");
-
     @Test
-    void addDipendente() {
-        Persona p = new Persona(
+    void addDipendentePermissionTest() {
+
+        Persona persona = new Persona(
                 "Mocassini",
                 "Luigini",
                 LocalDate.of(1958, 2, 15)
         );
 
-        assertThrows(AuthorizationException.class, () -> o.aggiungiDipendente(p));
+        azienda.addDipendente(persona);
+        Office o = new FrontOffice(
+                Identificatore.getUtenteFrom("Mocassini.Luigini").identificativo,
+                ""
+        );
+
+        assertThrows(AuthorizationException.class, () -> o.aggiungiDipendente(persona));
 
 //        o.allowDipendente(p, "aggiungiDipendente");
-        assertDoesNotThrow(() -> o.aggiungiDipendente(p));
+        assertDoesNotThrow(() -> o.aggiungiDipendente(persona));
     }
 }
