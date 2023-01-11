@@ -20,15 +20,15 @@ public class OfficeTest {
         azienda.addDipendente(persona);
         Dipendente d = (Dipendente) Identificatore.getUtenteFrom("Mocassini.Luigini");
 
-        Office front = new FrontOffice(d.identificativo, "");
-        Office back = new BackOffice(proprietario.identificativo, "");
+        Office frontOffice = new Office(d.identificativo, "");
+        Office backOffice = new Office(proprietario.identificativo, "");
 
         Persona p2 = new Persona("Macciccio", "Luigone", LocalDate.of(1958, 2, 15));
 
-        assertThrows(AuthorizationException.class, () -> front.aggiungiDipendente(p2));
+        assertThrows(AuthorizationException.class, () -> frontOffice.aggiungiDipendente(p2));
 
-        back.allowDipendente(d, "aggiungiDipendente");
+        backOffice.allowDipendente(d, "aggiungiDipendente");
 
-        assertDoesNotThrow(() -> front.aggiungiDipendente(p2));
+        assertDoesNotThrow(() -> frontOffice.aggiungiDipendente(p2));
     }
 }

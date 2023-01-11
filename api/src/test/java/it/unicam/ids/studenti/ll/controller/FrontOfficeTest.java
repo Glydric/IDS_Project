@@ -26,9 +26,9 @@ public class FrontOfficeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new FrontOffice(uid.identificativo, "wrongPassword")
+                () -> new Office(uid.identificativo, "wrongPassword")
         );
-        new FrontOffice(uid.identificativo, "bimariomaria");
+        new Office(uid.identificativo, "bimariomaria");
     }
 
 

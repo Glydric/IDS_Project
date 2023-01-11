@@ -2,8 +2,7 @@ package it.unicam.ids.studenti.ll.controller;
 
 import it.unicam.ids.studenti.ll.model.*;
 
-public abstract class Office {
-
+public class Office {
     public UtenteIdentificabile utente;
 
     protected Office(Identificatore identificatore, String password) {
