@@ -19,6 +19,7 @@ public class Proprietario extends UtenteIdentificabile {
         setAzienda(azienda);
     }
 
+    @Override
     public Azienda getAzienda() {
         return azienda;
     }

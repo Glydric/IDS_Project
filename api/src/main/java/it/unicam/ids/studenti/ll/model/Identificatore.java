@@ -25,10 +25,6 @@ public class Identificatore {
         return !listaID.containsKey(identificativo);
     }
 
-    public String getIdentificativo() {
-        return identificativo;
-    }
-
     private void setIdentificativo(String identificativo) {
         if (!isAvailable(identificativo))
             throw new IllegalArgumentException("Identificativo già presente nel sistema");
