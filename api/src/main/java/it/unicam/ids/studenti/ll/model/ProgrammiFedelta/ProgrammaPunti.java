@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -7,10 +7,10 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
     private int punti = 0;
     public BiConsumer<ProgrammaPunti, Float> rule = DefaultRule.programmaPunti;
 
-    public ProgrammaPunti() {
+    protected ProgrammaPunti() {
     }
 
-    public ProgrammaPunti(int punti) {
+    protected ProgrammaPunti(int punti) {
         setPunti(punti);
     }
 
@@ -18,7 +18,7 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
         return this.punti;
     }
 
-    protected void setPunti(int punti) {
+    public void setPunti(int punti) {
         if (punti < 0)
             throw new IllegalArgumentException("Numero punti inseriti è inferiore a 0");
         this.punti = punti;

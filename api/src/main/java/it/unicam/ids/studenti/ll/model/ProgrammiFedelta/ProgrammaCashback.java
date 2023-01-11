@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -7,10 +7,10 @@ public class ProgrammaCashback implements UpdatableProgrammaFedelta {
     private float cashback = 0;
     public BiConsumer<ProgrammaCashback, Float> rule = DefaultRule.programmaCashback;
 
-    public ProgrammaCashback() {
+    protected ProgrammaCashback() {
     }
 
-    public ProgrammaCashback(float initCashback) {
+    protected ProgrammaCashback(float initCashback) {
         cashback = initCashback;
     }
 

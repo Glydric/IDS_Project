@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -6,10 +6,10 @@ import java.util.function.BiConsumer;
 public class ProgrammaVIP implements ProgrammaFedelta {
     public boolean isVip = false;
 
-    ProgrammaVIP() {
+    protected ProgrammaVIP() {
     }
 
-    ProgrammaVIP(boolean isVip) {
+    protected ProgrammaVIP(boolean isVip) {
         this.isVip = isVip;
     }
 

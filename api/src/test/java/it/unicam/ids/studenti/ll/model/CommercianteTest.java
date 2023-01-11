@@ -1,5 +1,7 @@
 package it.unicam.ids.studenti.ll.model;
 
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.ProgrammaFedelta;
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.ProgrammaPunti;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -10,7 +12,7 @@ public class CommercianteTest {
     @Test
     void addProgramma() {
         Commerciante commerciante = new Commerciante("Xbox");
-        ProgrammaFedelta pf = new ProgrammaPunti();
+        ProgrammaFedelta pf = ProgrammaFedelta.create("punti");
 
         commerciante.addNewProgramma(pf);
 
@@ -37,7 +39,7 @@ public class CommercianteTest {
         Cliente c1 = new Cliente("Andrea", "Bianchi");
         commerciante.addCliente(c1);
 
-        ProgrammaPunti pf = new ProgrammaPunti(10);
+        ProgrammaPunti pf = (ProgrammaPunti) ProgrammaFedelta.create().setType("Programmapunti").buildWith(10);
         commerciante.addNewProgramma(pf);
 
         Cliente c2 = new Cliente("Luigi", "Bianchi");
@@ -89,11 +91,7 @@ public class CommercianteTest {
 
         String[] array = {"http://Ciaooooooo", "OK", " ", "https://www.ciao.", "https://www.ciao. ", "https://www.gatto"};
         for (String link : array) {
-            assertThrows(
-                    IllegalArgumentException.class,
-                    () -> c.setLinkEsterno(link),
-                    link + " not wrong"
-            );
+            assertThrows(IllegalArgumentException.class, () -> c.setLinkEsterno(link), link + " not wrong");
         }
     }
 }

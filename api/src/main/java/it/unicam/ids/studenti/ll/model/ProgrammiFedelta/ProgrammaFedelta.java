@@ -1,5 +1,6 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
+import java.io.Serializable;
 import java.util.function.BiConsumer;
 
 public interface ProgrammaFedelta extends Cloneable {
@@ -42,6 +43,20 @@ public interface ProgrammaFedelta extends Cloneable {
         /**
          * Si possono creare tutti i programmi, in programmaReferral si solleva un'eccezione se non inseriamo la function
          */
+        public <T extends Serializable> ProgrammaFedelta buildWith(T value) throws IllegalArgumentException {
+            return switch (type.toLowerCase()) {
+                case "programmapunti", "punti", "punto" -> new ProgrammaPunti((int) value);
+                case "programmalivelli", "livelli", "livello" -> new ProgrammaLivelli((short) value);
+                case "programmacashback", "cashback" -> new ProgrammaCashback((float) value);
+                case "programmavip", "vip" -> new ProgrammaVIP((boolean) value);
+                case "programmareferral", "referral" -> new ProgrammaReferral(function);
+                default -> throw new IllegalArgumentException("Programma sconosciuto o non impostato");
+            };
+        }
+
+        /**
+         * Si possono creare tutti i programmi, in programmaReferral si solleva un'eccezione se non inseriamo la function
+         */
         public ProgrammaFedelta build() throws IllegalArgumentException {
             return switch (type.toLowerCase()) {
                 case "programmapunti", "punti", "punto" -> new ProgrammaPunti();
@@ -74,5 +89,6 @@ public interface ProgrammaFedelta extends Cloneable {
             this.function = function;
             return this;
         }
+
     }
 }

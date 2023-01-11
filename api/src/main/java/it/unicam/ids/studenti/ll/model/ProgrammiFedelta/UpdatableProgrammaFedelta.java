@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.function.BiConsumer;
 

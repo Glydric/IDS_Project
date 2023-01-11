@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -7,10 +7,10 @@ public class ProgrammaLivelli implements UpdatableProgrammaFedelta {
     private short livello = 0;
     public BiConsumer<ProgrammaLivelli, Float> rule = DefaultRule.programmaLivelli;
 
-    public ProgrammaLivelli() {
+    protected ProgrammaLivelli() {
     }
 
-    public ProgrammaLivelli(short livello) {
+    protected ProgrammaLivelli(short livello) {
         setLivello(livello);
     }
 

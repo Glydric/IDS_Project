@@ -1,5 +1,7 @@
 package it.unicam.ids.studenti.ll.model;
 
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.ProgrammaFedelta;
+
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;

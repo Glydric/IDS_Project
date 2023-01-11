@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.model;
 
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -13,7 +14,7 @@ public class CoalizioneTest {
         Commerciante c2 = new Commerciante("Fendy");
 
         ProgrammaLivelli pf1 = (ProgrammaLivelli) ProgrammaFedelta.create("Livelli");
-        ProgrammaVIP pf2 = new ProgrammaVIP();
+        ProgrammaFedelta pf2 =ProgrammaFedelta.create("ProgrammaVIP");
 
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
@@ -46,10 +47,10 @@ public class CoalizioneTest {
     void getCommonProgramsTypeTest() {
         Commerciante c1 = new Commerciante("Unicredit");
         Commerciante c2 = new Commerciante("Xbox");
-        c1.addNewProgramma(new ProgrammaPunti(10));
-        c1.addNewProgramma(new ProgrammaCashback());
+        c1.addNewProgramma(ProgrammaFedelta.create().setType("ProgrammaPunti").buildWith(10));
+        c1.addNewProgramma(ProgrammaFedelta.create("ProgrammaCashback"));
 
-        c2.addNewProgramma(new ProgrammaPunti(10));
+        c2.addNewProgramma(ProgrammaFedelta.create().setType("ProgrammaPunti").buildWith(10));
 
         c1.mergeGroups(c2);
         Set<Class<? extends ProgrammaFedelta>> programs = c1.getCoalizione().getCommonProgramsType();
@@ -64,8 +65,8 @@ public class CoalizioneTest {
         Commerciante c1 = new Commerciante("Rolex");
         Commerciante c2 = new Commerciante("Fendy");
 
-        ProgrammaLivelli pf1 = new ProgrammaLivelli();
-        ProgrammaVIP pf2 = new ProgrammaVIP();
+        ProgrammaLivelli pf1 = (ProgrammaLivelli) ProgrammaFedelta.create("ProgrammaLivelli");
+        ProgrammaFedelta pf2 = ProgrammaFedelta.create("ProgrammaVIP");
 
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
@@ -101,7 +102,7 @@ public class CoalizioneTest {
     void addCliente() {
         Commerciante commerciante = new Commerciante("Xbox");
         Coalizione c = commerciante.getCoalizione();
-        ProgrammaFedelta pl = new ProgrammaVIP();
+        ProgrammaFedelta pl = ProgrammaFedelta.create("ProgrammaVIP");
 
         Cliente c1 = new Cliente("Mario", "Draghi");
 
@@ -128,13 +129,16 @@ public class CoalizioneTest {
         Cliente c1 = new Cliente("Mario", "Rossi");
         commerciante.addCliente(c1);
 
-        ProgrammaPunti punti = new ProgrammaPunti(5);
+        ProgrammaPunti punti = (ProgrammaPunti) ProgrammaFedelta
+                .create()
+                .setType("ProgrammaPunti")
+                .buildWith(5);
         commerciante.addNewProgramma(punti);
 
         Cliente c2 = new Cliente("Mario", "Bianchi");
         commerciante.addCliente(c2);
 
-        ProgrammaVIP vip = new ProgrammaVIP();
+        ProgrammaFedelta vip = ProgrammaFedelta.create("VIP");
         commerciante.addNewProgramma(vip);
 
         punti.setPunti(10);
@@ -158,8 +162,8 @@ public class CoalizioneTest {
         c1.addCliente(cl1);
         c2.addCliente(cl2);
 
-        ProgrammaFedelta pf1 = new ProgrammaPunti(10);
-        ProgrammaFedelta pf2 = new ProgrammaLivelli();
+        ProgrammaFedelta pf1 =ProgrammaFedelta.create().setType("punti").buildWith(10);
+        ProgrammaFedelta pf2 = ProgrammaFedelta.create("Programmalivelli");
 
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);

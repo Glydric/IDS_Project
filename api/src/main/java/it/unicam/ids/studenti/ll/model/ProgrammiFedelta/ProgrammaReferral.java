@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.model;
+package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.UUID;
 import java.util.function.BiConsumer;
@@ -13,7 +13,7 @@ public class ProgrammaReferral implements ProgrammaFedelta {
      *
      * @param function la 'funzione'
      */
-    public ProgrammaReferral(Runnable function) throws IllegalArgumentException{
+    protected ProgrammaReferral(Runnable function) throws IllegalArgumentException{
         if(function==null)
             throw new IllegalArgumentException("Function can't be null");
         this.function = function;
