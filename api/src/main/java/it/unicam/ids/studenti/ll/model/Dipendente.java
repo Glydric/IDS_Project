@@ -32,4 +32,11 @@ public class Dipendente extends UtenteIdentificabile {
             throw new IllegalArgumentException("Un proprietario non può essere instaziato senza azienda, manca di ragione");
         this.lavoraIn = azienda;
     }
+    //TODO implementare l'inserimento della vendita controllando se il cliente esiste nell'azienda
+    public void inserimentoVendita(Cliente cliente, float prezzo){
+        if(cliente == null)
+            throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
+        // TODO calcolare tramite programma fedeltà gli sconti
+
+    }
 }
