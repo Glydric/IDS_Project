@@ -1,7 +1,5 @@
-package it.unicam.ids.studenti.ll.controller;
+package it.unicam.ids.studenti.ll.model;
 
-import it.unicam.ids.studenti.ll.model.Commerciante;
-import it.unicam.ids.studenti.ll.model.Proprietario;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

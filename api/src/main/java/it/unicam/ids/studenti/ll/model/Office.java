@@ -1,7 +1,9 @@
-package it.unicam.ids.studenti.ll.controller;
+package it.unicam.ids.studenti.ll.model;
 
-import it.unicam.ids.studenti.ll.model.*;
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.ProgrammaFedelta;
 import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.UpdatableProgrammaFedelta;
+
+import java.util.Set;
 
 public class Office {
     public UtenteIdentificabile utente;
@@ -20,12 +22,6 @@ public class Office {
             throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
-    public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
-
-        ((Commerciante) utente.getAzienda()).addCliente(cliente);
-    }
 
     public void aggiungiDipendente(Persona persona) throws AuthorizationException {
         if (!utente.haveAuthorization())
@@ -41,6 +37,19 @@ public class Office {
         utente.getAzienda().addPermessoDipendente(dipendente, permesso);
     }
 
+    public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
+        if (!utente.haveAuthorization())
+            throw new AuthorizationException("L'utente non ha i permessi");
+
+        ((Commerciante) utente.getAzienda()).addCliente(cliente);
+    }
+
+    public Set<ProgrammaFedelta> getProgrammiFrom(Cliente cliente) throws AuthorizationException {
+        if (!utente.haveAuthorization())
+            throw new AuthorizationException("L'utente non ha i permessi");
+
+        return ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente);
+    }
     //TODO testare l'inserimento della vendita controllando se il cliente esiste nell'azienda
 
     public void inserimentoVendita(Cliente cliente, float prezzo) throws AuthorizationException {
@@ -50,12 +59,15 @@ public class Office {
             throw new IllegalArgumentException("Il prezzo è inferiore a zero.");
         if (cliente == null)
             throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
-        if (!((Commerciante)utente.getAzienda()).getClienti().contains(cliente))
+        if (!((Commerciante) utente.getAzienda()).getClienti().contains(cliente))
             throw new IllegalArgumentException("Cliente non esistente nell'azienda");
-        ((Commerciante)utente.getAzienda()).getCoalizione().getProgrammi(cliente).stream().filter(
-                (programmaFedelta)->(programmaFedelta instanceof UpdatableProgrammaFedelta)
-        )
-                .forEach((programmaFedelta)->((UpdatableProgrammaFedelta)programmaFedelta).aggiornaProgramma(prezzo)
+        ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente)
+                .stream()
+                .filter(
+                        (programmaFedelta) -> (programmaFedelta instanceof UpdatableProgrammaFedelta)
+                )
+                .forEach(
+                        (programmaFedelta) -> ((UpdatableProgrammaFedelta) programmaFedelta).aggiornaProgramma(prezzo)
                 );
     }
 }
