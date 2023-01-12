@@ -17,6 +17,6 @@ public interface UpdatableProgrammaFedelta extends ProgrammaFedelta {
     interface DefaultRule {
         BiConsumer<ProgrammaCashback, Float> programmaCashback = ProgrammaCashback::addCashback;
         BiConsumer<ProgrammaLivelli, Float> programmaLivelli = (programma, value) -> programma.increaseLivello((short) 1);
-        BiConsumer<ProgrammaPunti, Float> programmaPunti = (programma, value) -> programma.setPunti(value.intValue());
+        BiConsumer<ProgrammaPunti, Float> programmaPunti = (programma, value) -> programma.addPunti(value.intValue());
     }
 }
