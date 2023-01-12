@@ -2,6 +2,9 @@ package it.unicam.ids.studenti.ll.model.ProgrammiFedelta;
 
 import java.util.function.BiConsumer;
 
+/**
+ * Un programma fedelta aggiornabile in base al prezzo
+ */
 public interface UpdatableProgrammaFedelta extends ProgrammaFedelta {
     /**
      * Prende in input il costo del prodotto e calcola
