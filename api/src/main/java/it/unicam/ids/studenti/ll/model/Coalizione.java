@@ -36,7 +36,7 @@ public class Coalizione {
                 .contains(programma.getClass());
     }
 
-    public void addCliente(Cliente cliente) {
+    protected void addCliente(Cliente cliente) {
         mapClienti.put(cliente, new HashSet<>(getCommonPrograms()));
     }
 
@@ -44,7 +44,7 @@ public class Coalizione {
      *
      * @return i programmi in comune come classi
      */
-    public Set<Class<? extends ProgrammaFedelta>> getCommonProgramsType() {
+    protected Set<Class<? extends ProgrammaFedelta>> getCommonProgramsType() {
         return getCommonPrograms()
                 .stream()
                 .map(ProgrammaFedelta::getClass)
@@ -54,7 +54,7 @@ public class Coalizione {
     /**
      * @return tutti i programmi per come vengono visti nella `base dati`
      */
-    public List<List<ProgrammaFedelta>> getListsPrograms() {
+    protected List<List<ProgrammaFedelta>> getListsPrograms() {
         return appartenenti
                 .stream()
                 .map(Commerciante::getListaProgrammi)
@@ -65,7 +65,7 @@ public class Coalizione {
      * @return i programmi in comune a tutti i commercianti.
      * È basato su equals per cui i programmi uguali ma con diversi attributi non sono considerati come uguali
      */
-    public Set<ProgrammaFedelta> getCommonPrograms() {
+    protected Set<ProgrammaFedelta> getCommonPrograms() {
         return getAllPrograms()
                 .stream()
                 .filter(programma ->
@@ -91,7 +91,7 @@ public class Coalizione {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    public Set<ProgrammaFedelta> getProgrammi(Cliente cliente) {
+    protected Set<ProgrammaFedelta> getProgrammi(Cliente cliente) {
         return mapClienti.get(cliente);
     }
 
@@ -101,7 +101,7 @@ public class Coalizione {
      *
      * @param message il messaggio
      */
-    public void sendMessageToAll(String message) {
+    protected void sendMessageToAll(String message) {
         SingletonSMS.getEntity().inviaMessaggio(
                 getClienti(),
                 message
@@ -113,7 +113,7 @@ public class Coalizione {
      * @param cliente il cliente della coalizione a cui inviare il messaggio
      * @param message il messaggio
      */
-    public void sendMessage(Cliente cliente, String message) {
+    protected void sendMessage(Cliente cliente, String message) {
         if (mapClienti.containsKey(cliente))
             SingletonSMS.getEntity().inviaMessaggio(cliente, message);
     }
@@ -124,7 +124,7 @@ public class Coalizione {
      *
      * @param altraCoalizione l'altra coalizione con cui unire questa
      */
-    public Coalizione mergeCoalizioni(
+    protected Coalizione mergeCoalizioni(
             Coalizione altraCoalizione,
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
         for (Cliente c : altraCoalizione.getClienti()) {
@@ -141,7 +141,7 @@ public class Coalizione {
         return this;
     }
 
-    private void mergeProgrammi(
+    protected void mergeProgrammi(
             Set<ProgrammaFedelta> thisPrograms,
             Set<ProgrammaFedelta> otherPrograms,
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> rules) {
