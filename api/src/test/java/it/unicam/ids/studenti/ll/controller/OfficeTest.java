@@ -1,6 +1,8 @@
 package it.unicam.ids.studenti.ll.controller;
 
 import it.unicam.ids.studenti.ll.model.*;
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.ProgrammaFedelta;
+import it.unicam.ids.studenti.ll.model.ProgrammiFedelta.ProgrammaPunti;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -30,5 +32,15 @@ public class OfficeTest {
         backOffice.allowDipendente(d, "aggiungiDipendente");
 
         assertDoesNotThrow(() -> frontOffice.aggiungiDipendente(p2));
+    }
+    @Test
+    void inserimentoVenditaTest() throws AuthorizationException {
+        Cliente cliente = new Cliente("Pippo","Baudo",LocalDate.of(1936,6,7),"3426417897","pippo@baudo.com");
+        Office ufficio2 = new Office(proprietario.identificativo, "");
+        ((Commerciante)ufficio2.utente.getAzienda()).addNewProgramma(ProgrammaFedelta.create("punti"));
+        ufficio2.aggiungiCliente(cliente);
+        ufficio2.inserimentoVendita(cliente,10);
+        assert ((ProgrammaPunti)((Commerciante)ufficio2.utente.getAzienda()).getCoalizione().getProgrammi(cliente).stream().toList().get(0)).getPunti() == 10;
+
     }
 }
