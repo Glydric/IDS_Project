@@ -19,6 +19,13 @@ public class Office {
             throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
+    public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
+        if (!utente.haveAuthorization())
+            throw new AuthorizationException("L'utente non ha i permessi");
+
+        ((Commerciante) utente.getAzienda()).addCliente(cliente);
+    }
+
     public void aggiungiDipendente(Persona persona) throws AuthorizationException {
         if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
