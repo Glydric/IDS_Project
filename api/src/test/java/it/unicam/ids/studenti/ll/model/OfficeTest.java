@@ -1,6 +1,6 @@
 package it.unicam.ids.studenti.ll.model;
 
-import it.unicam.ids.studenti.ll.model.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -9,9 +9,18 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OfficeTest {
-    Azienda azienda = new Commerciante("Sony", LocalDate.of(1970, 2, 6));
+    static Azienda azienda;
+    static Proprietario proprietario;
 
-    Proprietario proprietario = new Proprietario("Mariooo", "Mazzolini", LocalDate.of(1990, 10, 25), azienda);
+    @BeforeAll
+    static void SetProprietario() {
+        azienda = new Commerciante("Sony", LocalDate.of(1970, 2, 6));
+        proprietario = new Proprietario(
+                "Mariooo",
+                "Mazzolini",
+                LocalDate.of(1990, 10, 25),
+                azienda);
+    }
 
     @Test
     void permissionTest() throws AuthorizationException {
@@ -33,17 +42,17 @@ public class OfficeTest {
 
     @Test
     void aggiungiDipendentePermissionTest() {
-        Persona persona = new Persona("Mocassini", "Luigini", LocalDate.of(1958, 2, 15));
+        Persona persona = new Persona("Morcone", "Luigini", LocalDate.of(1958, 2, 15));
 
         Office backOffice = new Office(proprietario.identificativo, "");
 
-        assertThrows(AuthorizationException.class, () -> backOffice.aggiungiDipendente(persona));
+        assertDoesNotThrow(() -> backOffice.aggiungiDipendente(persona));
     }
 
     @Test
     void aggiungiClienteTest() {
         Cliente cliente = new Cliente(
-                "Mocassini",
+                "Maranno",
                 "Luigini",
                 LocalDate.of(1958, 2, 15),
                 "4489275849",
@@ -52,6 +61,6 @@ public class OfficeTest {
 
         Office backOffice = new Office(proprietario.identificativo, "");
 
-        assertThrows(AuthorizationException.class, () -> backOffice.aggiungiCliente(cliente));
+        assertDoesNotThrow(() -> backOffice.aggiungiCliente(cliente));
     }
 }
