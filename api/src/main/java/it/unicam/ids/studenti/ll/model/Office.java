@@ -50,7 +50,6 @@ public class Office {
 
         return ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente);
     }
-    //TODO testare l'inserimento della vendita controllando se il cliente esiste nell'azienda
 
     public void inserimentoVendita(Cliente cliente, float prezzo) throws AuthorizationException {
         if (!utente.haveAuthorization())
