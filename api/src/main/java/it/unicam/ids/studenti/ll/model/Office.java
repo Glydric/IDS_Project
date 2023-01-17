@@ -8,14 +8,14 @@ import java.util.Set;
 public class Office {
     public UtenteIdentificabile utente;
 
-    protected Office(Identificatore identificatore, String password) {
+    public Office(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
     }
 
-    protected Office(String identificatore, String password) {
+    public Office(String identificatore, String password) throws IllegalArgumentException {
         utente = Identificatore.getUtenteFrom(identificatore);
 
-        if (!utente.isPasswordValid(password))
+        if (utente == null || !utente.isPasswordValid(password))
             throw new IllegalArgumentException("Login errato");
 
         if (utente.getAzienda() == null)
@@ -69,5 +69,12 @@ public class Office {
                 .forEach(
                         (programmaFedelta) -> ((UpdatableProgrammaFedelta) programmaFedelta).aggiornaProgramma(prezzo)
                 );
+    }
+
+    public Set<Cliente> getListaClienti() throws AuthorizationException {
+        if (!utente.haveAuthorization())
+            throw new AuthorizationException("L'utente non ha i permessi");
+
+        return ((Commerciante) utente.getAzienda()).getCoalizione().getClienti();
     }
 }

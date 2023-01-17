@@ -41,7 +41,6 @@ public class Coalizione {
     }
 
     /**
-     *
      * @return i programmi in comune come classi
      */
     protected Set<Class<? extends ProgrammaFedelta>> getCommonProgramsType() {
@@ -109,7 +108,6 @@ public class Coalizione {
     }
 
     /**
-     *
      * @param cliente il cliente della coalizione a cui inviare il messaggio
      * @param message il messaggio
      */

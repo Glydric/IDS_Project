@@ -61,7 +61,8 @@ public abstract class Azienda {
      * @param dataIscrizione la data d'iscrizione al registro imprese
      */
     private void setDate(LocalDate dataIscrizione) {
-        if (dataIscrizione.isAfter(LocalDate.now())) return;
+        if (dataIscrizione.isAfter(LocalDate.now()))
+            throw new IllegalArgumentException("Data non valida");
 
         this.dataIscrizioneRegistroImprese = dataIscrizione;
     }

@@ -8,7 +8,6 @@ import java.util.Set;
 public abstract class UtenteIdentificabile extends Persona {
     public final Identificatore identificativo = Identificatore.fromUtente(this);
     private String password = "";
-
     protected final Set<String> listaPermessi = new HashSet<>();
 
 
