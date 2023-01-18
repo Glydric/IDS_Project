@@ -58,7 +58,7 @@ public abstract class UtenteIdentificabile extends Persona {
         if (password.contains(" "))
             throw new IllegalArgumentException("La password non può avere spazi");
         if (password.length() < 8) {
-            throw new IllegalArgumentException("Password troppo corta, non e' sicura.");
+            throw new IllegalArgumentException("Password troppo corta, non è sicura.");
         }
         this.password = password;
     }

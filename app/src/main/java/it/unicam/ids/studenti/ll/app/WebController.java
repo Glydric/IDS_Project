@@ -1,22 +1,13 @@
 package it.unicam.ids.studenti.ll.app;
 
 import it.unicam.ids.studenti.ll.model.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RestController
-public class WebController {
-    static final String loginParameters = "?userName=%s&password=%s";
-    static final String button = """
-            <button onclick="window.location.href='%s'">
-                %s
-            </button>
-            """;
-    static final String indexButton = String.format(button, "/?%s", "Home");
-    static final String done = "<h1>Fatto</h1><br>" + indexButton;
+class WebController {
+
     @GetMapping("/")
     public static String index(
             @RequestParam(value = "userName") String userName,
@@ -25,25 +16,23 @@ public class WebController {
         if (userName == null) return "Inserire il nome utente";
         if (password == null) return "Inserire la password";
 
-        return String.format(
-                button,
-                String.format(
-                        Path.listaClienti + loginParameters,
+        return WebContents.button(
+                WebPaths.listaClienti + WebContents.loginParameters(
                         userName,
                         password
                 ),
                 "listaClienti");
     }
 
-    @GetMapping(Path.creaProprietarioAzienda)
+    @PostMapping(WebPaths.creaProprietarioAzienda)
     public static String creaProprietarioAzienda(
+            @PathVariable String ragioneSociale,
             @RequestParam(value = "nome") String nome,
             @RequestParam(value = "cognome") String cognome,
             @RequestParam(value = "password", required = false) String password,
             @RequestParam(value = "anno") int anno,
             @RequestParam(value = "mese") int mese,
             @RequestParam(value = "giorno") int giorno,
-            @RequestParam(value = "ragioneSociale") String nomeAzienda,
             @RequestParam(value = "annoAzienda", required = false) Integer annoAzienda,
             @RequestParam(value = "meseAzienda", required = false) Integer meseAzienda,
             @RequestParam(value = "giornoAzienda", required = false) Integer giornoAzienda
@@ -58,20 +47,23 @@ public class WebController {
                     cognome,
                     LocalDate.of(anno, mese, giorno),
                     new Commerciante(
-                            nomeAzienda,
+                            ragioneSociale,
                             date
                     )
             );
+
+            new Register(p.getAzienda());
+
             if (password != null) p.setPassword(password);
+
             return String.format(
-                    done + "<br>" + (
+                    WebContents.ok + "<br>" + (
                             password == null
                                     ? "Attenzione password non impostata!!"
                                     : "La password è stata impostata"
                     ),
-                    String.format(
-                            loginParameters,
-                            p.identificativo,
+                    WebContents.loginParameters(
+                            p.identificativo.toString(),
                             password == null
                                     ? ""
                                     : password
@@ -83,41 +75,124 @@ public class WebController {
         }
     }
 
-    @GetMapping(Path.creaAzienda)
-    public static String creaAzienda(
-            @RequestParam(value = "ragioneSociale") String ragioneSociale,
-            @RequestParam(value = "anno") int anno,
-            @RequestParam(value = "mese") int mese,
-            @RequestParam(value = "giorno") int giorno
-    ) {
-        try {
-            // TODO aggiungi al DB una volta completato
-            new Commerciante(ragioneSociale, LocalDate.of(anno, mese, giorno));
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        }
-        return done;
-    }
+//    @PostMapping(WebPaths.creaAzienda)
+//    public static String creaAzienda(
+//            @RequestParam(value = "ragioneSociale") String ragioneSociale,
+//            @RequestParam(value = "anno") int anno,
+//            @RequestParam(value = "mese") int mese,
+//            @RequestParam(value = "giorno") int giorno
+//    ) {
+//        try {
+//            // TODO aggiungi al DB una volta completato
+//            new Commerciante(ragioneSociale, LocalDate.of(anno, mese, giorno));
+//        } catch (IllegalArgumentException e) {
+//            return e.getMessage();
+//        }
+//        return WebContents.ok;
+//    }
 
-    @GetMapping(Path.listaClienti)
-    public static String listaClienti(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
+    @GetMapping(WebPaths.listaClienti)
+    public static String listaClienti(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password
+    ) {
         if (userName == null) return "Inserire il nome utente";
         if (password == null) return "Inserire la password";
 
         try {
-            Office office = new Office(userName, password);
-            return office.getListaClienti().toString();
+            return OfficeController
+                    .authenticatedBy(userName, password)
+                    .getListaClienti()
+                    .toString();
         } catch (IllegalArgumentException e) {
-            return "<h1>Id o password Errati!!!</h1>";
+            return "<h1>userName o password Errati!!!</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
 
     }
 
-    static abstract class Path {
-        static final String listaClienti = "/lista/clienti";
-        static final String creaProprietarioAzienda = "/crea/proprietarioAzienda";
-        static final String creaAzienda = "/crea/azienda";
+    @PostMapping
+    public static String registraCliente(
+            @PathVariable String azienda,
+            @RequestParam(value = "nome") String nome,
+            @RequestParam(value = "cognome") String cognome,
+            @RequestParam(value = "anno") int anno,
+            @RequestParam(value = "mese") int mese,
+            @RequestParam(value = "giorno") int giorno,
+            @RequestParam(value = "nome") String numeroTelefono,
+            @RequestParam(value = "nome") String email,
+            @RequestParam(value = "isFamily", required = false) boolean isFamily
+    ) {
+        Cliente c = new Cliente(
+                nome,
+                cognome,
+                LocalDate.of(anno, mese, giorno),
+                numeroTelefono,
+                email,
+                isFamily
+        );
+
+        try {
+            OfficeController
+                    .authenticatedByRegisterOf(azienda)
+                    .aggiungiCliente(c);
+        } catch (IllegalArgumentException e) {
+            return "<h1>userName o password Errati!!!</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok;
+    }
+
+    @PostMapping(WebPaths.aggiungiCliente)
+    public static String aggiungiCliente(
+            @PathVariable String ragioneSociale,
+            @RequestParam(value = "tessera") String tessera
+    ) {
+        // usa la stringa azienda per ottenere la struttura dati dal db (attualmente Identificatore)
+        OfficeController
+                .authenticatedByRegisterOf(ragioneSociale)
+//        .aggiungiCliente(ManagerDataBase.getClienteFromTessera(tessera))
+        ;
+        return WebContents.ok;
+    }
+
+    @PostMapping(WebPaths.aggiungiDipendente)
+    public static String aggiungiDipendente(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "nome") String nome,
+            @RequestParam(value = "cognome") String cognome,
+            @RequestParam(value = "anno") int anno,
+            @RequestParam(value = "mese") int mese,
+            @RequestParam(value = "giorno") int giorno,
+            @RequestParam(value = "passwordDipendente", required = false) String passwordDipendente
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName, password)
+                    .aggiungiDipendente(
+                            new Persona(
+                                    nome,
+                                    cognome,
+                                    LocalDate.of(
+                                            anno,
+                                            mese,
+                                            giorno
+                                    )
+                            ),
+                            passwordDipendente
+                    );
+//            if (passwordDipendente != null)
+//                Identificatore
+//                        .getUtenteFrom(nome + '.' + cognome)
+//                        .setPassword(passwordDipendente);
+        } catch (IllegalArgumentException e) {
+            return "<h1>"+e.getMessage()+"</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok;
     }
 }

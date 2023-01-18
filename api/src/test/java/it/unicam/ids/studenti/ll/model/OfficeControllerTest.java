@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OfficeTest {
+public class OfficeControllerTest {
     static Azienda azienda;
     static Proprietario proprietario;
 
@@ -31,13 +31,13 @@ public class OfficeTest {
         azienda.addDipendente(persona);
         Dipendente d = (Dipendente) Identificatore.getUtenteFrom("Mocassini.Luigini");
 
-        Office frontOffice = new Office(d.identificativo, "");
+        OfficeController frontOffice = new OfficeController(d.identificativo, "");
 
         Persona p2 = new Persona("Macciccio", "Luigone", LocalDate.of(1958, 2, 15));
 
         assertThrows(AuthorizationException.class, () -> frontOffice.aggiungiDipendente(p2));
 
-        new Office(proprietario.identificativo, "").allowDipendente(d, "aggiungiDipendente");
+        new OfficeController(proprietario.identificativo, "").allowDipendente(d, "aggiungiDipendente");
 
         assertDoesNotThrow(() -> frontOffice.aggiungiDipendente(p2));
     }
@@ -46,7 +46,7 @@ public class OfficeTest {
     void aggiungiDipendentePermissionTest() {
         Persona persona = new Persona("Morcone", "Luigini", LocalDate.of(1958, 2, 15));
 
-        Office backOffice = new Office(proprietario.identificativo, "");
+        OfficeController backOffice = new OfficeController(proprietario.identificativo, "");
 
         assertDoesNotThrow(() -> backOffice.aggiungiDipendente(persona));
     }
@@ -61,14 +61,14 @@ public class OfficeTest {
                 "bella@pe.te"
         );
 
-        Office backOffice = new Office(proprietario.identificativo, "");
+        OfficeController backOffice = new OfficeController(proprietario.identificativo, "");
 
         assertDoesNotThrow(() -> backOffice.aggiungiCliente(cliente));
     }
     @Test
     void inserimentoVenditaTest() throws AuthorizationException {
         Cliente cliente = new Cliente("Pippo","Baudo",LocalDate.of(1936,6,7),"3426417897","pippo@baudo.com");
-        Office ufficio2 = new Office(proprietario.identificativo, "");
+        OfficeController ufficio2 = new OfficeController(proprietario.identificativo, "");
         ((Commerciante)ufficio2.utente.getAzienda()).addNewProgramma(ProgrammaFedelta.create("punti"));
         ufficio2.aggiungiCliente(cliente);
         ufficio2.inserimentoVendita(cliente,10);

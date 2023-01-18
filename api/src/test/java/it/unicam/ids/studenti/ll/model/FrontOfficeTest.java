@@ -1,6 +1,5 @@
 package it.unicam.ids.studenti.ll.model;
 
-import it.unicam.ids.studenti.ll.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -23,9 +22,9 @@ public class FrontOfficeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Office(uid.identificativo, "wrongPassword")
+                () -> new OfficeController(uid.identificativo, "wrongPassword")
         );
-        new Office(uid.identificativo, "bimariomaria");
+        new OfficeController(uid.identificativo, "bimariomaria");
     }
 
 
