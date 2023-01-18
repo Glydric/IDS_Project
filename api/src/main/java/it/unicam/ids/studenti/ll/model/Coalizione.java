@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
+
 public class Coalizione {
     private final Map<Cliente, Set<ProgrammaFedelta>> mapClienti = new HashMap<>();
     public Set<Commerciante> appartenenti = new HashSet<>();
