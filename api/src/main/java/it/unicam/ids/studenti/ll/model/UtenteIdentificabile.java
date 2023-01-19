@@ -69,4 +69,17 @@ public abstract class UtenteIdentificabile extends Persona {
     public boolean isPasswordValid(String password) {
         return Objects.equals(password, this.password);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UtenteIdentificabile that)) return false;
+
+        return Objects.equals(identificativo, that.identificativo);
+    }
+
+    @Override
+    public int hashCode() {
+        return identificativo.hashCode();
+    }
 }
