@@ -1,6 +1,6 @@
 package it.unicam.ids.studenti.ll.app;
 
-import it.unicam.ids.studenti.ll.model.*;
+import it.unicam.ids.studenti.ll.app.model.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
