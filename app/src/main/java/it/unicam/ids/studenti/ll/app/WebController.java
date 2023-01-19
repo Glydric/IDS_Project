@@ -75,21 +75,21 @@ class WebController {
         }
     }
 
-//    @PostMapping(WebPaths.creaAzienda)
-//    public static String creaAzienda(
-//            @RequestParam(value = "ragioneSociale") String ragioneSociale,
-//            @RequestParam(value = "anno") int anno,
-//            @RequestParam(value = "mese") int mese,
-//            @RequestParam(value = "giorno") int giorno
-//    ) {
-//        try {
-//            // TODO aggiungi al DB una volta completato
-//            new Commerciante(ragioneSociale, LocalDate.of(anno, mese, giorno));
-//        } catch (IllegalArgumentException e) {
-//            return e.getMessage();
-//        }
-//        return WebContents.ok;
-//    }
+/*
+    @PostMapping(WebPaths.creaAzienda)
+    public static String creaAzienda(
+            @RequestParam(value = "ragioneSociale") String ragioneSociale,
+            @RequestParam(value = "anno") int anno,
+            @RequestParam(value = "mese") int mese,
+            @RequestParam(value = "giorno") int giorno
+    ) {
+        try {
+            new Commerciante(ragioneSociale, LocalDate.of(anno, mese, giorno));
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
+        }
+        return WebContents.ok;
+    }*/
 
     @GetMapping(WebPaths.listaClienti)
     public static String listaClienti(
@@ -184,10 +184,6 @@ class WebController {
                             ),
                             passwordDipendente
                     );
-//            if (passwordDipendente != null)
-//                Identificatore
-//                        .getUtenteFrom(nome + '.' + cognome)
-//                        .setPassword(passwordDipendente);
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
