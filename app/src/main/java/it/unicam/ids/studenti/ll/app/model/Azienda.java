@@ -61,7 +61,8 @@ public abstract class Azienda {
      * @param dataIscrizione la data d'iscrizione al registro imprese
      */
     private void setDate(LocalDate dataIscrizione) {
-        if (dataIscrizione.isAfter(LocalDate.now())) return;
+        if (dataIscrizione.isAfter(LocalDate.now()))
+            throw new IllegalArgumentException("Data non valida");
 
         this.dataIscrizioneRegistroImprese = dataIscrizione;
     }
@@ -94,12 +95,7 @@ public abstract class Azienda {
         if (persona == null)
             throw new IllegalArgumentException("Il dipendente non può essere nullo");
 
-        Dipendente d = new Dipendente(
-                persona.nome,
-                persona.cognome,
-                persona.getDataNascita(),
-                this
-        );
+        Dipendente d = Dipendente.fromPersona(persona, this);
 
         if (mapDipendenti.contains(d))
             throw new IllegalArgumentException("Il dipendente è già inserito");

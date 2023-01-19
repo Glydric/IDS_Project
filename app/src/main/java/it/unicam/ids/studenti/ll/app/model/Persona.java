@@ -7,7 +7,7 @@ public class Persona {
     public String cognome;
     private LocalDate dataNascita = LocalDate.now();
 
-    public Persona(String nome, String cognome) {
+    protected Persona(String nome, String cognome) {
         this.nome = nome;
         this.cognome = cognome;
     }

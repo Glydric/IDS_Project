@@ -1,8 +1,6 @@
 package it.unicam.ids.studenti.ll.app.model;
 
-import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
-import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaLivelli;
-import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaPunti;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

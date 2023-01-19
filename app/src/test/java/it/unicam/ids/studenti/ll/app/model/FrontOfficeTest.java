@@ -22,9 +22,9 @@ public class FrontOfficeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Office(uid.identificativo, "wrongPassword")
+                () -> new OfficeController(uid.identificativo, "wrongPassword")
         );
-        new Office(uid.identificativo, "bimariomaria");
+        new OfficeController(uid.identificativo, "bimariomaria");
     }
 
 

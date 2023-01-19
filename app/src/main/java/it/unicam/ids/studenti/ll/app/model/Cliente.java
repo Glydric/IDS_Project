@@ -23,12 +23,13 @@ public class Cliente extends Persona {
         this.identificativoTessera = UUID.randomUUID();
     }
 
-    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, boolean isFamily) {
+    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, Boolean isFamily) {
         this(nome, cognome, dataNascita, numeroTelefono, email);
-        this.isFamily = isFamily;
+        if (isFamily != null)
+            this.isFamily = isFamily;
     }
 
-    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
+    Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
         super(nome, cognome, dataNascita);
         setNumeroTelefono(numeroTelefono);
         setEmail(email);

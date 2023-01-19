@@ -17,8 +17,8 @@ public class BackOfficeTest {
                 new Commerciante("xbox", LocalDate.MIN));
         p.setPassword("bimariomaria");
 
-        assertThrows(IllegalArgumentException.class, () -> new Office(p.identificativo, "wrongPassword"));
-        new Office(p.identificativo, "bimariomaria");
+        assertThrows(IllegalArgumentException.class, () ->OfficeController.authenticatedBy(p.identificativo.toString(), "wrongPassword"));
+        new OfficeController(p.identificativo, "bimariomaria");
 
     }
 }

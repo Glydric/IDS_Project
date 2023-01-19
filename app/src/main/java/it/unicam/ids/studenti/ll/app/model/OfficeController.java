@@ -5,24 +5,47 @@ import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.UpdatableProgrammaFe
 
 import java.util.Set;
 
-public class Office {
+//TODO separala da model e reimposta gradle cosi da essere un solo progetto
+public class OfficeController {
     public UtenteIdentificabile utente;
 
-    protected Office(Identificatore identificatore, String password) {
+    protected OfficeController(Identificatore identificatore, String password) {
         this(identificatore.toString(), password);
     }
 
-    protected Office(String identificatore, String password) {
+    protected OfficeController(String identificatore, String password) throws IllegalArgumentException {
         utente = Identificatore.getUtenteFrom(identificatore);
 
-        if (!utente.isPasswordValid(password))
+        if (utente == null || !utente.isPasswordValid(password))
             throw new IllegalArgumentException("Login errato");
 
         if (utente.getAzienda() == null)
             throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
+    /**
+     * la password viene considerata vuota
+     *
+     * @param ragioneSociale l'identificatore
+     * @return un'office controller generato grazie all'identificatore
+     */
+    public static OfficeController authenticatedByRegisterOf(String ragioneSociale) {
+        return authenticatedBy("register." +ragioneSociale, "");
+    }
 
+    public static OfficeController authenticatedBy(String identificatore, String password) {
+        return new OfficeController(identificatore, password);
+    }
+
+
+    public void aggiungiDipendente(Persona persona, String password) throws AuthorizationException {
+        aggiungiDipendente(persona);
+
+        if (password != null)
+            Identificatore
+                    .getUtenteFrom(persona.nome + '.' + persona.cognome)
+                    .setPassword(password);
+    }
     public void aggiungiDipendente(Persona persona) throws AuthorizationException {
         if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
@@ -68,5 +91,12 @@ public class Office {
                 .forEach(
                         (programmaFedelta) -> ((UpdatableProgrammaFedelta) programmaFedelta).aggiornaProgramma(prezzo)
                 );
+    }
+
+    public Set<Cliente> getListaClienti() throws AuthorizationException {
+        if (!utente.haveAuthorization())
+            throw new AuthorizationException("L'utente non ha i permessi");
+
+        return ((Commerciante) utente.getAzienda()).getCoalizione().getClienti();
     }
 }

@@ -8,7 +8,6 @@ import java.util.Set;
 public abstract class UtenteIdentificabile extends Persona {
     public final Identificatore identificativo = Identificatore.fromUtente(this);
     private String password = "";
-
     protected final Set<String> listaPermessi = new HashSet<>();
 
 
@@ -59,7 +58,7 @@ public abstract class UtenteIdentificabile extends Persona {
         if (password.contains(" "))
             throw new IllegalArgumentException("La password non può avere spazi");
         if (password.length() < 8) {
-            throw new IllegalArgumentException("Password troppo corta, non e' sicura.");
+            throw new IllegalArgumentException("Password troppo corta, non è sicura.");
         }
         this.password = password;
     }
@@ -69,5 +68,18 @@ public abstract class UtenteIdentificabile extends Persona {
      */
     public boolean isPasswordValid(String password) {
         return Objects.equals(password, this.password);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UtenteIdentificabile that)) return false;
+
+        return Objects.equals(identificativo, that.identificativo);
+    }
+
+    @Override
+    public int hashCode() {
+        return identificativo.hashCode();
     }
 }

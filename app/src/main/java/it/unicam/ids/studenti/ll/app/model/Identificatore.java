@@ -2,6 +2,7 @@ package it.unicam.ids.studenti.ll.app.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Identificatore {
     private static final Map<String, UtenteIdentificabile> listaID = new HashMap<>();
@@ -41,6 +42,19 @@ public class Identificatore {
     public void updateIdentificativo(String identificativo) {
         setIdentificativo(identificativo);
         listaID.replace(identificativo, listaID.get(this.identificativo));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Identificatore that)) return false;
+
+        return Objects.equals(identificativo, that.identificativo);
+    }
+
+    @Override
+    public int hashCode() {
+        return identificativo != null ? identificativo.hashCode() : 0;
     }
 
     @Override
