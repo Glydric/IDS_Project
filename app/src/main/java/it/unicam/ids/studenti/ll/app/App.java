@@ -1,6 +1,6 @@
 package it.unicam.ids.studenti.ll.app;
 
-import it.unicam.ids.studenti.ll.model.Office;
+import it.unicam.ids.studenti.ll.app.model.Office;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
