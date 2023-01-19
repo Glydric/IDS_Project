@@ -105,7 +105,7 @@ class WebController {
                     .getListaClienti()
                     .toString();
         } catch (IllegalArgumentException e) {
-            return "<h1>userName o password Errati!!!</h1>";
+            return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
@@ -189,7 +189,7 @@ class WebController {
 //                        .getUtenteFrom(nome + '.' + cognome)
 //                        .setPassword(passwordDipendente);
         } catch (IllegalArgumentException e) {
-            return "<h1>"+e.getMessage()+"</h1>";
+            return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
