@@ -95,12 +95,7 @@ public abstract class Azienda {
         if (persona == null)
             throw new IllegalArgumentException("Il dipendente non può essere nullo");
 
-        Dipendente d = new Dipendente(
-                persona.nome,
-                persona.cognome,
-                persona.getDataNascita(),
-                this
-        );
+        Dipendente d = Dipendente.fromPersona(persona, this);
 
         if (mapDipendenti.contains(d))
             throw new IllegalArgumentException("Il dipendente è già inserito");
