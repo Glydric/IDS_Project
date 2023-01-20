@@ -16,7 +16,10 @@ public class OfficeController {
     protected OfficeController(String identificatore, String password) throws IllegalArgumentException {
         utente = Identificatore.getUtenteFrom(identificatore);
 
-        if (utente == null || !utente.isPasswordValid(password))
+        if (utente == null)
+            throw new IllegalArgumentException("Autorizzatore non esistente");
+
+        if (!utente.isPasswordValid(password))
             throw new IllegalArgumentException("Login errato");
 
         if (utente.getAzienda() == null)
@@ -29,8 +32,8 @@ public class OfficeController {
      * @param ragioneSociale l'identificatore
      * @return un'office controller generato grazie all'identificatore
      */
-    public static OfficeController authenticatedByRegisterOf(String ragioneSociale) throws AuthorizationException{
-        return authenticatedBy("register." +ragioneSociale, "");
+    public static OfficeController authenticatedByRegisterOf(String ragioneSociale) throws AuthorizationException {
+        return authenticatedBy("register." + ragioneSociale, "");
     }
 
     public static OfficeController authenticatedBy(String identificatore, String password) {
@@ -46,6 +49,7 @@ public class OfficeController {
                     .getUtenteFrom(persona.nome + '.' + persona.cognome)
                     .setPassword(password);
     }
+
     public void aggiungiDipendente(Persona persona) throws AuthorizationException {
         if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
