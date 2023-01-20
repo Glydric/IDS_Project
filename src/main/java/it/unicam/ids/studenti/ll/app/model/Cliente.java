@@ -15,6 +15,7 @@ public class Cliente extends Persona {
     private String email;
     private String password;
 
+
     /**
      * Un costruttore di test
      */
@@ -23,13 +24,32 @@ public class Cliente extends Persona {
         this.identificativoTessera = UUID.randomUUID();
     }
 
-    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, Boolean isFamily) {
+    public Cliente(
+            String nome,
+            String cognome,
+            int anno,
+            int mese,
+            int giorno,
+            String numeroTelefono,
+            String email,
+            Boolean isFamily) {
+        this(
+                nome,
+                cognome,
+                LocalDate.of(anno, mese, giorno),
+                numeroTelefono,
+                email,
+                isFamily//.equalsIgnoreCase("true")
+        );
+    }
+
+    protected Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, Boolean isFamily) {
         this(nome, cognome, dataNascita, numeroTelefono, email);
         if (isFamily != null)
             this.isFamily = isFamily;
     }
 
-    Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
+    protected Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
         super(nome, cognome, dataNascita);
         setNumeroTelefono(numeroTelefono);
         setEmail(email);
