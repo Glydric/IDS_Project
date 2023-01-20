@@ -7,7 +7,6 @@ public class Persona {
     public String cognome;
     private LocalDate dataNascita = LocalDate.now();
 
-
     protected Persona(String nome, String cognome) {
         this.nome = nome;
         this.cognome = cognome;
@@ -30,6 +29,7 @@ public class Persona {
         }
         this.dataNascita = dataNascita;
     }
+
 
     public LocalDate getDataNascita() {
         return this.dataNascita;

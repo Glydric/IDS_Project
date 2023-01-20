@@ -1,5 +1,7 @@
 package it.unicam.ids.studenti.ll.app.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +15,8 @@ public class Cliente extends Persona {
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
-    private String password;
 
+    private String password;
 
     /**
      * Un costruttore di test
@@ -24,6 +26,7 @@ public class Cliente extends Persona {
         this.identificativoTessera = UUID.randomUUID();
     }
 
+    @JsonCreator
     public Cliente(
             String nome,
             String cognome,
