@@ -7,11 +7,19 @@ package it.unicam.ids.studenti.ll.app.model;
 public class Register extends UtenteIdentificabile {
     private final Azienda azienda;
 
-    public Register(Azienda azienda) {
+    protected Register(Azienda azienda) {
         super("register", azienda.ragioneSociale);
         this.azienda = azienda;
         super.listaPermessi.add("inserimentoVendita");
         super.listaPermessi.add("aggiungiCliente");
+    }
+
+    public static Register from(Azienda azienda) {
+        return new Register(azienda);
+    }
+
+    public static void initializeFrom(Azienda azienda) {
+        from(azienda);
     }
 
     @Override

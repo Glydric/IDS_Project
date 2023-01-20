@@ -52,7 +52,7 @@ class WebController {
                     )
             );
 
-            new Register(p.getAzienda());
+            Register.initializeFrom(p.getAzienda());
 
             if (password != null) p.setPassword(password);
 
@@ -112,49 +112,70 @@ class WebController {
 
     }
 
-    @PostMapping
+    /**
+     * registra un cliente non già esistente
+     *
+     * @param ragioneSociale la ragione sociale dell'azienda
+     * @param cliente        il cliente da aggiungere
+     */
+    @PostMapping(WebPaths.registraCliente)
     public static String registraCliente(
-            @PathVariable String azienda,
-            @RequestParam(value = "nome") String nome,
-            @RequestParam(value = "cognome") String cognome,
-            @RequestParam(value = "anno") int anno,
-            @RequestParam(value = "mese") int mese,
-            @RequestParam(value = "giorno") int giorno,
-            @RequestParam(value = "nome") String numeroTelefono,
-            @RequestParam(value = "nome") String email,
-            @RequestParam(value = "isFamily", required = false) boolean isFamily
+            @PathVariable String ragioneSociale,
+            @RequestBody Cliente cliente
     ) {
-        Cliente c = new Cliente(
-                nome,
-                cognome,
-                LocalDate.of(anno, mese, giorno),
-                numeroTelefono,
-                email,
-                isFamily
-        );
-
+            /*
+                @RequestParam(value = "nome") String nome,
+                @RequestParam(value = "cognome") String cognome,
+                @RequestParam(value = "anno") int anno,
+                @RequestParam(value = "mese") int mese,
+                @RequestParam(value = "giorno") int giorno,
+                @RequestParam(value = "nome") String numeroTelefono,
+                @RequestParam(value = "email") String email,
+                @RequestParam(value = "isFamily", required = false) boolean isFamily
+            */
+//        Cliente c = new Cliente(
+//                nome,
+//                cognome,
+//                anno, mese, giorno,
+//                numeroTelefono,
+//                email,
+//                isFamily
+//        );
         try {
             OfficeController
-                    .authenticatedByRegisterOf(azienda)
-                    .aggiungiCliente(c);
+                    .authenticatedByRegisterOf(ragioneSociale)
+                    .aggiungiCliente(cliente);
         } catch (IllegalArgumentException e) {
-            return "<h1>userName o password Errati!!!</h1>";
+            return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
         return WebContents.ok;
     }
 
+    /**
+     * registra un cliente già esistente nell'applicativo
+     *
+     * @param ragioneSociale la ragione sociale dell'azienda
+     * @param tessera        il cliente da aggiungere
+     */
     @PostMapping(WebPaths.aggiungiCliente)
     public static String aggiungiCliente(
             @PathVariable String ragioneSociale,
             @RequestParam(value = "tessera") String tessera
     ) {
         // usa la stringa azienda per ottenere la struttura dati dal db (attualmente Identificatore)
-        OfficeController
-                .authenticatedByRegisterOf(ragioneSociale)
-//        .aggiungiCliente(ManagerDataBase.getClienteFromTessera(tessera))
-        ;
+        // TODO controlla che la tessera sia effettivamente esistente
+        try {
+            OfficeController
+                    .authenticatedByRegisterOf(ragioneSociale)
+            //        .aggiungiCliente(ManagerDataBase.getClienteFromTessera(tessera))
+            ;
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
         return WebContents.ok;
     }
 
@@ -176,11 +197,9 @@ class WebController {
                             new Persona(
                                     nome,
                                     cognome,
-                                    LocalDate.of(
-                                            anno,
-                                            mese,
-                                            giorno
-                                    )
+                                    anno,
+                                    mese,
+                                    giorno
                             ),
                             passwordDipendente
                     );
