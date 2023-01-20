@@ -29,7 +29,7 @@ public class OfficeController {
      * @param ragioneSociale l'identificatore
      * @return un'office controller generato grazie all'identificatore
      */
-    public static OfficeController authenticatedByRegisterOf(String ragioneSociale) {
+    public static OfficeController authenticatedByRegisterOf(String ragioneSociale) throws AuthorizationException{
         return authenticatedBy("register." +ragioneSociale, "");
     }
 
