@@ -44,4 +44,8 @@ public class Persona {
         return (short) eta;
     }
 
+    @Override
+    public String toString() {
+        return nome + " " + cognome + " nato il " + dataNascita;
+    }
 }

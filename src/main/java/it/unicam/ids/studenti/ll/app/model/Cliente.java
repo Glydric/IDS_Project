@@ -82,4 +82,11 @@ public class Cliente extends Persona {
         }
         this.numeroTelefono = numeroTelefono;
     }
+
+
+    @Override
+    public String toString() {
+        return "identificativo '" + identificativoTessera + "' " + super.toString()
+                + " è iscritto come " + (isFamily ? "famiglia" : "singolo");
+    }
 }
