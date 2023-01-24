@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app.model.entity;
+package it.unicam.ids.studenti.ll.app.model.persistence;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,19 +13,24 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "coalizione")
-public class CoalizioneEntity implements Serializable {
+@Table(name = "commerciante")
+public class CommercianteEntity implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-//    @JoinColumn(name = "id_commerciante", referencedColumnName = "id")
-//    @OneToMany(cascade = CascadeType.PERSIST)
-//    @Fetch(FetchMode.SELECT)
-//    private CommercianteEntity appartenenti;
-    // todo Map<Cliente, Set<ProgrammaFedelta>>
+    @Column(name = "linkEsterno")
+    private String linkEsterno;
 
+    @JoinColumn(name = "id_coalizione", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @Fetch(FetchMode.SELECT)
+    private CoalizioneEntity gruppoAppartenza;
+
+
+    @Column(name = "nome")
+    private String nome;
 
 }
