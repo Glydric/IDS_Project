@@ -17,6 +17,9 @@ public class Coalizione {
         appartenenti.add(commerciante);
     }
 
+    public List<Cliente> getListaClienti() {
+        return mapClienti.stream().toList();
+    }
     public Set<Cliente> getClienti() {
         return mapClienti;
     }
@@ -25,7 +28,7 @@ public class Coalizione {
         //dato che il programma è stato precedentemente aggiunto nel commerciante, lui verrà considerato tra i programmi in comune
         // e se tutti i commercianti lo hanno definito come programma, questo sarà true e lo aggiungerà
         if (isProgramInCommons(programma))
-            getClienti().forEach(
+            mapClienti.forEach(
                     cliente -> cliente
                             .mapCoalizione
                             .get(this)
@@ -115,7 +118,7 @@ public class Coalizione {
      */
     protected void sendMessageToAll(String message) {
         SingletonSMS.getEntity().inviaMessaggio(
-                getClienti(),
+                mapClienti,
                 message
         );
     }
