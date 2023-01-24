@@ -69,6 +69,9 @@ public class CommercianteTest {
 
     }
 
+    /**
+     * controlla che il tipo di ritorno sia lo stesso e che non vi siano errori
+     */
     @Test
     void setCoalizione() {
         Commerciante co = new Commerciante("Swift");

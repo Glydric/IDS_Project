@@ -7,8 +7,8 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class Coalizione {
-    private final Set<Cliente> mapClienti = new HashSet<>();
-    public Set<Commerciante> appartenenti = new HashSet<>();
+    protected final Set<Cliente> mapClienti = new HashSet<>();
+    protected final Set<Commerciante> appartenenti = new HashSet<>();
 
     protected Coalizione() {
     }
