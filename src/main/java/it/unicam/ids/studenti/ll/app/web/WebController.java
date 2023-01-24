@@ -71,24 +71,12 @@ class WebController {
             return e.getMessage();
         }
     }
-    //TODO make this Body-based
+
     @PostMapping(WebPaths.creaAzienda)
-    public static String creaAzienda(
-            @RequestParam(value = "ragioneSociale") String ragioneSociale,
-            @RequestParam(value = "anno") int anno,
-            @RequestParam(value = "mese") int mese,
-            @RequestParam(value = "giorno") int giorno
-    ) {
+    public static String creaAzienda(@RequestBody Commerciante commerciante) {
         try {
             // TODO modificare la chiamata per usare il DB
-            commercianti.add(
-                    new Commerciante(
-                            ragioneSociale,
-                            anno,
-                            mese,
-                            giorno
-                    )
-            );
+            commercianti.add(commerciante);
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
@@ -151,10 +139,10 @@ class WebController {
             @RequestParam(value = "tessera") String tessera
     ) {
         // usa la stringa azienda per ottenere la struttura dati dal db (attualmente Identificatore)
-        // TODO controlla che la tessera sia effettivamente esistente
         try {
             OfficeController
                     .authenticatedByRegisterOf(ragioneSociale)
+            // TODO controlla che la tessera sia effettivamente esistente
             //        .aggiungiCliente(ManagerDataBase.getClienteFromTessera(tessera))
             ;
         } catch (IllegalArgumentException e) {
@@ -165,31 +153,39 @@ class WebController {
         return WebContents.ok;
     }
 
-    //TODO make this Body-based
     @PostMapping(WebPaths.aggiungiDipendente)
     public static String aggiungiDipendente(
+            @RequestBody Persona persona,
             @RequestParam(value = "userName") String userName,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "nome") String nome,
-            @RequestParam(value = "cognome") String cognome,
-            @RequestParam(value = "anno") int anno,
-            @RequestParam(value = "mese") int mese,
-            @RequestParam(value = "giorno") int giorno,
             @RequestParam(value = "passwordDipendente", required = false) String passwordDipendente
     ) {
         try {
             OfficeController
                     .authenticatedBy(userName, password)
                     .aggiungiDipendente(
-                            new Persona(
-                                    nome,
-                                    cognome,
-                                    anno,
-                                    mese,
-                                    giorno
-                            ),
+                            persona,
                             passwordDipendente
                     );
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok + "userName: " + persona.cognome + "." + persona.cognome;
+    }
+
+    @PostMapping(WebPaths.consentiDipendente)
+    public static String consentiDipendente(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "userNameDipendente") String userNameDipendente,
+            @RequestParam(value = "permesso") String permesso
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName, password)
+                    .allowDipendente(userNameDipendente, permesso);
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {

@@ -9,5 +9,6 @@ abstract class WebPaths {
     static final String creaAzienda = "/crea/azienda";
     static final String listaClienti = "/ottieni/clienti";
     static final String aggiungiDipendente = "/aggiungi/dipendente";
+    static final String consentiDipendente = "/consenti/dipendente";
 }
 
