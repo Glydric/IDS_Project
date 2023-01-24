@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app;
+package it.unicam.ids.studenti.ll.app.web;
 
 abstract class WebPaths {
     static final String creaProprietarioAzienda = "/{ragioneSociale}/crea/proprietarioAzienda";
