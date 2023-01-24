@@ -1,17 +1,20 @@
 package it.unicam.ids.studenti.ll.app.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cliente extends Persona {
+    protected final Map<Coalizione, Set<ProgrammaFedelta>> mapCoalizione
+            = new HashMap<>();
     public UUID identificativoTessera;
-    public Set<Coalizione> listaCommercianti = new HashSet<>();
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
