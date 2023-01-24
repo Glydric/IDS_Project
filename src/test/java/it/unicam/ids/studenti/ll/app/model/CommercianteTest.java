@@ -27,7 +27,10 @@ public class CommercianteTest {
         ((ProgrammaPunti) commerciante.getProgressAsList(c1).get(0)).setPunti(10);
 
         assertEquals(1, commerciante.getCoalizione().getAllPrograms().size());
-        assertNotEquals(commerciante.getProgressAsList(c1).get(0), commerciante.getProgressAsList(c2).get(0));
+        assertNotEquals(
+                commerciante.getProgressAsList(c1).get(0),
+                commerciante.getProgressAsList(c2).get(0)
+        );
 
         assertThrows(UnsupportedOperationException.class, () -> commerciante.getListaProgrammi().add(pf));
     }
@@ -66,6 +69,9 @@ public class CommercianteTest {
 
     }
 
+    /**
+     * controlla che il tipo di ritorno sia lo stesso e che non vi siano errori
+     */
     @Test
     void setCoalizione() {
         Commerciante co = new Commerciante("Swift");

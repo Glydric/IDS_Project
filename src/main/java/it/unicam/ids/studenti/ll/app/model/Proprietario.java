@@ -6,7 +6,29 @@ public class Proprietario extends UtenteIdentificabile {
     private Azienda azienda;
 
     /**
-     * un proprietario non può essere istanziato con un'azienda nulla, ma essa può diventarlo successivamente
+     * costruttore di comodo
+     */
+    public Proprietario(
+            String nome,
+            String cognome,
+            int anno,
+            int mese,
+            int giorno,
+            Azienda azienda,
+            String password) {
+        this(
+                nome,
+                cognome,
+                LocalDate.of(anno, mese, giorno),
+                azienda
+        );
+        if (password != null)
+            setPassword(password);
+    }
+
+
+    /**
+     * un proprietario non può essere inizializzato con un'azienda nulla, ma essa può diventarlo successivamente
      *
      * @param nome        il nome del proprietario
      * @param cognome     il cognome del proprietario
@@ -25,7 +47,6 @@ public class Proprietario extends UtenteIdentificabile {
     }
 
     /**
-     *
      * @param azienda non nulla
      */
     public void setAzienda(Azienda azienda) {

@@ -1,18 +1,24 @@
 package it.unicam.ids.studenti.ll.app.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
+
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cliente extends Persona {
+    protected final Map<Coalizione, Set<ProgrammaFedelta>> mapCoalizione
+            = new HashMap<>();
     public UUID identificativoTessera;
-    public Set<Coalizione> listaCommercianti = new HashSet<>();
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
+
     private String password;
 
     /**
@@ -23,13 +29,33 @@ public class Cliente extends Persona {
         this.identificativoTessera = UUID.randomUUID();
     }
 
-    public Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, Boolean isFamily) {
+    @JsonCreator
+    public Cliente(
+            String nome,
+            String cognome,
+            int anno,
+            int mese,
+            int giorno,
+            String numeroTelefono,
+            String email,
+            Boolean isFamily) {
+        this(
+                nome,
+                cognome,
+                LocalDate.of(anno, mese, giorno),
+                numeroTelefono,
+                email,
+                isFamily//.equalsIgnoreCase("true")
+        );
+    }
+
+    protected Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email, Boolean isFamily) {
         this(nome, cognome, dataNascita, numeroTelefono, email);
         if (isFamily != null)
             this.isFamily = isFamily;
     }
 
-    Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
+    protected Cliente(String nome, String cognome, LocalDate dataNascita, String numeroTelefono, String email) {
         super(nome, cognome, dataNascita);
         setNumeroTelefono(numeroTelefono);
         setEmail(email);
