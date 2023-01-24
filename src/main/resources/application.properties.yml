@@ -11,7 +11,7 @@ spring:
             # After first run stop project, set this to "update" and run again to use
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/ids-server
+        url: jdbc:postgresql://localhost:5432/ids-db
         username: postgres #Leave as is
         password: pass #Put password you used during postgres installation
         driverClassName: org.postgresql.Driver
