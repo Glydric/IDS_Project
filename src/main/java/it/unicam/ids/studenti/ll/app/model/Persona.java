@@ -1,5 +1,7 @@
 package it.unicam.ids.studenti.ll.app.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.time.LocalDate;
 
 public class Persona {
@@ -7,13 +9,14 @@ public class Persona {
     public String cognome;
     private LocalDate dataNascita = LocalDate.now();
 
+    @JsonCreator
+    public Persona(String nome, String cognome, int anno, int mese, int giorno) {
+        this(nome, cognome, LocalDate.of(anno, mese, giorno));
+    }
+
     protected Persona(String nome, String cognome) {
         this.nome = nome;
         this.cognome = cognome;
-    }
-
-    public Persona(String nome, String cognome, int anno, int mese, int giorno) {
-        this(nome, cognome, LocalDate.of(anno, mese, giorno));
     }
 
     public Persona(String nome, String cognome, LocalDate dataNascita) {

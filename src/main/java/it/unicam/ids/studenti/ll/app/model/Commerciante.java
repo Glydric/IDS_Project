@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.app.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 
 import java.time.LocalDate;
@@ -12,13 +13,16 @@ public class Commerciante extends Azienda {
     private String linkEsterno;
     private Coalizione gruppoAppartenza = new Coalizione(this);
 
-    public Commerciante(String ragioneSociale,
-                        int annoAzienda,
-                        int meseAzienda,
-                        int giornoAzienda) {
+    @JsonCreator
+    public Commerciante(
+            String ragioneSociale,
+            int anno,
+            int mese,
+            int giorno
+    ) {
         super(
                 ragioneSociale,
-                LocalDate.of(annoAzienda, meseAzienda, giornoAzienda)
+                LocalDate.of(anno, mese, giorno)
         );
     }
 
