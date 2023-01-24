@@ -28,8 +28,8 @@ class WebController {
                 "listaClienti");
     }
 
-    @PostMapping(WebPaths.creaProprietarioAzienda)
-    public static String creaProprietarioAzienda(
+    @PostMapping(WebPaths.creaProprietario)
+    public static String creaProprietario(
             @PathVariable String ragioneSociale,
             @RequestParam(value = "nome") String nome,
             @RequestParam(value = "cognome") String cognome,
@@ -40,6 +40,8 @@ class WebController {
     ) {
         Commerciante actualC =
                 getCommercianteFrom(ragioneSociale);
+        if (actualC.haveProprietario())
+            return "<h2>Proprietario già iscritto, solo il vecchio proprietario può definire un successore</h2>";
         try {
             Proprietario proprietario = new Proprietario(
                     nome,
@@ -50,8 +52,6 @@ class WebController {
                     actualC,
                     password
             );
-
-            Register.initializeFrom(actualC);
 
             return String.format(
                     WebContents.ok + "<br>" + (
@@ -77,6 +77,7 @@ class WebController {
         try {
             // TODO modificare la chiamata per usare il DB
             commercianti.add(commerciante);
+            Register.initializeFrom(commerciante);
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }

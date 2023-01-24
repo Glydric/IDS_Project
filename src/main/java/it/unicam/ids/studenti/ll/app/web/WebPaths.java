@@ -1,7 +1,7 @@
 package it.unicam.ids.studenti.ll.app.web;
 
 abstract class WebPaths {
-    static final String creaProprietarioAzienda = "/{ragioneSociale}/crea/proprietarioAzienda";
+    static final String creaProprietario = "/{ragioneSociale}/crea/proprietarioAzienda";
     static final String aggiungiCliente = "/{ragioneSociale}/aggiungi/cliente";
     static final String registraCliente = "/{ragioneSociale}/registra/cliente";
 
