@@ -3,6 +3,7 @@ package it.unicam.ids.studenti.ll.app.model;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.UpdatableProgrammaFedelta;
 
+import java.util.List;
 import java.util.Set;
 
 //TODO separala da model e reimposta gradle cosi da essere un solo progetto
@@ -57,6 +58,12 @@ public class OfficeController {
         utente.getAzienda().addDipendente(persona);
     }
 
+    public void allowDipendente(String userName, String permesso) throws AuthorizationException {
+        allowDipendente(
+                (Dipendente) Identificatore.getUtenteFrom(userName),
+                permesso
+        );
+    }
     public void allowDipendente(Dipendente dipendente, String permesso) throws AuthorizationException {
         if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
@@ -98,10 +105,14 @@ public class OfficeController {
                 );
     }
 
-    public Set<Cliente> getListaClienti() throws AuthorizationException {
+    public List<Cliente> getListaClienti() throws AuthorizationException {
         if (!utente.haveAuthorization())
             throw new AuthorizationException("L'utente non ha i permessi");
 
-        return ((Commerciante) utente.getAzienda()).getCoalizione().getClienti();
+        return ((Commerciante) utente.getAzienda())
+                .getCoalizione()
+                .getClienti()
+                .stream()
+                .toList();
     }
 }
