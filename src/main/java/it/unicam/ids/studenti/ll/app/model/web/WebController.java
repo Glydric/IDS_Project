@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app;
+package it.unicam.ids.studenti.ll.app.model.web;
 
 import it.unicam.ids.studenti.ll.app.model.*;
 import org.springframework.web.bind.annotation.*;
