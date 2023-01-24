@@ -111,8 +111,6 @@ public class OfficeController {
 
         return ((Commerciante) utente.getAzienda())
                 .getCoalizione()
-                .getClienti()
-                .stream()
-                .toList();
+                .getListaClienti();
     }
 }
