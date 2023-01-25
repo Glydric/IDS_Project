@@ -73,15 +73,17 @@ public class OfficeController {
     public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
         utente.authorize();
 
-
         ((Commerciante) utente.getAzienda()).addCliente(cliente);
     }
 
-    public Set<ProgrammaFedelta> getProgrammiFrom(Cliente cliente) throws AuthorizationException {
+    public Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws AuthorizationException {
         utente.authorize();
 
-
-        return ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente);
+        return ((Commerciante) utente.getAzienda())
+                .getCoalizione()
+                .getProgrammiOf(
+                        tessera, password
+                );
     }
     //TODO testare l'inserimento della vendita controllando se il cliente esiste nell'azienda
 
@@ -94,7 +96,7 @@ public class OfficeController {
             throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
         if (!((Commerciante) utente.getAzienda()).getClienti().contains(cliente))
             throw new IllegalArgumentException("Cliente non esistente nell'azienda");
-        ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente)
+        ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammiOf(cliente)
                 .stream()
                 .filter(
                         (programmaFedelta) -> (programmaFedelta instanceof UpdatableProgrammaFedelta)
@@ -117,5 +119,4 @@ public class OfficeController {
 
         ((Commerciante) utente.getAzienda()).mergeGroups(commerciante);
     }
-
 }

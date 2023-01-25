@@ -72,7 +72,7 @@ public class OfficeControllerTest {
         ((Commerciante)ufficio2.utente.getAzienda()).addNewProgramma(ProgrammaFedelta.create("punti"));
         ufficio2.aggiungiCliente(cliente);
         ufficio2.inserimentoVendita(cliente,10);
-        assert ((ProgrammaPunti)((Commerciante)ufficio2.utente.getAzienda()).getCoalizione().getProgrammi(cliente).stream().toList().get(0)).getPunti() == 10;
+        assert ((ProgrammaPunti)((Commerciante)ufficio2.utente.getAzienda()).getCoalizione().getProgrammiOf(cliente).stream().toList().get(0)).getPunti() == 10;
 
     }
 }

@@ -83,6 +83,17 @@ public class Cliente extends Persona {
         this.numeroTelefono = numeroTelefono;
     }
 
+    public boolean isValid(String tessera, String password) {
+        return identificativoTessera.toString().equals(tessera)
+                && this.password.equals(password);
+    }
+
+    public void setPassword(String password) {
+        if (password.length() <= 8)
+            throw new IllegalArgumentException("Password troppo corta");
+
+        this.password = password;
+    }
 
     @Override
     public String toString() {

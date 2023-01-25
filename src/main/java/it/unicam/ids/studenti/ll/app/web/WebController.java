@@ -215,6 +215,24 @@ class WebController {
         return WebContents.ok;
     }
 
+    @GetMapping(WebPaths.programmi)
+    public static String ottieniProgrammi(
+            @PathVariable String ragioneSociale,
+            @RequestParam(value = "tessera") String tessera,
+            @RequestParam(value = "password") String password
+    ) {
+        try {
+            return OfficeController
+                    .authenticatedByRegisterOf(ragioneSociale)
+                    .getProgrammiOf(tessera, password)
+                    .toString();
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+    }
+
     static Commerciante getCommercianteFrom(String ragioneSociale) {
         List<Commerciante> c = commercianti.stream().filter(
                 commerciante -> Objects.equals(commerciante.ragioneSociale, ragioneSociale)
