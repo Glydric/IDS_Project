@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 
 public class Coalizione {
-    protected final Set<Cliente> mapClienti = new HashSet<>();
+    protected final Set<Cliente> clienti = new HashSet<>();
     protected final Set<Commerciante> appartenenti = new HashSet<>();
 
     protected Coalizione() {
@@ -19,7 +19,7 @@ public class Coalizione {
     }
 
     public Set<Cliente> getClienti() {
-        return mapClienti;
+        return clienti;
     }
 
     protected void addProgrammaForEachCliente(ProgrammaFedelta programma) {
@@ -43,7 +43,7 @@ public class Coalizione {
     }
 
     protected void addCliente(Cliente cliente) {
-        mapClienti.add(cliente);
+        clienti.add(cliente);
         cliente
                 .mapCoalizione
                 .put(this, new HashSet<>(getCommonPrograms()));
@@ -100,7 +100,7 @@ public class Coalizione {
     }
 
     protected Set<ProgrammaFedelta> getProgrammi(Cliente cliente) {
-        return mapClienti.stream().map(
+        return clienti.stream().map(
                         c -> c.mapCoalizione
                                 .get(this)
                 )
@@ -126,7 +126,7 @@ public class Coalizione {
      * @param message il messaggio
      */
     protected void sendMessage(Cliente cliente, String message) {
-        if (mapClienti.contains(cliente))
+        if (clienti.contains(cliente))
             SingletonSMS.getEntity().inviaMessaggio(cliente, message);
     }
 
@@ -145,7 +145,7 @@ public class Coalizione {
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione
-                mapClienti.add(c);
+                clienti.add(c);
                 c.mapCoalizione.put(this, otherPrograms);
             } else {
                 mergeProgrammi(

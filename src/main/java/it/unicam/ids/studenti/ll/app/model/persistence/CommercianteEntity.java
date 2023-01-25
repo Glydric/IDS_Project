@@ -14,12 +14,19 @@ import java.util.UUID;
 @Accessors(chain = true)
 @Entity
 @Table(name = "commerciante")
+
+/**
+ * We will not save listaProgrammi for time based reasons
+ */
 public class CommercianteEntity implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
+
+    @Column(name = "ragioneSoziale")
+    private String ragioneSociale;
 
     @Column(name = "linkEsterno")
     private String linkEsterno;
@@ -29,8 +36,5 @@ public class CommercianteEntity implements Serializable {
     @Fetch(FetchMode.SELECT)
     private CoalizioneEntity gruppoAppartenza;
 
-
-    @Column(name = "nome")
-    private String nome;
 
 }

@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.validation.constraints.Email;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
@@ -21,8 +23,16 @@ public class ClienteEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    //private UUID id;
+    private UUID identificativoTessera;
 
+    @Column(name = "nome")
+    public String nome;
+
+    @Column(name = "cognome")
+    public String cognome;
+
+    @Column(name = "dataNascita")
+    public LocalDate dataNascita;
 
     @Column(name = "isFamily")
     public boolean isFamily = false;
@@ -33,7 +43,6 @@ public class ClienteEntity implements Serializable {
     @Email
     @Column(name = "email")
     private String email;
-
 
     @Column (name = "password")
     private String password;
