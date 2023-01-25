@@ -52,8 +52,7 @@ public class OfficeController {
     }
 
     public void aggiungiDipendente(Persona persona) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
 
         utente.getAzienda().addDipendente(persona);
     }
@@ -64,31 +63,31 @@ public class OfficeController {
                 permesso
         );
     }
+
     public void allowDipendente(Dipendente dipendente, String permesso) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
 
         utente.getAzienda().addPermessoDipendente(dipendente, permesso);
     }
 
     public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
+
 
         ((Commerciante) utente.getAzienda()).addCliente(cliente);
     }
 
     public Set<ProgrammaFedelta> getProgrammiFrom(Cliente cliente) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
+
 
         return ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente);
     }
     //TODO testare l'inserimento della vendita controllando se il cliente esiste nell'azienda
 
     public void inserimentoVendita(Cliente cliente, float prezzo) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
+
         if (prezzo <= 0)
             throw new IllegalArgumentException("Il prezzo è inferiore a zero.");
         if (cliente == null)
@@ -106,11 +105,17 @@ public class OfficeController {
     }
 
     public List<Cliente> getListaClienti() throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
 
         return ((Commerciante) utente.getAzienda())
                 .getCoalizione()
                 .getListaClienti();
     }
+
+    public void coalizzaCon(Commerciante commerciante) throws AuthorizationException, IllegalStateException {
+        utente.authorize();
+
+        ((Commerciante) utente.getAzienda()).mergeGroups(commerciante);
+    }
+
 }

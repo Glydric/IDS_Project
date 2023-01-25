@@ -7,8 +7,8 @@ import java.util.Set;
 
 public abstract class UtenteIdentificabile extends Persona {
     public final Identificatore identificativo = Identificatore.fromUtente(this);
-    private String password = "";
     protected final Set<String> listaPermessi = new HashSet<>();
+    private String password = "";
 
 
     /**
@@ -43,10 +43,11 @@ public abstract class UtenteIdentificabile extends Persona {
                 .getMethodName();
     }
 
-    public Boolean haveAuthorization() {
-        return listaPermessi.contains(getPreviousMethodOf(2))
+    public void authorize() throws AuthorizationException {
+        if (!(listaPermessi.contains(getPreviousMethodOf(2))
                 || listaPermessi.contains("ALL")
-                || listaPermessi.contains("all");
+                || listaPermessi.contains("all")))
+            throw new AuthorizationException("L'utente non ha i permessi");
     }
 
     /**
