@@ -25,10 +25,10 @@ public class CommercianteEntity implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "ragioneSoziale")
+    @Column(name = "ragione_sociale")
     private String ragioneSociale;
 
-    @Column(name = "linkEsterno")
+    @Column(name = "link_esterno")
     private String linkEsterno;
 
     @JoinColumn(name = "id_coalizione", referencedColumnName = "id")
