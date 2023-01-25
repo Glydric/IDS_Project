@@ -6,7 +6,6 @@ import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.UpdatableProgrammaFe
 import java.util.List;
 import java.util.Set;
 
-//TODO separala da model e reimposta gradle cosi da essere un solo progetto
 public class OfficeController {
     public UtenteIdentificabile utente;
 
