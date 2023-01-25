@@ -12,15 +12,26 @@ public class Commerciante extends Azienda {
     private String linkEsterno;
     private Coalizione gruppoAppartenza = new Coalizione(this);
 
-    protected Commerciante(String ragioneSociale) {
-        super(ragioneSociale);
+    public Commerciante(String ragioneSociale,
+                        int annoAzienda,
+                        int meseAzienda,
+                        int giornoAzienda) {
+        super(
+                ragioneSociale,
+                LocalDate.of(annoAzienda, meseAzienda, giornoAzienda)
+        );
     }
 
     public Commerciante(String ragioneSociale, LocalDate dataIscrizione) {
         super(ragioneSociale, dataIscrizione);
     }
 
-    public Commerciante(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
+    protected Commerciante(String ragioneSociale) {
+        super(ragioneSociale);
+    }
+
+
+    protected Commerciante(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
         super(ragioneSociale, dataIscrizione, proprietario);
     }
 
@@ -101,7 +112,9 @@ public class Commerciante extends Azienda {
     }
 
     public Set<ProgrammaFedelta> getProgress(Cliente cliente) {
-        return gruppoAppartenza.getProgrammi(cliente);
+        return cliente
+                .mapCoalizione
+                .get(gruppoAppartenza);
     }
 
     protected boolean clientHaveProgram(Cliente cliente, ProgrammaFedelta pf) {

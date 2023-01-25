@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 
 public class Coalizione {
-    private final Map<Cliente, Set<ProgrammaFedelta>> mapClienti = new HashMap<>();
-    public Set<Commerciante> appartenenti = new HashSet<>();
+    protected final Set<Cliente> mapClienti = new HashSet<>();
+    protected final Set<Commerciante> appartenenti = new HashSet<>();
 
     protected Coalizione() {
     }
@@ -19,14 +19,19 @@ public class Coalizione {
     }
 
     public Set<Cliente> getClienti() {
-        return mapClienti.keySet();
+        return mapClienti;
     }
 
     protected void addProgrammaForEachCliente(ProgrammaFedelta programma) {
         //dato che il programma è stato precedentemente aggiunto nel commerciante, lui verrà considerato tra i programmi in comune
         // e se tutti i commercianti lo hanno definito come programma, questo sarà true e lo aggiungerà
         if (isProgramInCommons(programma))
-            getClienti().forEach(cliente -> mapClienti.get(cliente).add(programma.clone()));
+            getClienti().forEach(
+                    cliente -> cliente
+                            .mapCoalizione
+                            .get(this)
+                            .add(programma.clone())
+            );
     }
 
     private boolean isProgramInCommons(ProgrammaFedelta programma) {
@@ -38,7 +43,10 @@ public class Coalizione {
     }
 
     protected void addCliente(Cliente cliente) {
-        mapClienti.put(cliente, new HashSet<>(getCommonPrograms()));
+        mapClienti.add(cliente);
+        cliente
+                .mapCoalizione
+                .put(this, new HashSet<>(getCommonPrograms()));
     }
 
     /**
@@ -92,7 +100,12 @@ public class Coalizione {
     }
 
     protected Set<ProgrammaFedelta> getProgrammi(Cliente cliente) {
-        return mapClienti.get(cliente);
+        return mapClienti.stream().map(
+                        c -> c.mapCoalizione
+                                .get(this)
+                )
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
     }
 
 
@@ -113,7 +126,7 @@ public class Coalizione {
      * @param message il messaggio
      */
     protected void sendMessage(Cliente cliente, String message) {
-        if (mapClienti.containsKey(cliente))
+        if (mapClienti.contains(cliente))
             SingletonSMS.getEntity().inviaMessaggio(cliente, message);
     }
 
@@ -132,9 +145,14 @@ public class Coalizione {
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione
-                mapClienti.put(c, otherPrograms);
+                mapClienti.add(c);
+                c.mapCoalizione.put(this, otherPrograms);
             } else {
-                mergeProgrammi(mapClienti.get(c), otherPrograms, mergeRules);
+                mergeProgrammi(
+                        c.mapCoalizione.get(this),
+                        otherPrograms,
+                        mergeRules
+                );
             }
         }
         return this;

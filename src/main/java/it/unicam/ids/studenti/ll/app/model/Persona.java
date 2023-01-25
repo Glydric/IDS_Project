@@ -12,19 +12,24 @@ public class Persona {
         this.cognome = cognome;
     }
 
+    public Persona(String nome, String cognome, int anno, int mese, int giorno) {
+        this(nome, cognome, LocalDate.of(anno, mese, giorno));
+    }
+
     public Persona(String nome, String cognome, LocalDate dataNascita) {
         this(nome, cognome);
-        if (dataNascita.getYear() > LocalDate.now().getYear()){
+        if (dataNascita.getYear() > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Non vini dal futuro, vero?");
         }
-        if ((LocalDate.now().getYear() - dataNascita.getYear()) > 120 ){
+        if ((LocalDate.now().getYear() - dataNascita.getYear()) > 120) {
             throw new IllegalArgumentException("Hai piu' di 120 anni?");
         }
-        if ((LocalDate.now().getYear() - dataNascita.getYear()) < 18 ){
+        if ((LocalDate.now().getYear() - dataNascita.getYear()) < 18) {
             throw new IllegalArgumentException("Hemm...chiama i tuoi genitori, grazie.");
         }
         this.dataNascita = dataNascita;
     }
+
 
     public LocalDate getDataNascita() {
         return this.dataNascita;
