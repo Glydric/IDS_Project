@@ -1,5 +1,7 @@
-package it.unicam.ids.studenti.ll.app.model.persistence;
+package it.unicam.ids.studenti.ll.app.model.persistence.coalizione;
 
+import it.unicam.ids.studenti.ll.app.model.persistence.cliente.ClienteEntity;
+import it.unicam.ids.studenti.ll.app.model.persistence.commerciante.CommercianteEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app.model.persistence;
+package it.unicam.ids.studenti.ll.app.model.persistence.cliente;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,13 +31,13 @@ public class ClienteEntity implements Serializable {
     @Column(name = "cognome")
     public String cognome;
 
-    @Column(name = "dataNascita")
+    @Column(name = "data_nascita")
     public LocalDate dataNascita;
 
-    @Column(name = "isFamily")
+    @Column(name = "is_family")
     public boolean isFamily = false;
 
-    @Column(name = "numeroTelefono")
+    @Column(name = "numero_telefono")
     private String numeroTelefono;
 
     @Email

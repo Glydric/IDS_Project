@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app.model.persistence;
+package it.unicam.ids.studenti.ll.app.model.persistence.commerciante;
 
 import org.springframework.data.repository.CrudRepository;
 
