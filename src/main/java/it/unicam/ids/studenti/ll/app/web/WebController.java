@@ -195,6 +195,26 @@ class WebController {
         return WebContents.ok;
     }
 
+    @PostMapping(WebPaths.coalizzaAzienda)
+    public static String coalizzaCon(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "ragioneSociale") String ragioneSociale
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName, password)
+                    .coalizzaCon(getCommercianteFrom(ragioneSociale));
+        } catch (IllegalStateException e) {
+            return "Attendere che l'altra azienda accetti la richiesta";
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok;
+    }
+
     static Commerciante getCommercianteFrom(String ragioneSociale) {
         List<Commerciante> c = commercianti.stream().filter(
                 commerciante -> Objects.equals(commerciante.ragioneSociale, ragioneSociale)

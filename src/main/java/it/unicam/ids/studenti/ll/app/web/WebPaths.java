@@ -4,6 +4,7 @@ abstract class WebPaths {
     static final String creaProprietario = "/{ragioneSociale}/crea/proprietarioAzienda";
     static final String aggiungiCliente = "/{ragioneSociale}/aggiungi/cliente";
     static final String registraCliente = "/{ragioneSociale}/registra/cliente";
+    static final String coalizzaAzienda = "/coalizza/azienda";
 
 
     static final String creaAzienda = "/crea/azienda";
