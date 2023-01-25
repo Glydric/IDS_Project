@@ -12,6 +12,7 @@ public class Commerciante extends Azienda {
     private final Set<ProgrammaFedelta> listaProgrammi = new HashSet<>();
     private String linkEsterno;
     private Coalizione gruppoAppartenza = new Coalizione(this);
+    private Commerciante wantCoalize;
 
     @JsonCreator
     public Commerciante(
@@ -64,7 +65,7 @@ public class Commerciante extends Azienda {
      *
      * @param commerciante l'altro commerciante
      */
-    public void mergeGroups(Commerciante commerciante) {
+    public void mergeGroups(Commerciante commerciante)throws IllegalStateException {
         mergeGroups(commerciante, null);
     }
 
@@ -76,11 +77,25 @@ public class Commerciante extends Azienda {
      * @param mergeRules   regole di default per ogni classe di tipo programma fedelta, ogni programma senza una
      *                     regola predefinita sfrutterà la propria regola di default
      */
-    public void mergeGroups(Commerciante commerciante, Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
+    public void mergeGroups(
+            Commerciante commerciante,
+            Map<
+                    Class<ProgrammaFedelta>,
+                    BiConsumer<ProgrammaFedelta, ProgrammaFedelta>
+                    > mergeRules) throws IllegalStateException {
+
+        wantCoalize = commerciante;
+        if (!commerciante.wantCoalizeWith(this)) {
+            throw new IllegalStateException("L'altro commerciante non ha accettato la fusione");
+        }
         commerciante.setCoalizione(gruppoAppartenza.mergeCoalizioni(
                 commerciante.gruppoAppartenza,
                 mergeRules
         ));
+    }
+
+    private boolean wantCoalizeWith(Commerciante commerciante) {
+        return wantCoalize == commerciante;
     }
 
     /**
