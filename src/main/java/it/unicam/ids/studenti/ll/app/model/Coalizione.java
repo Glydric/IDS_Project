@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class Coalizione {
-    protected final Set<Cliente> mapClienti = new HashSet<>();
+    protected final Set<Cliente> clienti = new HashSet<>();
     protected final Set<Commerciante> appartenenti = new HashSet<>();
 
     protected Coalizione() {
@@ -18,18 +18,18 @@ public class Coalizione {
     }
 
     public List<Cliente> getListaClienti() {
-        return mapClienti.stream().toList();
+        return clienti.stream().toList();
     }
 
     public Set<Cliente> getClienti() {
-        return mapClienti;
+        return clienti;
     }
 
     protected void addProgrammaForEachCliente(ProgrammaFedelta programma) {
         //dato che il programma è stato precedentemente aggiunto nel commerciante, lui verrà considerato tra i programmi in comune
         // e se tutti i commercianti lo hanno definito come programma, questo sarà true e lo aggiungerà
         if (isProgramInCommons(programma))
-            mapClienti.forEach(
+            clienti.forEach(
                     cliente -> cliente
                             .mapCoalizione
                             .get(this)
@@ -46,7 +46,7 @@ public class Coalizione {
     }
 
     protected void addCliente(Cliente cliente) {
-        mapClienti.add(cliente);
+        clienti.add(cliente);
         cliente
                 .mapCoalizione
                 .put(this, new HashSet<>(getCommonPrograms()));
@@ -103,7 +103,7 @@ public class Coalizione {
     }
 
     protected Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) {
-        List<Cliente> cliente = mapClienti.stream().filter(
+        List<Cliente> cliente = clienti.stream().filter(
                 c -> c.isValid(tessera, password)
         ).toList();
         assert cliente.size() == 1;
@@ -123,7 +123,7 @@ public class Coalizione {
      */
     protected void sendMessageToAll(String message) {
         SingletonSMS.getEntity().inviaMessaggio(
-                mapClienti,
+                clienti,
                 message
         );
     }
@@ -133,7 +133,7 @@ public class Coalizione {
      * @param message il messaggio
      */
     protected void sendMessage(Cliente cliente, String message) {
-        if (mapClienti.contains(cliente))
+        if (clienti.contains(cliente))
             SingletonSMS.getEntity().inviaMessaggio(cliente, message);
     }
 
@@ -152,7 +152,7 @@ public class Coalizione {
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione
-                mapClienti.add(c);
+                clienti.add(c);
                 c.mapCoalizione.put(this, otherPrograms);
             } else {
                 mergeProgrammi(
