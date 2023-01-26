@@ -18,7 +18,6 @@ public class Cliente extends Persona {
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
-
     private String password;
 
     /**
@@ -45,7 +44,7 @@ public class Cliente extends Persona {
                 LocalDate.of(anno, mese, giorno),
                 numeroTelefono,
                 email,
-                isFamily//.equalsIgnoreCase("true")
+                isFamily
         );
     }
 
@@ -95,9 +94,13 @@ public class Cliente extends Persona {
         this.password = password;
     }
 
+    public Set<ProgrammaFedelta> getProgramsOf(Coalizione coalizione) {
+        return mapCoalizione.get(coalizione);
+    }
+
     @Override
     public String toString() {
-        return "identificativo '" + identificativoTessera + "' " + super.toString()
+        return "Tessera: '" + identificativoTessera + "' " + super.toString()
                 + " è iscritto come " + (isFamily ? "famiglia" : "singolo");
     }
 }

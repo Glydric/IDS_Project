@@ -100,7 +100,8 @@ public class OfficeController {
             throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
         if (!((Commerciante) utente.getAzienda()).getClienti().contains(cliente))
             throw new IllegalArgumentException("Cliente non esistente nell'azienda");
-        ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammiOf(cliente)
+
+        cliente.getProgramsOf(((Commerciante) utente.getAzienda()).getCoalizione())
                 .stream()
                 .filter(
                         (programmaFedelta) -> (programmaFedelta instanceof UpdatableProgrammaFedelta)

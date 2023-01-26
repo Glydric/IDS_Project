@@ -108,13 +108,8 @@ public class Coalizione {
         ).toList();
         assert cliente.size() == 1;
 
-        return getProgrammiOf(cliente.get(0));
+        return cliente.get(0).getProgramsOf(this);
     }
-
-    protected Set<ProgrammaFedelta> getProgrammiOf(Cliente cliente) {
-        return cliente.mapCoalizione.get(this);
-    }
-
 
     /**
      * Ottiene i clienti dalla propria coalizione
@@ -148,7 +143,8 @@ public class Coalizione {
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
         for (Cliente c : altraCoalizione.getClienti()) {
             // primo passo del merge è il merge dei clienti con i programmi
-            Set<ProgrammaFedelta> otherPrograms = altraCoalizione.getProgrammiOf(c);
+            Set<ProgrammaFedelta> otherPrograms =
+                    c.getProgramsOf(altraCoalizione);
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione
