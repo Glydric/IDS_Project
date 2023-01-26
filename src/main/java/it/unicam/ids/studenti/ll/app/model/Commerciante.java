@@ -51,9 +51,14 @@ public class Commerciante extends Azienda {
     /**
      * @param programma il nuovo programma
      */
-    public void addNewProgramma(ProgrammaFedelta programma) {
+    public void addNewProgramma(ProgrammaFedelta programma) throws IllegalArgumentException {
         // Se la classe è già presente
-        if (listaProgrammi.stream().map(Object::getClass).toList().contains(programma.getClass()))
+        if (listaProgrammi
+                .stream()
+                .map(Object::getClass)
+                .toList()
+                .contains(programma.getClass())
+        )
             throw new IllegalArgumentException("Programma già presente");
         listaProgrammi.add(programma.clone());
         gruppoAppartenza.addProgrammaForEachCliente(programma);
@@ -65,7 +70,7 @@ public class Commerciante extends Azienda {
      *
      * @param commerciante l'altro commerciante
      */
-    public void mergeGroups(Commerciante commerciante)throws IllegalStateException {
+    public void mergeGroups(Commerciante commerciante) throws IllegalStateException {
         mergeGroups(commerciante, null);
     }
 

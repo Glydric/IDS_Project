@@ -1,12 +1,27 @@
 package it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.io.Serializable;
 import java.util.function.BiConsumer;
 
 public interface ProgrammaFedelta extends Cloneable {
 
+
     static ProgrammaFedelta create(String type) throws IllegalArgumentException {
         return create().setType(type).build();
+    }
+
+    @JsonCreator
+    static <T extends Serializable> ProgrammaFedelta jsonBuilder(
+            String tipo,
+            Runnable referralFunction,
+            T value
+    ) {
+        return create()
+                .setType(tipo)
+                .setReferralFunction(referralFunction)
+                .buildWith(value);
     }
 
     static Builder create() {
@@ -39,6 +54,7 @@ public interface ProgrammaFedelta extends Cloneable {
 
         private Builder() {
         }
+
 
         /**
          * Si possono creare tutti i programmi, in programmaReferral si solleva un'eccezione se non inseriamo la function

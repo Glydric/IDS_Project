@@ -1,12 +1,14 @@
 package it.unicam.ids.studenti.ll.app.web;
 
 import it.unicam.ids.studenti.ll.app.model.*;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
 
 @RestController
 class WebController {
@@ -73,7 +75,9 @@ class WebController {
     }
 
     @PostMapping(WebPaths.creaAzienda)
-    public static String creaAzienda(@RequestBody Commerciante commerciante) {
+    public static String creaAzienda(
+            @RequestBody Commerciante commerciante
+    ) {
         try {
             // TODO modificare la chiamata per usare il DB
             commercianti.add(commerciante);
@@ -207,6 +211,24 @@ class WebController {
                     .coalizzaCon(getCommercianteFrom(ragioneSociale));
         } catch (IllegalStateException e) {
             return "Attendere che l'altra azienda accetti la richiesta";
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok;
+    }
+
+    @PostMapping(WebPaths.aggiungiProgramma)
+    public static String aggiungiProgramma(
+            @RequestBody ProgrammaFedelta pf,
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName,password)
+                    .aggiungiProgramma(pf);
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {

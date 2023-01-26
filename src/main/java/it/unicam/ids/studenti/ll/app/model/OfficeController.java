@@ -40,7 +40,6 @@ public class OfficeController {
         return new OfficeController(identificatore, password);
     }
 
-
     public void aggiungiDipendente(Persona persona, String password) throws AuthorizationException {
         aggiungiDipendente(persona);
 
@@ -73,6 +72,12 @@ public class OfficeController {
         utente.authorize();
 
         ((Commerciante) utente.getAzienda()).addCliente(cliente);
+    }
+
+    public void aggiungiProgramma(ProgrammaFedelta pf) throws AuthorizationException, IllegalArgumentException {
+        utente.authorize();
+
+        ((Commerciante) utente.getAzienda()).addNewProgramma(pf);
     }
 
     public Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws AuthorizationException {
