@@ -109,6 +109,7 @@ public class Coalizione {
                 .filter(
                         filteringRule
                 ).toList();
+
         assert cliente.size() <= 1;
 
         if (cliente.size() == 0)
