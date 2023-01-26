@@ -2,6 +2,7 @@ package it.unicam.ids.studenti.ll.app.model;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -71,6 +72,14 @@ public abstract class UtenteIdentificabile extends Persona {
         return Objects.equals(password, this.password);
     }
 
+    protected void addPermessi(String... permessi) {
+        addPermessi(List.of(permessi));
+    }
+
+    protected void addPermessi(List<String> permessi) {
+        listaPermessi.addAll(permessi);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,4 +92,6 @@ public abstract class UtenteIdentificabile extends Persona {
     public int hashCode() {
         return identificativo.hashCode();
     }
+
+
 }
