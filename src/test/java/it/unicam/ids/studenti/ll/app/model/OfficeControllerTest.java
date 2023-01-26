@@ -76,7 +76,9 @@ public class OfficeControllerTest {
         assert (
                 (ProgrammaPunti)
                         cliente
-                                .getProgramsOf(((Commerciante) ufficio2.utente.getAzienda()).getCoalizione())
+                                .getProgramsOf(
+                                        ((Commerciante) ufficio2.utente.getAzienda()).getCoalizione()
+                                )
                                 .stream()
                                 .toList()
                                 .get(0)
