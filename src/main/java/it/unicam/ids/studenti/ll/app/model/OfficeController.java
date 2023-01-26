@@ -80,7 +80,7 @@ public class OfficeController {
         ((Commerciante) utente.getAzienda()).addNewProgramma(pf);
     }
 
-    public Set<ProgrammaFedelta> getProgrammiBy(String tessera) throws AuthorizationException {
+    public Set<ProgrammaFedelta> getProgrammi(String tessera) throws AuthorizationException {
         utente.authorize();
 
         return ((Commerciante) utente.getAzienda())

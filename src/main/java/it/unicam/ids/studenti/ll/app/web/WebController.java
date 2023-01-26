@@ -219,7 +219,7 @@ class WebController {
         return WebContents.ok;
     }
 
-    @PostMapping(WebPaths.aggiungiProgramma)
+    @PostMapping(WebPaths.getPostPrograms)
     public static String aggiungiProgramma(
             @RequestBody ProgrammaFedelta pf,
             @RequestParam(value = "userName") String userName,
@@ -237,7 +237,7 @@ class WebController {
         return WebContents.ok;
     }
 
-    @GetMapping(WebPaths.ottieniProgrammi)
+    @GetMapping(WebPaths.getPostPrograms)
     public static String ottieniProgrammi(
             @RequestParam(value = "userName") String userName,
             @RequestParam(value = "password") String password,
@@ -246,7 +246,7 @@ class WebController {
         try {
             return OfficeController
                     .authenticatedBy(userName, password)
-                    .getProgrammiBy(tessera)
+                    .getProgrammi(tessera)
                     .toString();
         } catch (IllegalArgumentException | NullPointerException e) {
             return "<h1>" + e.getMessage() + "</h1>";

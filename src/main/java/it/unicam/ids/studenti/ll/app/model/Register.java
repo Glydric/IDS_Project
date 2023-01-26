@@ -12,7 +12,7 @@ public class Register extends UtenteIdentificabile {
         this.azienda = azienda;
         super.listaPermessi.add("inserimentoVendita");
         super.listaPermessi.add("aggiungiCliente");
-        super.listaPermessi.add("getProgrammiOf");
+        super.listaPermessi.add("getProgrammi");
     }
 
     public static Register from(Azienda azienda) {
