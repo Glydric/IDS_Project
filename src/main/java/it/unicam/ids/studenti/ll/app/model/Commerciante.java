@@ -41,10 +41,10 @@ public class Commerciante extends Azienda {
     }
 
     protected List<ProgrammaFedelta> getListaProgrammi() {
-        return getProgressi().stream().toList();
+        return getProgrammi().stream().toList();
     }
 
-    public Set<ProgrammaFedelta> getProgressi() {
+    public Set<ProgrammaFedelta> getProgrammi() {
         return Collections.unmodifiableSet(listaProgrammi);
     }
 
