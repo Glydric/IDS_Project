@@ -32,4 +32,5 @@ public class CoalizioneEntity implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST)
     @Fetch(FetchMode.SELECT)
     private Set<ClienteEntity> clienti;
+
 }
