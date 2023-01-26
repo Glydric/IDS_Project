@@ -80,13 +80,22 @@ public class OfficeController {
         ((Commerciante) utente.getAzienda()).addNewProgramma(pf);
     }
 
+    public Set<ProgrammaFedelta> getProgrammiBy(String tessera) throws AuthorizationException {
+        utente.authorize();
+
+        return ((Commerciante) utente.getAzienda())
+                .getCoalizione()
+                .getProgrammiOf(tessera);
+    }
+
     public Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws AuthorizationException {
         utente.authorize();
 
         return ((Commerciante) utente.getAzienda())
                 .getCoalizione()
                 .getProgrammiOf(
-                        tessera, password
+                        tessera,
+                        password
                 );
     }
     //TODO testare l'inserimento della vendita controllando se il cliente esiste nell'azienda

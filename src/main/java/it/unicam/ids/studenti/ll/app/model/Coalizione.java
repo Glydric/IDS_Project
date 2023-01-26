@@ -102,11 +102,27 @@ public class Coalizione {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
+    protected Set<ProgrammaFedelta> getProgrammiOf(String tessera) throws NullPointerException{
+        List<Cliente> cliente = clienti.stream().filter(
+                c -> c.identificativoTessera.toString().equals(tessera)
+        ).toList();
+        assert cliente.size() <= 1;
+
+        if (cliente.size() == 0)
+            throw new NullPointerException("Nome utente o password errata");
+
+        return cliente.get(0).getProgramsOf(this);
+    }
+
     protected Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) {
         List<Cliente> cliente = clienti.stream().filter(
                 c -> c.isValid(tessera, password)
         ).toList();
-        assert cliente.size() == 1;
+
+        assert cliente.size() <= 1;
+
+        if (cliente.size() == 0)
+            throw new NullPointerException("Nome utente o password errata");
 
         return cliente.get(0).getProgramsOf(this);
     }

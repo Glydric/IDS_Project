@@ -18,7 +18,7 @@ public class Cliente extends Persona {
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
-    private String password;
+    private String password = "";
 
     /**
      * Un costruttore di test

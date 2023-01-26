@@ -129,7 +129,7 @@ class WebController {
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
-        return WebContents.ok;
+        return WebContents.ok + "<br>tessera: " + cliente.identificativoTessera;
     }
 
     /**
@@ -227,7 +227,7 @@ class WebController {
     ) {
         try {
             OfficeController
-                    .authenticatedBy(userName,password)
+                    .authenticatedBy(userName, password)
                     .aggiungiProgramma(pf);
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
@@ -237,8 +237,26 @@ class WebController {
         return WebContents.ok;
     }
 
-    @GetMapping(WebPaths.programmi)
+    @GetMapping(WebPaths.ottieniProgrammi)
     public static String ottieniProgrammi(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "tessera") String tessera
+    ) {
+        try {
+            return OfficeController
+                    .authenticatedBy(userName, password)
+                    .getProgrammiBy(tessera)
+                    .toString();
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+    }
+
+    @GetMapping(WebPaths.clienteGetProgrammi)
+    public static String mostraProgrammi(
             @PathVariable String ragioneSociale,
             @RequestParam(value = "tessera") String tessera,
             @RequestParam(value = "password") String password
@@ -248,7 +266,7 @@ class WebController {
                     .authenticatedByRegisterOf(ragioneSociale)
                     .getProgrammiOf(tessera, password)
                     .toString();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
