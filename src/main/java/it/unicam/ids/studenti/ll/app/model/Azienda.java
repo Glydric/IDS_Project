@@ -112,4 +112,8 @@ public abstract class Azienda {
         if (mapDipendenti.contains(dipendente))
             dipendente.listaPermessi.add(permesso);
     }
+
+    public boolean haveProprietario() {
+        return proprietario != null;
+    }
 }

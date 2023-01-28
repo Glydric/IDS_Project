@@ -8,10 +8,13 @@ public class Register extends UtenteIdentificabile {
     private final Azienda azienda;
 
     protected Register(Azienda azienda) {
-        super("register", azienda.ragioneSociale);
+        super("register", azienda.ragioneSociale, azienda.dataIscrizioneRegistroImprese);
         this.azienda = azienda;
-        super.listaPermessi.add("inserimentoVendita");
-        super.listaPermessi.add("aggiungiCliente");
+        addPermessi(
+                "inserimentoVendita",
+                "aggiungiCliente",
+                "getProgrammiOf"
+        );
     }
 
     public static Register from(Azienda azienda) {

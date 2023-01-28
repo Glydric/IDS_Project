@@ -62,4 +62,9 @@ public class ProgrammaLivelli implements UpdatableProgrammaFedelta {
     public int hashCode() {
         return Objects.hash(getLivello());
     }
+
+    @Override
+    public String toString() {
+        return "Programma Livello - raggiunto " + livello;
+    }
 }

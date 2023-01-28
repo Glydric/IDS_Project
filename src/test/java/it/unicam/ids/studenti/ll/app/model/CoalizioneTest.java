@@ -1,6 +1,8 @@
 package it.unicam.ids.studenti.ll.app.model;
 
-import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.*;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaLivelli;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaPunti;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -14,13 +16,14 @@ public class CoalizioneTest {
         Commerciante c2 = new Commerciante("Fendy");
 
         ProgrammaLivelli pf1 = (ProgrammaLivelli) ProgrammaFedelta.create("Livelli");
-        ProgrammaFedelta pf2 =ProgrammaFedelta.create("ProgrammaVIP");
+        ProgrammaFedelta pf2 = ProgrammaFedelta.create("ProgrammaVIP");
 
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
 
-        c1.mergeGroups(c2);
+        assertThrows(IllegalStateException.class, () -> c1.mergeGroups(c2));
 
+        c2.mergeGroups(c1);
 
         assertEquals(2, c1.getCoalizione().getAllPrograms().size());
 
@@ -52,7 +55,9 @@ public class CoalizioneTest {
 
         c2.addNewProgramma(ProgrammaFedelta.create().setType("ProgrammaPunti").buildWith(10));
 
-        c1.mergeGroups(c2);
+        assertThrows(IllegalStateException.class, () -> c1.mergeGroups(c2));
+
+        c2.mergeGroups(c1);
         Set<Class<? extends ProgrammaFedelta>> programs = c1.getCoalizione().getCommonProgramsType();
 
         assert (programs.size() == 1);
@@ -71,7 +76,9 @@ public class CoalizioneTest {
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
 
-        c1.mergeGroups(c2);
+        assertThrows(IllegalStateException.class, () -> c1.mergeGroups(c2));
+
+        c2.mergeGroups(c1);
 
         assertEquals(0, c1.getCoalizione().getCommonPrograms().size());
 
@@ -83,7 +90,7 @@ public class CoalizioneTest {
 
         // dato che ora uno dei programmi è in comune tra entrambi i commercianti (in quanto abbiamo entrambi i
         // programmi a livelli con un livello default di 0, esso diventa programma in comun
-        ((ProgrammaLivelli) c2.getProgressi()
+        ((ProgrammaLivelli) c2.getProgrammi()
                 .stream()
                 .filter(p -> p.getClass() == ProgrammaLivelli.class)
                 .toList().get(0)).setLivello((short) 0);
@@ -162,13 +169,15 @@ public class CoalizioneTest {
         c1.addCliente(cl1);
         c2.addCliente(cl2);
 
-        ProgrammaFedelta pf1 =ProgrammaFedelta.create().setType("punti").buildWith(10);
+        ProgrammaFedelta pf1 = ProgrammaFedelta.create().setType("punti").buildWith(10);
         ProgrammaFedelta pf2 = ProgrammaFedelta.create("Programmalivelli");
 
         c1.addNewProgramma(pf1);
         c2.addNewProgramma(pf2);
 
-        c1.mergeGroups(c2);
+        assertThrows(IllegalStateException.class, () -> c1.mergeGroups(c2));
+
+        c2.mergeGroups(c1);
 
         assertEquals(c1.getCoalizione(), c2.getCoalizione());
         assertEquals(2, c1.getClienti().size());

@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.app.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 
 import java.time.LocalDate;
@@ -11,14 +12,18 @@ public class Commerciante extends Azienda {
     private final Set<ProgrammaFedelta> listaProgrammi = new HashSet<>();
     private String linkEsterno;
     private Coalizione gruppoAppartenza = new Coalizione(this);
+    private Commerciante wantCoalize;
 
-    public Commerciante(String ragioneSociale,
-                        int annoAzienda,
-                        int meseAzienda,
-                        int giornoAzienda) {
+    @JsonCreator
+    public Commerciante(
+            String ragioneSociale,
+            int anno,
+            int mese,
+            int giorno
+    ) {
         super(
                 ragioneSociale,
-                LocalDate.of(annoAzienda, meseAzienda, giornoAzienda)
+                LocalDate.of(anno, mese, giorno)
         );
     }
 
@@ -36,19 +41,24 @@ public class Commerciante extends Azienda {
     }
 
     protected List<ProgrammaFedelta> getListaProgrammi() {
-        return getProgressi().stream().toList();
+        return getProgrammi().stream().toList();
     }
 
-    public Set<ProgrammaFedelta> getProgressi() {
+    public Set<ProgrammaFedelta> getProgrammi() {
         return Collections.unmodifiableSet(listaProgrammi);
     }
 
     /**
      * @param programma il nuovo programma
      */
-    public void addNewProgramma(ProgrammaFedelta programma) {
+    public void addNewProgramma(ProgrammaFedelta programma) throws IllegalArgumentException {
         // Se la classe è già presente
-        if (listaProgrammi.stream().map(Object::getClass).toList().contains(programma.getClass()))
+        if (listaProgrammi
+                .stream()
+                .map(Object::getClass)
+                .toList()
+                .contains(programma.getClass())
+        )
             throw new IllegalArgumentException("Programma già presente");
         listaProgrammi.add(programma.clone());
         gruppoAppartenza.addProgrammaForEachCliente(programma);
@@ -60,7 +70,7 @@ public class Commerciante extends Azienda {
      *
      * @param commerciante l'altro commerciante
      */
-    public void mergeGroups(Commerciante commerciante) {
+    public void mergeGroups(Commerciante commerciante) throws IllegalStateException {
         mergeGroups(commerciante, null);
     }
 
@@ -72,11 +82,25 @@ public class Commerciante extends Azienda {
      * @param mergeRules   regole di default per ogni classe di tipo programma fedelta, ogni programma senza una
      *                     regola predefinita sfrutterà la propria regola di default
      */
-    public void mergeGroups(Commerciante commerciante, Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
+    public void mergeGroups(
+            Commerciante commerciante,
+            Map<
+                    Class<ProgrammaFedelta>,
+                    BiConsumer<ProgrammaFedelta, ProgrammaFedelta>
+                    > mergeRules) throws IllegalStateException {
+
+        wantCoalize = commerciante;
+        if (!commerciante.wantCoalizeWith(this)) {
+            throw new IllegalStateException("L'altro commerciante non ha accettato la fusione");
+        }
         commerciante.setCoalizione(gruppoAppartenza.mergeCoalizioni(
                 commerciante.gruppoAppartenza,
                 mergeRules
         ));
+    }
+
+    private boolean wantCoalizeWith(Commerciante commerciante) {
+        return wantCoalize == commerciante;
     }
 
     /**

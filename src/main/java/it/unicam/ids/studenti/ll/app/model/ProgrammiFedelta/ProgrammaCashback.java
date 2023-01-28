@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ProgrammaCashback implements UpdatableProgrammaFedelta {
     private float cashback = 0;
-    public BiConsumer<ProgrammaCashback, Float> rule = DefaultRule.programmaCashback;
+    private BiConsumer<ProgrammaCashback, Float> rule = DefaultRule.programmaCashback;
 
     protected ProgrammaCashback() {
     }
@@ -27,6 +27,11 @@ public class ProgrammaCashback implements UpdatableProgrammaFedelta {
         float oldCashback = cashback;
         cashback = 0;
         return oldCashback;
+    }
+
+    public void setRule(BiConsumer<ProgrammaCashback, Float> rule) {
+        if (rule != null)
+            this.rule = rule;
     }
 
     @Override
@@ -64,5 +69,10 @@ public class ProgrammaCashback implements UpdatableProgrammaFedelta {
     @Override
     public int hashCode() {
         return Objects.hash(getCashback());
+    }
+
+    @Override
+    public String toString() {
+        return "Programma CashBack - accumulato " + cashback;
     }
 }
