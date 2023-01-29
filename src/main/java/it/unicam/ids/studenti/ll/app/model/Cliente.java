@@ -18,8 +18,7 @@ public class Cliente extends Persona {
     public boolean isFamily = false;
     private String numeroTelefono;
     private String email;
-
-    private String password;
+    private String password = "";
 
     /**
      * Un costruttore di test
@@ -45,7 +44,7 @@ public class Cliente extends Persona {
                 LocalDate.of(anno, mese, giorno),
                 numeroTelefono,
                 email,
-                isFamily//.equalsIgnoreCase("true")
+                isFamily
         );
     }
 
@@ -81,5 +80,27 @@ public class Cliente extends Persona {
             throw new IllegalArgumentException("Numero non valida");
         }
         this.numeroTelefono = numeroTelefono;
+    }
+
+    public boolean isValid(String tessera, String password) {
+        return identificativoTessera.toString().equals(tessera)
+                && this.password.equals(password);
+    }
+
+    public void setPassword(String password) {
+        if (password.length() <= 8)
+            throw new IllegalArgumentException("Password troppo corta");
+
+        this.password = password;
+    }
+
+    public Set<ProgrammaFedelta> getProgramsOf(Coalizione coalizione) {
+        return mapCoalizione.get(coalizione);
+    }
+
+    @Override
+    public String toString() {
+        return "Tessera: '" + identificativoTessera + "' " + super.toString()
+                + " è iscritto come " + (isFamily ? "famiglia" : "singolo");
     }
 }

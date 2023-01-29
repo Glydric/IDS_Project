@@ -43,4 +43,10 @@ public class ProgrammaVIP implements ProgrammaFedelta {
     public int hashCode() {
         return Objects.hash(isVip);
     }
+
+
+    @Override
+    public String toString() {
+        return "Programma VIP - stato " + isVip;
+    }
 }

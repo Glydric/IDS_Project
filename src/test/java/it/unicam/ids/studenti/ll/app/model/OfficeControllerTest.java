@@ -65,14 +65,25 @@ public class OfficeControllerTest {
 
         assertDoesNotThrow(() -> backOffice.aggiungiCliente(cliente));
     }
+
     @Test
     void inserimentoVenditaTest() throws AuthorizationException {
-        Cliente cliente = new Cliente("Pippo","Baudo",LocalDate.of(1936,6,7),"3426417897","pippo@baudo.com");
+        Cliente cliente = new Cliente("Pippo", "Baudo", LocalDate.of(1936, 6, 7), "3426417897", "pippo@baudo.com");
         OfficeController ufficio2 = new OfficeController(proprietario.identificativo, "");
-        ((Commerciante)ufficio2.utente.getAzienda()).addNewProgramma(ProgrammaFedelta.create("punti"));
+        ((Commerciante) ufficio2.utente.getAzienda()).addNewProgramma(ProgrammaFedelta.create("punti"));
         ufficio2.aggiungiCliente(cliente);
-        ufficio2.inserimentoVendita(cliente,10);
-        assert ((ProgrammaPunti)((Commerciante)ufficio2.utente.getAzienda()).getCoalizione().getProgrammi(cliente).stream().toList().get(0)).getPunti() == 10;
+        ufficio2.inserimentoVendita(cliente, 10);
+        assert (
+                (ProgrammaPunti)
+                        cliente
+                                .getProgramsOf(
+                                        ((Commerciante) ufficio2.utente.getAzienda()).getCoalizione()
+                                )
+                                .stream()
+                                .toList()
+                                .get(0)
+        )
+                .getPunti() == 10;
 
     }
 }

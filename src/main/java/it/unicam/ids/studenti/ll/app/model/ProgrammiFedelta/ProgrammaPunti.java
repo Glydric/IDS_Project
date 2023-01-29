@@ -64,4 +64,9 @@ public class ProgrammaPunti implements UpdatableProgrammaFedelta {
         return Objects.hash(getPunti());
     }
 
+
+    @Override
+    public String toString() {
+        return "Programma Punti - accumulati " + punti;
+    }
 }

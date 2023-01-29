@@ -37,4 +37,9 @@ public class ProgrammaReferral implements ProgrammaFedelta {
         return (pr1, pr2) -> {
         };
     }
+
+    @Override
+    public String toString() {
+        return "Programma Fedelta - codiceInvito " + codiceInvito;
+    }
 }

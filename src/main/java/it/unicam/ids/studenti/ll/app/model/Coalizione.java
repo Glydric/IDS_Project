@@ -4,8 +4,8 @@ import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 
 public class Coalizione {
     protected final Set<Cliente> clienti = new HashSet<>();
@@ -18,6 +18,10 @@ public class Coalizione {
         appartenenti.add(commerciante);
     }
 
+    public List<Cliente> getListaClienti() {
+        return clienti.stream().toList();
+    }
+
     public Set<Cliente> getClienti() {
         return clienti;
     }
@@ -26,7 +30,7 @@ public class Coalizione {
         //dato che il programma è stato precedentemente aggiunto nel commerciante, lui verrà considerato tra i programmi in comune
         // e se tutti i commercianti lo hanno definito come programma, questo sarà true e lo aggiungerà
         if (isProgramInCommons(programma))
-            getClienti().forEach(
+            clienti.forEach(
                     cliente -> cliente
                             .mapCoalizione
                             .get(this)
@@ -99,15 +103,28 @@ public class Coalizione {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<ProgrammaFedelta> getProgrammi(Cliente cliente) {
-        return clienti.stream().map(
-                        c -> c.mapCoalizione
-                                .get(this)
-                )
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
+    private Set<ProgrammaFedelta> getProgrammiFilteredBy(Predicate<Cliente> filteringRule) throws NullPointerException {
+        List<Cliente> cliente = clienti
+                .stream()
+                .filter(
+                        filteringRule
+                ).toList();
+
+        assert cliente.size() <= 1;
+
+        if (cliente.size() == 0)
+            throw new NullPointerException("Nome utente o password errata");
+
+        return cliente.get(0).getProgramsOf(this);
     }
 
+    protected Set<ProgrammaFedelta> getProgrammiOf(String tessera) throws NullPointerException {
+        return getProgrammiFilteredBy(c -> c.identificativoTessera.toString().equals(tessera));
+    }
+
+    protected Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws NullPointerException {
+        return getProgrammiFilteredBy(c -> c.isValid(tessera, password));
+    }
 
     /**
      * Ottiene i clienti dalla propria coalizione
@@ -116,7 +133,7 @@ public class Coalizione {
      */
     protected void sendMessageToAll(String message) {
         SingletonSMS.getEntity().inviaMessaggio(
-                getClienti(),
+                clienti,
                 message
         );
     }
@@ -141,7 +158,8 @@ public class Coalizione {
             Map<Class<ProgrammaFedelta>, BiConsumer<ProgrammaFedelta, ProgrammaFedelta>> mergeRules) {
         for (Cliente c : altraCoalizione.getClienti()) {
             // primo passo del merge è il merge dei clienti con i programmi
-            Set<ProgrammaFedelta> otherPrograms = altraCoalizione.getProgrammi(c);
+            Set<ProgrammaFedelta> otherPrograms =
+                    c.getProgramsOf(altraCoalizione);
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione

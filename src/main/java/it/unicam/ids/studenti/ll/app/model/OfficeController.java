@@ -3,9 +3,9 @@ package it.unicam.ids.studenti.ll.app.model;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.UpdatableProgrammaFedelta;
 
+import java.util.List;
 import java.util.Set;
 
-//TODO separala da model e reimposta gradle cosi da essere un solo progetto
 public class OfficeController {
     public UtenteIdentificabile utente;
 
@@ -40,7 +40,6 @@ public class OfficeController {
         return new OfficeController(identificatore, password);
     }
 
-
     public void aggiungiDipendente(Persona persona, String password) throws AuthorizationException {
         aggiungiDipendente(persona);
 
@@ -51,43 +50,66 @@ public class OfficeController {
     }
 
     public void aggiungiDipendente(Persona persona) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
 
         utente.getAzienda().addDipendente(persona);
     }
 
+    public void allowDipendente(String userName, String permesso) throws AuthorizationException {
+        allowDipendente(
+                (Dipendente) Identificatore.getUtenteFrom(userName),
+                permesso
+        );
+    }
+
     public void allowDipendente(Dipendente dipendente, String permesso) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
 
         utente.getAzienda().addPermessoDipendente(dipendente, permesso);
     }
 
     public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
 
         ((Commerciante) utente.getAzienda()).addCliente(cliente);
     }
 
-    public Set<ProgrammaFedelta> getProgrammiFrom(Cliente cliente) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+    public void aggiungiProgramma(ProgrammaFedelta pf) throws AuthorizationException, IllegalArgumentException {
+        utente.authorize();
 
-        return ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente);
+        ((Commerciante) utente.getAzienda()).addNewProgramma(pf);
+    }
+
+    public Set<ProgrammaFedelta> getProgrammi(String tessera) throws AuthorizationException {
+        utente.authorize();
+
+        return ((Commerciante) utente.getAzienda())
+                .getCoalizione()
+                .getProgrammiOf(tessera);
+    }
+
+    public Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws AuthorizationException {
+        utente.authorize();
+
+        return ((Commerciante) utente.getAzienda())
+                .getCoalizione()
+                .getProgrammiOf(
+                        tessera,
+                        password
+                );
     }
 
     public void inserimentoVendita(Cliente cliente, float prezzo) throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+        utente.authorize();
+
         if (prezzo <= 0)
             throw new IllegalArgumentException("Il prezzo è inferiore a zero.");
         if (cliente == null)
             throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
         if (!((Commerciante) utente.getAzienda()).getClienti().contains(cliente))
             throw new IllegalArgumentException("Cliente non esistente nell'azienda");
-        ((Commerciante) utente.getAzienda()).getCoalizione().getProgrammi(cliente)
+
+        cliente.getProgramsOf(((Commerciante) utente.getAzienda()).getCoalizione())
                 .stream()
                 .filter(
                         (programmaFedelta) -> (programmaFedelta instanceof UpdatableProgrammaFedelta)
@@ -97,10 +119,17 @@ public class OfficeController {
                 );
     }
 
-    public Set<Cliente> getListaClienti() throws AuthorizationException {
-        if (!utente.haveAuthorization())
-            throw new AuthorizationException("L'utente non ha i permessi");
+    public List<Cliente> getListaClienti() throws AuthorizationException {
+        utente.authorize();
 
-        return ((Commerciante) utente.getAzienda()).getCoalizione().getClienti();
+        return ((Commerciante) utente.getAzienda())
+                .getCoalizione()
+                .getListaClienti();
+    }
+
+    public void coalizzaCon(Commerciante commerciante) throws AuthorizationException, IllegalStateException {
+        utente.authorize();
+
+        ((Commerciante) utente.getAzienda()).mergeGroups(commerciante);
     }
 }

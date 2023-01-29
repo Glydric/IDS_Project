@@ -1,4 +1,4 @@
-package it.unicam.ids.studenti.ll.app.model.web;
+package it.unicam.ids.studenti.ll.app.web;
 
 abstract class WebContents {
 //    static final String indexButton = WebContents.button("/?%s", "Home");

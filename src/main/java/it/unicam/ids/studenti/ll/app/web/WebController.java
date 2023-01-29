@@ -1,12 +1,14 @@
-package it.unicam.ids.studenti.ll.app.model.web;
+package it.unicam.ids.studenti.ll.app.web;
 
 import it.unicam.ids.studenti.ll.app.model.*;
+import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
 
 @RestController
 class WebController {
@@ -28,8 +30,8 @@ class WebController {
                 "listaClienti");
     }
 
-    @PostMapping(WebPaths.creaProprietarioAzienda)
-    public static String creaProprietarioAzienda(
+    @PostMapping(WebPaths.creaProprietario)
+    public static String creaProprietario(
             @PathVariable String ragioneSociale,
             @RequestParam(value = "nome") String nome,
             @RequestParam(value = "cognome") String cognome,
@@ -40,6 +42,8 @@ class WebController {
     ) {
         Commerciante actualC =
                 getCommercianteFrom(ragioneSociale);
+        if (actualC.haveProprietario())
+            return "<h2>Proprietario già iscritto, solo il vecchio proprietario può definire un successore</h2>";
         try {
             Proprietario proprietario = new Proprietario(
                     nome,
@@ -50,8 +54,6 @@ class WebController {
                     actualC,
                     password
             );
-
-            Register.initializeFrom(actualC);
 
             return String.format(
                     WebContents.ok + "<br>" + (
@@ -71,24 +73,15 @@ class WebController {
             return e.getMessage();
         }
     }
-    //TODO make this Body-based
+
     @PostMapping(WebPaths.creaAzienda)
     public static String creaAzienda(
-            @RequestParam(value = "ragioneSociale") String ragioneSociale,
-            @RequestParam(value = "anno") int anno,
-            @RequestParam(value = "mese") int mese,
-            @RequestParam(value = "giorno") int giorno
+            @RequestBody Commerciante commerciante
     ) {
         try {
             // TODO modificare la chiamata per usare il DB
-            commercianti.add(
-                    new Commerciante(
-                            ragioneSociale,
-                            anno,
-                            mese,
-                            giorno
-                    )
-            );
+            commercianti.add(commerciante);
+            Register.initializeFrom(commerciante);
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
@@ -136,7 +129,7 @@ class WebController {
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
-        return WebContents.ok;
+        return WebContents.ok + "<br>tessera: " + cliente.identificativoTessera;
     }
 
     /**
@@ -151,10 +144,10 @@ class WebController {
             @RequestParam(value = "tessera") String tessera
     ) {
         // usa la stringa azienda per ottenere la struttura dati dal db (attualmente Identificatore)
-        // TODO controlla che la tessera sia effettivamente esistente
         try {
             OfficeController
                     .authenticatedByRegisterOf(ragioneSociale)
+            // TODO controlla che la tessera sia effettivamente esistente
             //        .aggiungiCliente(ManagerDataBase.getClienteFromTessera(tessera))
             ;
         } catch (IllegalArgumentException e) {
@@ -165,29 +158,18 @@ class WebController {
         return WebContents.ok;
     }
 
-    //TODO make this Body-based
     @PostMapping(WebPaths.aggiungiDipendente)
     public static String aggiungiDipendente(
+            @RequestBody Persona persona,
             @RequestParam(value = "userName") String userName,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "nome") String nome,
-            @RequestParam(value = "cognome") String cognome,
-            @RequestParam(value = "anno") int anno,
-            @RequestParam(value = "mese") int mese,
-            @RequestParam(value = "giorno") int giorno,
             @RequestParam(value = "passwordDipendente", required = false) String passwordDipendente
     ) {
         try {
             OfficeController
                     .authenticatedBy(userName, password)
                     .aggiungiDipendente(
-                            new Persona(
-                                    nome,
-                                    cognome,
-                                    anno,
-                                    mese,
-                                    giorno
-                            ),
+                            persona,
                             passwordDipendente
                     );
         } catch (IllegalArgumentException e) {
@@ -195,7 +177,100 @@ class WebController {
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
+        return WebContents.ok + "userName: " + persona.cognome + "." + persona.cognome;
+    }
+
+    @PostMapping(WebPaths.consentiDipendente)
+    public static String consentiDipendente(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "userNameDipendente") String userNameDipendente,
+            @RequestParam(value = "permesso") String permesso
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName, password)
+                    .allowDipendente(userNameDipendente, permesso);
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
         return WebContents.ok;
+    }
+
+    @PostMapping(WebPaths.coalizzaAzienda)
+    public static String coalizzaCon(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "ragioneSociale") String ragioneSociale
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName, password)
+                    .coalizzaCon(getCommercianteFrom(ragioneSociale));
+        } catch (IllegalStateException e) {
+            return "Attendere che l'altra azienda accetti la richiesta";
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok;
+    }
+
+    @PostMapping(WebPaths.getPostPrograms)
+    public static String aggiungiProgramma(
+            @RequestBody ProgrammaFedelta pf,
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password
+    ) {
+        try {
+            OfficeController
+                    .authenticatedBy(userName, password)
+                    .aggiungiProgramma(pf);
+        } catch (IllegalArgumentException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+        return WebContents.ok;
+    }
+
+    @GetMapping(WebPaths.getPostPrograms)
+    public static String ottieniProgrammi(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "tessera") String tessera
+    ) {
+        try {
+            return OfficeController
+                    .authenticatedBy(userName, password)
+                    .getProgrammi(tessera)
+                    .toString();
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
+    }
+
+    @GetMapping(WebPaths.clienteGetProgrammi)
+    public static String mostraProgrammi(
+            @PathVariable String ragioneSociale,
+            @RequestParam(value = "tessera") String tessera,
+            @RequestParam(value = "password") String password
+    ) {
+        try {
+            return OfficeController
+                    .authenticatedByRegisterOf(ragioneSociale)
+                    .getProgrammiOf(tessera, password)
+                    .toString();
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return "<h1>" + e.getMessage() + "</h1>";
+        } catch (AuthorizationException e) {
+            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        }
     }
 
     static Commerciante getCommercianteFrom(String ragioneSociale) {

@@ -2,13 +2,14 @@ package it.unicam.ids.studenti.ll.app.model;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public abstract class UtenteIdentificabile extends Persona {
     public final Identificatore identificativo = Identificatore.fromUtente(this);
-    private String password = "";
     protected final Set<String> listaPermessi = new HashSet<>();
+    private String password = "";
 
 
     /**
@@ -43,10 +44,11 @@ public abstract class UtenteIdentificabile extends Persona {
                 .getMethodName();
     }
 
-    public Boolean haveAuthorization() {
-        return listaPermessi.contains(getPreviousMethodOf(2))
+    public void authorize() throws AuthorizationException {
+        if (!(listaPermessi.contains(getPreviousMethodOf(2))
                 || listaPermessi.contains("ALL")
-                || listaPermessi.contains("all");
+                || listaPermessi.contains("all")))
+            throw new AuthorizationException("L'utente non ha i permessi");
     }
 
     /**
@@ -70,6 +72,14 @@ public abstract class UtenteIdentificabile extends Persona {
         return Objects.equals(password, this.password);
     }
 
+    protected void addPermessi(String... permessi) {
+        addPermessi(List.of(permessi));
+    }
+
+    protected void addPermessi(List<String> permessi) {
+        listaPermessi.addAll(permessi);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,4 +92,6 @@ public abstract class UtenteIdentificabile extends Persona {
     public int hashCode() {
         return identificativo.hashCode();
     }
+
+
 }
