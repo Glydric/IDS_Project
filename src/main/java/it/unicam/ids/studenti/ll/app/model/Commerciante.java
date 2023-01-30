@@ -22,7 +22,7 @@ public class Commerciante extends Azienda {
     }
 
     @JsonCreator
-    public Commerciante(
+    protected Commerciante(
             String ragioneSociale,
             int anno,
             int mese,
@@ -34,7 +34,7 @@ public class Commerciante extends Azienda {
         );
     }
 
-    public Commerciante(String ragioneSociale, LocalDate dataIscrizione) {
+    protected Commerciante(String ragioneSociale, LocalDate dataIscrizione) {
         super(ragioneSociale, dataIscrizione);
     }
 
@@ -51,14 +51,14 @@ public class Commerciante extends Azienda {
         return getProgrammi().stream().toList();
     }
 
-    public Set<ProgrammaFedelta> getProgrammi() {
+    protected Set<ProgrammaFedelta> getProgrammi() {
         return Collections.unmodifiableSet(listaProgrammi);
     }
 
     /**
      * @param programma il nuovo programma
      */
-    public void addNewProgramma(ProgrammaFedelta programma) throws IllegalArgumentException {
+    protected void addNewProgramma(ProgrammaFedelta programma) throws IllegalArgumentException {
         // Se la classe è già presente
         if (listaProgrammi
                 .stream()
@@ -77,7 +77,7 @@ public class Commerciante extends Azienda {
      *
      * @param commerciante l'altro commerciante
      */
-    public void mergeGroups(Commerciante commerciante) throws IllegalStateException {
+    protected void mergeGroups(Commerciante commerciante) throws IllegalStateException {
         mergeGroups(commerciante, null);
     }
 
@@ -89,7 +89,7 @@ public class Commerciante extends Azienda {
      * @param mergeRules   regole di default per ogni classe di tipo programma fedelta, ogni programma senza una
      *                     regola predefinita sfrutterà la propria regola di default
      */
-    public void mergeGroups(
+    protected void mergeGroups(
             Commerciante commerciante,
             Map<
                     Class<ProgrammaFedelta>,
@@ -98,7 +98,7 @@ public class Commerciante extends Azienda {
 
         setWantCoalize(commerciante);
         if (!commerciante.wantCoalizeWith(this)) {
-            throw new IllegalStateException("L'altro commerciante non ha accettato la fusione");
+            throw new IllegalStateException("Attendere che l'altro commerciante accetti la richiesta");
         }
         commerciante.setCoalizione(gruppoAppartenza.mergeCoalizioni(
                 commerciante.gruppoAppartenza,
@@ -132,17 +132,17 @@ public class Commerciante extends Azienda {
         return oldGroup;
     }
 
-    public Coalizione getCoalizione() {
+    protected Coalizione getCoalizione() {
         return gruppoAppartenza;
     }
 
     /// metodi di comodo
 
-    public List<Cliente> getClienti() {
+    protected List<Cliente> getClienti() {
         return gruppoAppartenza.getClienti().stream().toList();
     }
 
-    public void addCliente(Cliente cliente) {
+    protected void addCliente(Cliente cliente) {
         gruppoAppartenza.addCliente(cliente);
     }
 
@@ -150,7 +150,7 @@ public class Commerciante extends Azienda {
         return getProgress(cliente).stream().toList();
     }
 
-    public Set<ProgrammaFedelta> getProgress(Cliente cliente) {
+    protected Set<ProgrammaFedelta> getProgress(Cliente cliente) {
         return cliente
                 .mapCoalizione
                 .get(gruppoAppartenza);
@@ -164,7 +164,7 @@ public class Commerciante extends Azienda {
                 .contains(pf.getClass());
     }
 
-    public String getLinkEsterno() {
+    protected String getLinkEsterno() {
         return linkEsterno;
     }
 
@@ -173,7 +173,7 @@ public class Commerciante extends Azienda {
      *
      * @param link da inserire
      */
-    public void setLinkEsterno(String link) {
+    protected void setLinkEsterno(String link) {
         if (link == null)
             return;
         if (!Pattern
