@@ -22,8 +22,12 @@ public class Coalizione {
         return clienti.stream().toList();
     }
 
-    public Set<Cliente> getClienti() {
+    protected Set<Cliente> getClienti() {
         return clienti;
+    }
+
+    protected Set<Commerciante> getAppartenenti() {
+        return appartenenti;
     }
 
     protected void addProgrammaForEachCliente(ProgrammaFedelta programma) {
@@ -125,6 +129,7 @@ public class Coalizione {
     protected Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws NullPointerException {
         return getProgrammiFilteredBy(c -> c.isValid(tessera, password));
     }
+
 
     /**
      * Ottiene i clienti dalla propria coalizione
