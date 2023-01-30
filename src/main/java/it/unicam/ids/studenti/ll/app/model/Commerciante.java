@@ -14,6 +14,13 @@ public class Commerciante extends Azienda {
     private Coalizione gruppoAppartenza = new Coalizione(this);
     private Commerciante wantCoalize;
 
+    /**
+     * Used by spring
+     */
+    protected Commerciante() {
+        super("");
+    }
+
     @JsonCreator
     public Commerciante(
             String ragioneSociale,
@@ -89,7 +96,7 @@ public class Commerciante extends Azienda {
                     BiConsumer<ProgrammaFedelta, ProgrammaFedelta>
                     > mergeRules) throws IllegalStateException {
 
-        wantCoalize = commerciante;
+        setWantCoalize(commerciante);
         if (!commerciante.wantCoalizeWith(this)) {
             throw new IllegalStateException("L'altro commerciante non ha accettato la fusione");
         }
@@ -101,6 +108,14 @@ public class Commerciante extends Azienda {
 
     private boolean wantCoalizeWith(Commerciante commerciante) {
         return wantCoalize == commerciante;
+    }
+
+    protected Commerciante getWantCoalize() {
+        return wantCoalize;
+    }
+
+    protected void setWantCoalize(Commerciante commerciante) {
+        wantCoalize = commerciante;
     }
 
     /**
@@ -159,6 +174,8 @@ public class Commerciante extends Azienda {
      * @param link da inserire
      */
     public void setLinkEsterno(String link) {
+        if (link == null)
+            return;
         if (!Pattern
                 .compile("(https?://)(w{3}\\.)?([^(w{3})]\\w*\\.\\w*[^.\\s])")
                 .matcher(link)

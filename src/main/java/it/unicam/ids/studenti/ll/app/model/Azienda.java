@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public abstract class Azienda {
     private String ragioneSociale;
     public final Set<Dipendente> mapDipendenti = new HashSet<>();
-    public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
+    private LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
     /**
      * Il proprietario può essere null, benchè nel mondo reale non ha senso come elemento
      * nel nostro modello il proprietario è si chi possiede l'azienda ma è soprattutto il suo admin
@@ -119,6 +119,14 @@ public abstract class Azienda {
 
     public void setRagioneSociale(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
+    }
+
+    public LocalDate getDataIscrizione() {
+        return dataIscrizioneRegistroImprese;
+    }
+
+    public void setDataIscrizione(LocalDate dataIscrizioneRegistroImprese) {
+        this.dataIscrizioneRegistroImprese = dataIscrizioneRegistroImprese;
     }
 
     public boolean haveProprietario() {
