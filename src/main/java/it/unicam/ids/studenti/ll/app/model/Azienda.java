@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public abstract class Azienda {
-    public final String ragioneSociale;
+    private String ragioneSociale;
     public final Set<Dipendente> mapDipendenti = new HashSet<>();
     public LocalDate dataIscrizioneRegistroImprese = LocalDate.now();
     /**
@@ -111,6 +111,14 @@ public abstract class Azienda {
     public void addPermessoDipendente(Dipendente dipendente, String permesso) {
         if (mapDipendenti.contains(dipendente))
             dipendente.listaPermessi.add(permesso);
+    }
+
+    public String getRagioneSociale(){
+        return ragioneSociale;
+    }
+
+    public void setRagioneSociale(String ragioneSociale) {
+        this.ragioneSociale = ragioneSociale;
     }
 
     public boolean haveProprietario() {
