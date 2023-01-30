@@ -1,6 +1,5 @@
 package it.unicam.ids.studenti.ll.app.model.persistence.coalizione;
 
-import it.unicam.ids.studenti.ll.app.model.persistence.cliente.ClienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
