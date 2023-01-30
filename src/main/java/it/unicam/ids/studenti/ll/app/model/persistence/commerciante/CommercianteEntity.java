@@ -1,5 +1,6 @@
 package it.unicam.ids.studenti.ll.app.model.persistence.commerciante;
 
+import it.unicam.ids.studenti.ll.app.model.Commerciante;
 import it.unicam.ids.studenti.ll.app.model.persistence.coalizione.CoalizioneEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Data
 @Accessors(chain = true)
@@ -32,5 +34,7 @@ public class CommercianteEntity implements Serializable {
     @Fetch(FetchMode.SELECT)
     private CoalizioneEntity gruppoAppartenza;
 
+    @Column(name = "data_iscrizione")
+    private LocalDate dataIscrizione;
 
 }
