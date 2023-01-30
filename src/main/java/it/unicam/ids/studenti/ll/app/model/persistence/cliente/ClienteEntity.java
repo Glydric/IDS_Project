@@ -1,10 +1,13 @@
 package it.unicam.ids.studenti.ll.app.model.persistence.cliente;
 
+import it.unicam.ids.studenti.ll.app.model.persistence.coalizione.CoalizioneEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.validation.constraints.Email;
@@ -23,6 +26,7 @@ public class ClienteEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "identificativo_tessera")
     private UUID identificativoTessera;
 
     @Column(name = "nome")
@@ -47,6 +51,8 @@ public class ClienteEntity implements Serializable {
     @Column (name = "password")
     private String password;
 
-
-
+    @JoinColumn(name = "coalizione", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @Fetch(FetchMode.SELECT)
+    private CoalizioneEntity coalizione;
 }

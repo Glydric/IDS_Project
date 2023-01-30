@@ -23,13 +23,13 @@ public class CoalizioneEntity implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @JoinColumn(name = "id_commerciante", referencedColumnName = "id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "coalizione", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.REMOVE)
     @Fetch(FetchMode.SELECT)
-    private Set<CommercianteEntity> commercianti;
+    private Set<CommercianteEntity> appartenenti;
 
-    @JoinColumn(name = "id_clienti", referencedColumnName = "id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "coalizione", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.DETACH)
     @Fetch(FetchMode.SELECT)
     private Set<ClienteEntity> clienti;
 
