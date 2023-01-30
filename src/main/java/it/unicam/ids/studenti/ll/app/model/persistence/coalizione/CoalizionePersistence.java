@@ -17,7 +17,6 @@ public class CoalizionePersistence {
         List<CoalizioneEntity> coalizioneEntitys = new ArrayList<>();
         coalizioneRepository.findAll().forEach(coalizioneEntitys::add);
         return coalizioneEntitys;
-
     }
 
     public void addCoalizione(CoalizioneEntity coalizioneEntity){

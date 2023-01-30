@@ -1,13 +1,11 @@
 package it.unicam.ids.studenti.ll.app.model.persistence.commerciante;
 
-import it.unicam.ids.studenti.ll.app.model.Commerciante;
 import it.unicam.ids.studenti.ll.app.model.persistence.coalizione.CoalizioneEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyToOne;
 
 import java.io.Serializable;
 import java.time.LocalDate;
