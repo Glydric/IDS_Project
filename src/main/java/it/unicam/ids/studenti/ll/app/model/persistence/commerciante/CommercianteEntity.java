@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
@@ -22,12 +20,9 @@ import java.util.UUID;
 public class CommercianteEntity implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
-
     @Column(name = "ragione_sociale")
     private String ragioneSociale;
+
 
     @Column(name = "link_esterno")
     private String linkEsterno;
