@@ -13,7 +13,10 @@ public class OfficeController {
         this(identificatore.toString(), password);
     }
 
-    protected OfficeController(String identificatore, String password) throws IllegalArgumentException {
+    protected OfficeController(
+            String identificatore,
+            String password
+    ) throws IllegalArgumentException {
         utente = Identificatore.getUtenteFrom(identificatore);
 
         if (utente == null)
@@ -26,6 +29,7 @@ public class OfficeController {
             throw new IllegalArgumentException("Non possedete alcuna azienda");
     }
 
+
     /**
      * la password viene considerata vuota
      *
@@ -34,6 +38,9 @@ public class OfficeController {
      */
     public static OfficeController authenticatedByRegisterOf(String ragioneSociale) throws AuthorizationException {
         return authenticatedBy("register." + ragioneSociale, "");
+    }
+    public Commerciante getCommerciante(){
+        return (Commerciante) utente.getAzienda();
     }
 
     public static OfficeController authenticatedBy(String identificatore, String password) {
@@ -71,19 +78,19 @@ public class OfficeController {
     public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
         utente.authorize();
 
-        ((Commerciante) utente.getAzienda()).addCliente(cliente);
+        getCommerciante().addCliente(cliente);
     }
 
     public void aggiungiProgramma(ProgrammaFedelta pf) throws AuthorizationException, IllegalArgumentException {
         utente.authorize();
 
-        ((Commerciante) utente.getAzienda()).addNewProgramma(pf);
+        getCommerciante().addNewProgramma(pf);
     }
 
     public Set<ProgrammaFedelta> getProgrammi(String tessera) throws AuthorizationException {
         utente.authorize();
 
-        return ((Commerciante) utente.getAzienda())
+        return getCommerciante()
                 .getCoalizione()
                 .getProgrammiOf(tessera);
     }
@@ -91,7 +98,7 @@ public class OfficeController {
     public Set<ProgrammaFedelta> getProgrammiOf(String tessera, String password) throws AuthorizationException {
         utente.authorize();
 
-        return ((Commerciante) utente.getAzienda())
+        return getCommerciante()
                 .getCoalizione()
                 .getProgrammiOf(
                         tessera,
@@ -106,10 +113,10 @@ public class OfficeController {
             throw new IllegalArgumentException("Il prezzo è inferiore a zero.");
         if (cliente == null)
             throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
-        if (!((Commerciante) utente.getAzienda()).getClienti().contains(cliente))
+        if (!getCommerciante().getClienti().contains(cliente))
             throw new IllegalArgumentException("Cliente non esistente nell'azienda");
 
-        cliente.getProgramsOf(((Commerciante) utente.getAzienda()).getCoalizione())
+        cliente.getProgramsOf(getCommerciante().getCoalizione())
                 .stream()
                 .filter(
                         (programmaFedelta) -> (programmaFedelta instanceof UpdatableProgrammaFedelta)
@@ -122,7 +129,7 @@ public class OfficeController {
     public List<Cliente> getListaClienti() throws AuthorizationException {
         utente.authorize();
 
-        return ((Commerciante) utente.getAzienda())
+        return getCommerciante()
                 .getCoalizione()
                 .getListaClienti();
     }
@@ -130,6 +137,6 @@ public class OfficeController {
     public void coalizzaCon(Commerciante commerciante) throws AuthorizationException, IllegalStateException {
         utente.authorize();
 
-        ((Commerciante) utente.getAzienda()).mergeGroups(commerciante);
+        getCommerciante().mergeGroups(commerciante);
     }
 }
