@@ -24,12 +24,12 @@ public class CoalizioneEntity implements Serializable {
     private UUID id;
 
     @JoinColumn(name = "coalizione", referencedColumnName = "id")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     private Set<CommercianteEntity> appartenenti;
 
     @JoinColumn(name = "coalizione", referencedColumnName = "id")
-    @OneToMany(cascade = CascadeType.DETACH)
+    @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     private Set<ClienteEntity> clienti;
 

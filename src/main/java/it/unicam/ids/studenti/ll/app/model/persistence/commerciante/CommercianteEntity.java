@@ -31,12 +31,12 @@ public class CommercianteEntity implements Serializable {
     private LocalDate dataIscrizione;
 
     @JoinColumn(name = "want_coalize", referencedColumnName = "ragione_sociale")
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     private CommercianteEntity wantCoalize;
 
     @JoinColumn(name = "coalizione", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     private CoalizioneEntity coalizione;
 }
