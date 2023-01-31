@@ -13,6 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -24,8 +25,8 @@ import java.util.UUID;
 public class ClienteEntity implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+   // @GeneratedValue(generator = "UUID")
+   // @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "identificativo_tessera")
     private UUID identificativoTessera;
 
@@ -51,8 +52,4 @@ public class ClienteEntity implements Serializable {
     @Column (name = "password")
     private String password;
 
-    @JoinColumn(name = "coalizione", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @Fetch(FetchMode.SELECT)
-    private CoalizioneEntity coalizione;
 }

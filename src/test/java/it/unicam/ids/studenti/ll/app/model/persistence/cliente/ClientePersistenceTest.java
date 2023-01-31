@@ -1,6 +1,6 @@
 package it.unicam.ids.studenti.ll.app.model.persistence.cliente;
 
-import org.junit.jupiter.api.BeforeAll;
+import it.unicam.ids.studenti.ll.app.model.Cliente;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,16 +10,15 @@ import java.util.Optional;
 class ClientePersistenceTest {
 
     @Autowired
-    ClientePersistence cliente;
+    ClientePersistence persistence;
 
     @Test
     void addClienteTest(){
-        ClienteEntity cliente1 = new ClienteEntity();
-        cliente.addCliente(cliente1);
-        Optional<ClienteEntity> cliente2 = cliente.getCliente(cliente1.getIdentificativoTessera().toString());
-        assert cliente2.isPresent();
-        assert cliente1.equals(cliente2.get());
-
+        Cliente cliente1 = new Cliente("Pippo","Pluto", 1990,12,18,"3428956123","Pippo@hotmail.com",false);
+        cliente1.setPassword("hjgfdhfyjgjh");
+        persistence.addCliente(cliente1);
+        Cliente cliente2 = persistence.getCliente(cliente1.identificativoTessera.toString());
+        assert cliente2.equals(cliente1);
     }
 
 }
