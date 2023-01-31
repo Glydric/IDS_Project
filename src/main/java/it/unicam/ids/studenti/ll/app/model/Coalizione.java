@@ -8,10 +8,18 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Coalizione {
+    private UUID id;
     protected final Set<Cliente> clienti = new HashSet<>();
     protected final Set<Commerciante> appartenenti = new HashSet<>();
 
-    protected Coalizione() {
+    protected Coalizione() {}
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Coalizione(Commerciante commerciante) {
