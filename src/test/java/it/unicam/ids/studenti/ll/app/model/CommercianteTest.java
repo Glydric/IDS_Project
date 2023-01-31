@@ -77,7 +77,7 @@ public class CommercianteTest {
         Commerciante co = new Commerciante("Swift");
         Coalizione c = new Coalizione();
 
-        assertEquals(co.getCoalizione(), co.setCoalizione(c));
+        assertEquals(co.getCoalizione(), co.setCoalizioneGettingOld(c));
     }
 
     @Test

@@ -53,7 +53,7 @@ public class CommerciantePersistence {
     public Commerciante getCommerciante(String ragioneSociale) {
         Optional<CommercianteEntity> opt = commercianteRepository.findById(ragioneSociale);
         if (opt.isEmpty())
-            throw new NoSuchElementException("Il commerciante non esiste");
+            throw new NoSuchElementException("La coalizione non esiste");
         return ModelMapperConfig
                 .mapper()
                 .map(

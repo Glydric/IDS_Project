@@ -100,21 +100,21 @@ public class Commerciante extends Azienda {
         if (!commerciante.wantCoalizeWith(this)) {
             throw new IllegalStateException("Attendere che l'altro commerciante accetti la richiesta");
         }
-        commerciante.setCoalizione(gruppoAppartenza.mergeCoalizioni(
+        commerciante.setCoalizioneGettingOld(gruppoAppartenza.mergeCoalizioni(
                 commerciante.gruppoAppartenza,
                 mergeRules
         ));
     }
 
-    private boolean wantCoalizeWith(Commerciante commerciante) {
+    protected boolean wantCoalizeWith(Commerciante commerciante) {
         return wantCoalize == commerciante;
     }
 
-    protected Commerciante getWantCoalize() {
+    public Commerciante getWantCoalize() {
         return wantCoalize;
     }
 
-    protected void setWantCoalize(Commerciante commerciante) {
+    public void setWantCoalize(Commerciante commerciante) {
         wantCoalize = commerciante;
     }
 
@@ -125,14 +125,18 @@ public class Commerciante extends Azienda {
      * @param coalizione la coalizione a cui ci si aggiunge
      * @return la coalizione precedente
      */
-    protected Coalizione setCoalizione(Coalizione coalizione) {
+    protected Coalizione setCoalizioneGettingOld(Coalizione coalizione) {
         Coalizione oldGroup = gruppoAppartenza;
-        gruppoAppartenza = coalizione;
-        coalizione.appartenenti.add(this);
+        setCoalizione(coalizione);
         return oldGroup;
     }
 
-    protected Coalizione getCoalizione() {
+    public void setCoalizione(Coalizione coalizione){
+        gruppoAppartenza = coalizione;
+        coalizione.appartenenti.add(this);
+    }
+
+    public Coalizione getCoalizione() {
         return gruppoAppartenza;
     }
 
