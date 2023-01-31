@@ -199,21 +199,25 @@ class WebController {
             @RequestParam(value = "password") String password,
             @RequestParam(value = "ragioneSociale") String ragioneSociale
     ) {
+        OfficeController office;
         try {
-            OfficeController
-                    .authenticatedBy(userName, password)
-                    .coalizzaCon(commerciantePersistence.getCommerciante(ragioneSociale));
-        } catch (IllegalStateException e) {
-            commerciantePersistence.updateCommerciante(
-                    OfficeController
-                            .authenticatedBy(userName, password)
-                            .getCommerciante()
-            );
+            office = OfficeController
+                            .authenticatedBy(userName, password);
+        } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
-        } catch (IllegalArgumentException | NoSuchElementException e) {
+        }
+
+        try {
+            office.coalizzaCon(commerciantePersistence.getCommerciante(ragioneSociale));
+        } catch (IllegalStateException | NoSuchElementException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        } finally {
+            // TODO check coalizione update
+            commerciantePersistence.updateCommerciante(
+                    office.getCommerciante()
+            );
         }
         return WebContents.ok;
     }
