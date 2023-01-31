@@ -132,4 +132,19 @@ public abstract class Azienda {
     public boolean haveProprietario() {
         return proprietario != null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Azienda azienda)) return false;
+
+        return getRagioneSociale() != null ?
+                getRagioneSociale().equals(azienda.getRagioneSociale()) : azienda.getRagioneSociale() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getRagioneSociale() != null ?
+                getRagioneSociale().hashCode() : 0;
+    }
 }

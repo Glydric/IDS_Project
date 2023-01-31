@@ -107,7 +107,7 @@ public class Commerciante extends Azienda {
     }
 
     protected boolean wantCoalizeWith(Commerciante commerciante) {
-        return wantCoalize == commerciante;
+        return wantCoalize != null && wantCoalize.equals(commerciante);
     }
 
     public Commerciante getWantCoalize() {
@@ -131,13 +131,13 @@ public class Commerciante extends Azienda {
         return oldGroup;
     }
 
-    public void setCoalizione(Coalizione coalizione){
-        gruppoAppartenza = coalizione;
-        coalizione.appartenenti.add(this);
-    }
-
     public Coalizione getCoalizione() {
         return gruppoAppartenza;
+    }
+
+    public void setCoalizione(Coalizione coalizione) {
+        gruppoAppartenza = coalizione;
+        coalizione.appartenenti.add(this);
     }
 
     /// metodi di comodo
@@ -188,4 +188,5 @@ public class Commerciante extends Azienda {
 
         this.linkEsterno = link;
     }
+
 }
