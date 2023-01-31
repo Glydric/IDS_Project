@@ -37,17 +37,17 @@ public class CommerciantePersistence {
     }
 
     public void addCommerciante(Commerciante commerciante) throws IllegalArgumentException {
-        CommercianteEntity entity =
-                ModelMapperConfig.mapper().map(
-                        commerciante,
-                        CommercianteEntity.class
-                );
-        if (exists(entity.getRagioneSociale())) {
+        if (exists(commerciante.getRagioneSociale())) {
             updateCommerciante(commerciante);
             throw new IllegalArgumentException("Commerciante già esistente");
         }
 
-        commercianteRepository.save(entity);
+        commercianteRepository.save(
+                ModelMapperConfig.mapper().map(
+                        commerciante,
+                        CommercianteEntity.class
+                )
+        );
     }
 
     public Commerciante getCommerciante(String ragioneSociale) {
