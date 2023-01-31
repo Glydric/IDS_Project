@@ -127,7 +127,7 @@ public class Coalizione {
         if (cliente.size() == 0)
             throw new NullPointerException("Nome utente o password errata");
 
-        return cliente.get(0).getProgramsOf(this);
+        return cliente.get(0).getProgressIn(this);
     }
 
     protected Set<ProgrammaFedelta> getProgrammiOf(String tessera) throws NullPointerException {
@@ -172,7 +172,7 @@ public class Coalizione {
         for (Cliente c : altraCoalizione.getClienti()) {
             // primo passo del merge è il merge dei clienti con i programmi
             Set<ProgrammaFedelta> otherPrograms =
-                    c.getProgramsOf(altraCoalizione);
+                    c.getProgressIn(altraCoalizione);
 
             if (!getClienti().contains(c)) {
                 // se il cliente non esiste lo creiamo prendendo i programmi dall'altra coalizione

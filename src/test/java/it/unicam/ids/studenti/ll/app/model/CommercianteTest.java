@@ -21,15 +21,19 @@ public class CommercianteTest {
         Cliente c1 = new Cliente("Pippo", "Baudo");
         Cliente c2 = new Cliente("Mario", "Baudo");
 
-        commerciante.addCliente(c1);
-        commerciante.addCliente(c2);
+        commerciante.getCoalizione().addCliente(c1);
+        commerciante.getCoalizione().addCliente(c2);
 
-        ((ProgrammaPunti) commerciante.getProgressAsList(c1).get(0)).setPunti(10);
+
+        ((ProgrammaPunti) c1
+                .getProgressAsListIn(commerciante)
+                .get(0)
+        ).setPunti(10);
 
         assertEquals(1, commerciante.getCoalizione().getAllPrograms().size());
         assertNotEquals(
-                commerciante.getProgressAsList(c1).get(0),
-                commerciante.getProgressAsList(c2).get(0)
+                c1.getProgressAsListIn(commerciante).get(0),
+                c2.getProgressAsListIn(commerciante).get(0)
         );
 
         assertThrows(UnsupportedOperationException.class, () -> commerciante.getListaProgrammi().add(pf));
@@ -40,32 +44,32 @@ public class CommercianteTest {
         Commerciante commerciante = new Commerciante("Xbox");
 
         Cliente c1 = new Cliente("Andrea", "Bianchi");
-        commerciante.addCliente(c1);
+        commerciante.getCoalizione().addCliente(c1);
 
         ProgrammaPunti pf = (ProgrammaPunti) ProgrammaFedelta.create().setType("Programmapunti").buildWith(10);
         commerciante.addNewProgramma(pf);
 
         Cliente c2 = new Cliente("Luigi", "Bianchi");
-        commerciante.addCliente(c2);
+        commerciante.getCoalizione().addCliente(c2);
 
         assert (commerciante.getListaProgrammi().contains(pf));
 
         // Controlla l'esistenza del cliente
-        assert (commerciante.getClienti().contains(c1));
-        assert (commerciante.getClienti().contains(c2));
+        assert (commerciante.getCoalizione().getListaClienti().contains(c1));
+        assert (commerciante.getCoalizione().getListaClienti().contains(c2));
 
         /// Controlla che il programma sia stato inserito
         pf.setPunti(5); // modifichiamo i punti cosi da assicurarci che l'oggetto sia diverso durante i prossimi controlli
 
         // la classe deve essere uguale
-        assertInstanceOf(ProgrammaPunti.class, commerciante.getProgressAsList(c1).get(0));
+        assertInstanceOf(ProgrammaPunti.class, c1.getProgressAsListIn(commerciante).get(0));
         // ma l'oggetto deve essere diverso
-        assertNotEquals(commerciante.getProgressAsList(c1).get(0), pf);
+        assertNotEquals(c1.getProgressAsListIn(commerciante).get(0), pf);
 
         // la classe deve essere uguale
-        assertInstanceOf(ProgrammaPunti.class, commerciante.getProgressAsList(c2).get(0));
+        assertInstanceOf(ProgrammaPunti.class, c2.getProgressAsListIn(commerciante).get(0));
         // ma l'oggetto deve essere diverso
-        assertNotEquals(commerciante.getProgressAsList(c2).get(0), pf);
+        assertNotEquals(c2.getProgressAsListIn(commerciante).get(0), pf);
 
     }
 

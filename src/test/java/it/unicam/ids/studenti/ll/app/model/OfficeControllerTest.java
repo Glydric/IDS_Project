@@ -76,7 +76,7 @@ public class OfficeControllerTest {
         assert (
                 (ProgrammaPunti)
                         cliente
-                                .getProgramsOf(
+                                .getProgressIn(
                                         ((Commerciante) ufficio2.utente.getAzienda()).getCoalizione()
                                 )
                                 .stream()

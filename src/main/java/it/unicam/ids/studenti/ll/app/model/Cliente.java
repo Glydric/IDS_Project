@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -94,9 +91,25 @@ public class Cliente extends Persona {
         this.password = password;
     }
 
-    public Set<ProgrammaFedelta> getProgramsOf(Coalizione coalizione) {
+    protected List<ProgrammaFedelta> getProgressAsListIn(Commerciante commerciante) {
+        return getProgressIn(commerciante.getCoalizione()).stream().toList();
+    }
+
+    protected Set<ProgrammaFedelta> getProgressIn(Coalizione coalizione) {
         return mapCoalizione.get(coalizione);
     }
+
+    /**
+     * metodo di comodo
+     */
+    protected boolean haveProgramIn(Commerciante commerciante, ProgrammaFedelta pf) {
+        return getProgressIn(commerciante.getCoalizione())
+                .stream()
+                .map(Object::getClass)
+                .toList()
+                .contains(pf.getClass());
+    }
+
 
     @Override
     public String toString() {
