@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CommercianteTest {
     @Test
-    void addProgramma() {
+    void addProgrammaTest() {
         Commerciante commerciante = new Commerciante("Xbox");
         ProgrammaFedelta pf = ProgrammaFedelta.create("punti");
 
