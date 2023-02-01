@@ -9,10 +9,20 @@ public class Identificatore {
     private String identificativo;
 
     private Identificatore(UtenteIdentificabile utente) {
-        String id = (utente.nome + '.' + utente.cognome).toLowerCase();
+        String id = getFormat(utente);
         setIdentificativo(id);
         listaID.put(id, utente);
     }
+
+    public static String getFormat(String nome, String cognome) {
+        return (nome + '.' + cognome).toLowerCase();
+
+    }
+
+    public static String getFormat(UtenteIdentificabile utente) {
+        return getFormat(utente.nome, utente.cognome);
+    }
+
 
     public static Identificatore fromUtente(UtenteIdentificabile utente) {
         return new Identificatore(utente);

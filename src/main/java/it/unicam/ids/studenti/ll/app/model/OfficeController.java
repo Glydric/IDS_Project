@@ -37,11 +37,8 @@ public class OfficeController {
      * @return un'office controller generato grazie all'identificatore
      */
     public static OfficeController authenticatedByRegisterOf(Commerciante commerciante) throws AuthorizationException {
-        try {
-            Register.initializeFrom(commerciante);
-        } catch (IllegalArgumentException ignored) {
-        }
-        return authenticatedBy("register." + commerciante.getRagioneSociale(), "");
+        Register.initFrom(commerciante);
+        return authenticatedBy(Identificatore.getFormat("register", commerciante.getRagioneSociale()), "");
 
     }
 
