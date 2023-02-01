@@ -7,14 +7,12 @@ import it.unicam.ids.studenti.ll.app.model.persistence.commerciante.Commerciante
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
-
 @RestController
 class WebController {
     @Autowired
     private CommerciantePersistence commerciantePersistence;
     @Autowired
-    private ClientePersistence  clientePersistence;
+    private ClientePersistence clientePersistence;
 
     @GetMapping("/")
     public String index(
@@ -207,17 +205,17 @@ class WebController {
         Commerciante otherCommerciente = commerciantePersistence.getCommerciante(ragioneSociale);
         try {
             office = OfficeController
-                            .authenticatedBy(userName, password);
+                    .authenticatedBy(userName, password);
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         }
 
         try {
             office.coalizzaCon(otherCommerciente);
-        } catch (IllegalStateException | NoSuchElementException e) {
-            return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
+        } catch (Exception e) {
+            return "<h1>" + e.getMessage() + "</h1>";
         } finally {
             // TODO check coalizione update
             commerciantePersistence.updateCommerciante(
