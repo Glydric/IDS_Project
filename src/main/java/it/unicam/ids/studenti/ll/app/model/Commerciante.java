@@ -96,10 +96,14 @@ public class Commerciante extends Azienda {
                     BiConsumer<ProgrammaFedelta, ProgrammaFedelta>
                     > mergeRules) throws IllegalStateException {
 
+        if (commerciante.gruppoAppartenza.equals(gruppoAppartenza))
+            throw new IllegalArgumentException("La coalizione con questo commerciante è già attiva");
+
         setWantCoalize(commerciante);
-        if (!commerciante.wantCoalizeWith(this)) {
+
+        if (!commerciante.wantCoalizeWith(this))
             throw new IllegalStateException("Attendere che l'altro commerciante accetti la richiesta");
-        }
+
         commerciante.setCoalizione(
                 gruppoAppartenza.mergeCoalizioni(
                         commerciante.gruppoAppartenza,
