@@ -36,11 +36,10 @@ public class CommerciantePersistence {
         );
     }
 
-    public void addCommerciante(Commerciante commerciante) throws IllegalArgumentException {
-        if (exists(commerciante.getRagioneSociale())) {
-            updateCommerciante(commerciante);
+
+    public void addOrThrowsCommerciante(Commerciante commerciante) throws IllegalArgumentException {
+        if (exists(commerciante.getRagioneSociale()))
             throw new IllegalArgumentException("Commerciante già esistente");
-        }
 
         commercianteRepository.save(
                 ModelMapperConfig.mapper().map(
@@ -48,6 +47,18 @@ public class CommerciantePersistence {
                         CommercianteEntity.class
                 )
         );
+    }
+
+    public void addOrUpdateCommerciante(Commerciante commerciante) {
+        if (exists(commerciante.getRagioneSociale()))
+            updateCommerciante(commerciante);
+        else
+            commercianteRepository.save(
+                    ModelMapperConfig.mapper().map(
+                            commerciante,
+                            CommercianteEntity.class
+                    )
+            );
     }
 
     public Commerciante getCommerciante(String ragioneSociale) {

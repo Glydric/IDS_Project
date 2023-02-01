@@ -74,12 +74,14 @@ class WebController {
     }
 
     @PostMapping(WebPaths.creaAzienda)
-    public String creaAzienda(@RequestBody Commerciante commerciante) {
+    public String creaAzienda(
+            @RequestBody Commerciante commerciante
+    ) {
         try {
-            commerciantePersistence.addCommerciante(commerciante);
+            commerciantePersistence.addOrThrowsCommerciante(commerciante);
             Register.initializeFrom(commerciante);
         } catch (IllegalArgumentException e) {
-            return e.getMessage();
+            return "<h1>" + e.getMessage() + "<h1>";
         }
         return WebContents.ok;
     }
@@ -173,7 +175,7 @@ class WebController {
         } catch (AuthorizationException e) {
             return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
-        return WebContents.ok + "userName: " + persona.cognome + "." + persona.cognome;
+        return WebContents.ok + "userName: " + persona.nome + "." + persona.cognome;
     }
 
     @PostMapping(WebPaths.consentiDipendente)
@@ -217,7 +219,6 @@ class WebController {
         } catch (Exception e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } finally {
-            // TODO check coalizione update
             commerciantePersistence.updateCommerciante(
                     office.getCommerciante()
             );
