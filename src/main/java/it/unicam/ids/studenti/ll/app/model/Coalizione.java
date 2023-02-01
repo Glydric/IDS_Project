@@ -12,7 +12,12 @@ public class Coalizione {
     protected final Set<Cliente> clienti = new HashSet<>();
     protected final Set<Commerciante> appartenenti = new HashSet<>();
 
-    protected Coalizione() {}
+    protected Coalizione() {
+    }
+
+    public Coalizione(Commerciante commerciante) {
+        appartenenti.add(commerciante);
+    }
 
     public UUID getId() {
         return id;
@@ -20,10 +25,6 @@ public class Coalizione {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public Coalizione(Commerciante commerciante) {
-        appartenenti.add(commerciante);
     }
 
     public List<Cliente> getListaClienti() {
@@ -212,5 +213,20 @@ public class Coalizione {
                 );
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Coalizione that)) return false;
+
+        return getId() != null
+                ? getId().equals(that.getId())
+                : that.getId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }
