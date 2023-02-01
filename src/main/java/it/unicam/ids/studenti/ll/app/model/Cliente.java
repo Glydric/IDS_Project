@@ -9,10 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cliente extends Persona {
-    protected final Map<Coalizione, Set<ProgrammaFedelta>> mapCoalizione
-            = new HashMap<>();
     public UUID identificativoTessera;
     public boolean isFamily = false;
+    protected Map<Coalizione, Set<ProgrammaFedelta>> mapCoalizione
+            = new HashMap<>();
     private String numeroTelefono;
     private String email;
     private String password = "";
@@ -28,8 +28,8 @@ public class Cliente extends Persona {
     /**
      * Usato da spring
      */
-    protected Cliente(){
-        this("","");
+    protected Cliente() {
+        this("", "");
     }
 
     @JsonCreator
@@ -91,13 +91,6 @@ public class Cliente extends Persona {
                 && this.password.equals(password);
     }
 
-    public void setPassword(String password) {
-        if (password == null)
-            throw new IllegalArgumentException("Password nulla");
-
-        this.password = password;
-    }
-
     protected List<ProgrammaFedelta> getProgressAsListIn(Commerciante commerciante) {
         return getProgressIn(commerciante.getCoalizione()).stream().toList();
     }
@@ -116,7 +109,6 @@ public class Cliente extends Persona {
                 .toList()
                 .contains(pf.getClass());
     }
-
 
     @Override
     public String toString() {
@@ -137,10 +129,22 @@ public class Cliente extends Persona {
         return Objects.hash(identificativoTessera);
     }
 
-
-
     public Set<Coalizione> getCoalizioni() {
         return mapCoalizione.keySet();
+    }
+
+    /**
+     * Do Not use, used by JPA
+     *
+     * @param coalizioni la lista di coalizioni
+     */
+    public void setCoalizioni(Set<Coalizione> coalizioni) {
+        coalizioni.forEach(coalizione ->
+                this.mapCoalizione.putIfAbsent(
+                        coalizione,
+                        coalizione.getAllPrograms()
+                )
+        );
     }
 
     public UUID getIdentificativoTessera() {
@@ -161,5 +165,12 @@ public class Cliente extends Persona {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        if (password == null)
+            throw new IllegalArgumentException("Password nulla");
+
+        this.password = password;
     }
 }

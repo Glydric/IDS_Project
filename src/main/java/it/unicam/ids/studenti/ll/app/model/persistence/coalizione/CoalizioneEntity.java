@@ -28,9 +28,20 @@ public class CoalizioneEntity implements Serializable {
     @Fetch(FetchMode.SELECT)
     private Set<CommercianteEntity> appartenenti;
 
-    @JoinColumn(name = "cliente", referencedColumnName = "identificativo_tessera")
-    @ManyToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    private Set<ClienteEntity> clienti;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "clienti_coalizioni",
+//            joinColumns = @JoinColumn(
+//                    name = "coalizione_id",
+//                    referencedColumnName = "id",
+//                    nullable = false
+//            ),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "cliente_id",
+//                    referencedColumnName = "identificativo_tessera",
+//                    nullable = false
+//            )
+//    )
+//    private Set<ClienteEntity> clienti;
 
 }
