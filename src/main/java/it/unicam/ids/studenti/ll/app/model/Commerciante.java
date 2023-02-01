@@ -100,10 +100,14 @@ public class Commerciante extends Azienda {
         if (!commerciante.wantCoalizeWith(this)) {
             throw new IllegalStateException("Attendere che l'altro commerciante accetti la richiesta");
         }
-        commerciante.setCoalizioneGettingOld(gruppoAppartenza.mergeCoalizioni(
-                commerciante.gruppoAppartenza,
-                mergeRules
-        ));
+        commerciante.setCoalizione(
+                gruppoAppartenza.mergeCoalizioni(
+                        commerciante.gruppoAppartenza,
+                        mergeRules
+                )
+        );
+        setWantCoalize(null);
+        commerciante.setWantCoalize(null);
     }
 
     protected boolean wantCoalizeWith(Commerciante commerciante) {
