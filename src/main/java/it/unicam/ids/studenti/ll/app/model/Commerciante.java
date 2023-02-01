@@ -32,19 +32,23 @@ public class Commerciante extends Azienda {
                 ragioneSociale,
                 LocalDate.of(anno, mese, giorno)
         );
+        gruppoAppartenza.setId(UUID.randomUUID());
     }
 
     protected Commerciante(String ragioneSociale, LocalDate dataIscrizione) {
         super(ragioneSociale, dataIscrizione);
+        gruppoAppartenza.setId(UUID.randomUUID());
     }
 
     protected Commerciante(String ragioneSociale) {
         super(ragioneSociale);
+        gruppoAppartenza.setId(UUID.randomUUID());
     }
 
 
     protected Commerciante(String ragioneSociale, LocalDate dataIscrizione, Proprietario proprietario) {
         super(ragioneSociale, dataIscrizione, proprietario);
+        gruppoAppartenza.setId(UUID.randomUUID());
     }
 
     protected List<ProgrammaFedelta> getListaProgrammi() {
