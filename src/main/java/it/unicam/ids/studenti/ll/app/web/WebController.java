@@ -204,6 +204,7 @@ class WebController {
             @RequestParam(value = "ragioneSociale") String ragioneSociale
     ) {
         OfficeController office;
+        Commerciante otherCommerciente = commerciantePersistence.getCommerciante(ragioneSociale);
         try {
             office = OfficeController
                             .authenticatedBy(userName, password);
@@ -212,7 +213,7 @@ class WebController {
         }
 
         try {
-            office.coalizzaCon(commerciantePersistence.getCommerciante(ragioneSociale));
+            office.coalizzaCon(otherCommerciente);
         } catch (IllegalStateException | NoSuchElementException e) {
             return "<h1>" + e.getMessage() + "</h1>";
         } catch (AuthorizationException e) {
@@ -221,6 +222,9 @@ class WebController {
             // TODO check coalizione update
             commerciantePersistence.updateCommerciante(
                     office.getCommerciante()
+            );
+            commerciantePersistence.updateCommerciante(
+                    otherCommerciente
             );
         }
         return WebContents.ok;
