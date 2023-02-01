@@ -17,7 +17,7 @@ public class Commerciante extends Azienda {
     /**
      * Used by spring
      */
-    protected Commerciante() {
+    public Commerciante() {
         super("");
     }
 

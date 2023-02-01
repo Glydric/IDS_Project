@@ -79,7 +79,6 @@ class WebController {
     ) {
         try {
             commerciantePersistence.addOrThrowsCommerciante(commerciante);
-            Register.initializeFrom(commerciante);
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "<h1>";
         }
@@ -118,15 +117,18 @@ class WebController {
             @PathVariable String ragioneSociale,
             @RequestBody Cliente cliente
     ) {
+
+        Commerciante c = commerciantePersistence
+                .getCommerciante(ragioneSociale);
         try {
             OfficeController
-                    .authenticatedByRegisterOf(ragioneSociale)
+                    .authenticatedByRegisterOf(c)
                     .aggiungiCliente(cliente);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return "<h1>" + e.getMessage() + "</h1>";
-        } catch (AuthorizationException e) {
-            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
+        clientePersistence.addCliente(cliente);
+        commerciantePersistence.updateCommerciante(c);
         return WebContents.ok + "<br>tessera: " + cliente.identificativoTessera;
     }
 
@@ -143,15 +145,13 @@ class WebController {
     ) {
         // usa la stringa azienda per ottenere la struttura dati dal db (attualmente Identificatore)
         try {
-            // TODO controlla che la tessera sia effettivamente esistente
-
-            OfficeController.authenticatedByRegisterOf(ragioneSociale)
-                    .aggiungiCliente(clientePersistence.getCliente(tessera))
-            ;
-        } catch (IllegalArgumentException e) {
+            OfficeController.authenticatedByRegisterOf(
+                            commerciantePersistence
+                                    .getCommerciante(ragioneSociale)
+                    )
+                    .aggiungiCliente(clientePersistence.getCliente(tessera));
+        } catch (Exception e) {
             return "<h1>" + e.getMessage() + "</h1>";
-        } catch (AuthorizationException e) {
-            return "<h1>Chiedi i permessi ad un tuo superiore!!!</h1>";
         }
         return WebContents.ok;
     }
@@ -274,7 +274,9 @@ class WebController {
     ) {
         try {
             return OfficeController
-                    .authenticatedByRegisterOf(ragioneSociale)
+                    .authenticatedByRegisterOf(
+                            commerciantePersistence.getCommerciante(ragioneSociale)
+                    )
                     .getProgrammiOf(tessera, password)
                     .toString();
         } catch (IllegalArgumentException | NullPointerException e) {

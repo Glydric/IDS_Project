@@ -33,18 +33,24 @@ public class OfficeController {
     /**
      * la password viene considerata vuota
      *
-     * @param ragioneSociale l'identificatore
+     * @param commerciante l'identificatore
      * @return un'office controller generato grazie all'identificatore
      */
-    public static OfficeController authenticatedByRegisterOf(String ragioneSociale) throws AuthorizationException {
-        return authenticatedBy("register." + ragioneSociale, "");
-    }
-    public Commerciante getCommerciante(){
-        return (Commerciante) utente.getAzienda();
+    public static OfficeController authenticatedByRegisterOf(Commerciante commerciante) throws AuthorizationException {
+        try {
+            Register.initializeFrom(commerciante);
+        } catch (IllegalArgumentException ignored) {
+        }
+        return authenticatedBy("register." + commerciante.getRagioneSociale(), "");
+
     }
 
     public static OfficeController authenticatedBy(String identificatore, String password) {
         return new OfficeController(identificatore, password);
+    }
+
+    public Commerciante getCommerciante() {
+        return (Commerciante) utente.getAzienda();
     }
 
     public void aggiungiDipendente(Persona persona, String password) throws AuthorizationException {

@@ -17,11 +17,14 @@ public class Register extends UtenteIdentificabile {
         );
     }
 
-    public static Register from(Azienda azienda) {
+    public static Register from(Azienda azienda) throws IllegalArgumentException {
+        if (!Identificatore.isAvailable("register" + azienda.getRagioneSociale()))
+            throw new IllegalArgumentException("Register già esistente");
+
         return new Register(azienda);
     }
 
-    public static void initializeFrom(Azienda azienda) {
+    public static void initializeFrom(Azienda azienda) throws IllegalArgumentException {
         from(azienda);
     }
 
