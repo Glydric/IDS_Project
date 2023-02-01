@@ -2,6 +2,7 @@ package it.unicam.ids.studenti.ll.app.web;
 
 import it.unicam.ids.studenti.ll.app.model.*;
 import it.unicam.ids.studenti.ll.app.model.ProgrammiFedelta.ProgrammaFedelta;
+import it.unicam.ids.studenti.ll.app.model.persistence.cliente.ClientePersistence;
 import it.unicam.ids.studenti.ll.app.model.persistence.commerciante.CommerciantePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import java.util.NoSuchElementException;
 class WebController {
     @Autowired
     private CommerciantePersistence commerciantePersistence;
+    @Autowired
+    private ClientePersistence  clientePersistence;
 
     @GetMapping("/")
     public String index(
@@ -140,9 +143,10 @@ class WebController {
     ) {
         // usa la stringa azienda per ottenere la struttura dati dal db (attualmente Identificatore)
         try {
-            OfficeController.authenticatedByRegisterOf(ragioneSociale)
             // TODO controlla che la tessera sia effettivamente esistente
-            //        .aggiungiCliente(ManagerDataBase.getClienteFromTessera(tessera))
+
+            OfficeController.authenticatedByRegisterOf(ragioneSociale)
+                    .aggiungiCliente(clientePersistence.getCliente(tessera))
             ;
         } catch (IllegalArgumentException e) {
             return "<h1>" + e.getMessage() + "</h1>";
