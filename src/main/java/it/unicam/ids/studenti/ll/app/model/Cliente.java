@@ -98,9 +98,25 @@ public class Cliente extends Persona {
         this.password = password;
     }
 
-    public Set<ProgrammaFedelta> getProgramsOf(Coalizione coalizione) {
+    protected List<ProgrammaFedelta> getProgressAsListIn(Commerciante commerciante) {
+        return getProgressIn(commerciante.getCoalizione()).stream().toList();
+    }
+
+    protected Set<ProgrammaFedelta> getProgressIn(Coalizione coalizione) {
         return mapCoalizione.get(coalizione);
     }
+
+    /**
+     * metodo di comodo
+     */
+    protected boolean haveProgramIn(Commerciante commerciante, ProgrammaFedelta pf) {
+        return getProgressIn(commerciante.getCoalizione())
+                .stream()
+                .map(Object::getClass)
+                .toList()
+                .contains(pf.getClass());
+    }
+
 
     @Override
     public String toString() {

@@ -125,8 +125,8 @@ public class CoalizioneTest {
 
         commerciante.addNewProgramma(pl);
 
-        assert (commerciante.clientHaveProgram(c1, pl));
-        assert (commerciante.clientHaveProgram(c2, pl));
+        assert (c1.haveProgramIn(commerciante, pl));
+        assert (c2.haveProgramIn(commerciante, pl));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class CoalizioneTest {
         Commerciante commerciante = new Commerciante("Xbox");
 
         Cliente c1 = new Cliente("Mario", "Rossi");
-        commerciante.addCliente(c1);
+        commerciante.getCoalizione().addCliente(c1);
 
         ProgrammaPunti punti = (ProgrammaPunti) ProgrammaFedelta
                 .create()
@@ -143,7 +143,7 @@ public class CoalizioneTest {
         commerciante.addNewProgramma(punti);
 
         Cliente c2 = new Cliente("Mario", "Bianchi");
-        commerciante.addCliente(c2);
+        commerciante.getCoalizione().addCliente(c2);
 
         ProgrammaFedelta vip = ProgrammaFedelta.create("VIP");
         commerciante.addNewProgramma(vip);
@@ -151,10 +151,10 @@ public class CoalizioneTest {
         punti.setPunti(10);
 
         //Problema non funziona il getCommons
-        assert (commerciante.clientHaveProgram(c1, punti));
-        assert (commerciante.clientHaveProgram(c1, vip));
-        assert (commerciante.clientHaveProgram(c2, punti));
-        assert (commerciante.clientHaveProgram(c2, vip));
+        assert (c1.haveProgramIn(commerciante, punti));
+        assert (c1.haveProgramIn(commerciante, vip));
+        assert (c2.haveProgramIn(commerciante, punti));
+        assert (c2.haveProgramIn(commerciante, vip));
     }
 
     @Test
@@ -166,8 +166,8 @@ public class CoalizioneTest {
         Cliente cl2 = new Cliente("Mario", "Draghi");
         Cliente cl3 = new Cliente("Mario", "Bianchi");
 
-        c1.addCliente(cl1);
-        c2.addCliente(cl2);
+        c1.getCoalizione().addCliente(cl1);
+        c2.getCoalizione().addCliente(cl2);
 
         ProgrammaFedelta pf1 = ProgrammaFedelta.create().setType("punti").buildWith(10);
         ProgrammaFedelta pf2 = ProgrammaFedelta.create("Programmalivelli");
@@ -180,12 +180,12 @@ public class CoalizioneTest {
         c2.mergeGroups(c1);
 
         assertEquals(c1.getCoalizione(), c2.getCoalizione());
-        assertEquals(2, c1.getClienti().size());
+        assertEquals(2, c1.getCoalizione().getListaClienti().size());
 
         // controlliamo che l'inserimento in un commerciante corrisponda all'inserimento in tutti i commercianti
-        c2.addCliente(cl3);
+        c2.getCoalizione().addCliente(cl3);
 
-        assertTrue(c1.getClienti().contains(cl3));
+        assertTrue(c1.getCoalizione().getListaClienti().contains(cl3));
 
         // I programmi scelti da un commerciante non devono inficiare problemi scelti dagli altri anche dopo il merge
         assertFalse(c2.getListaProgrammi().contains(pf1));

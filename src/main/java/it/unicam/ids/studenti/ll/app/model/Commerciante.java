@@ -140,34 +140,6 @@ public class Commerciante extends Azienda {
         coalizione.appartenenti.add(this);
     }
 
-    /// metodi di comodo
-
-    protected List<Cliente> getClienti() {
-        return gruppoAppartenza.getClienti().stream().toList();
-    }
-
-    protected void addCliente(Cliente cliente) {
-        gruppoAppartenza.addCliente(cliente);
-    }
-
-    protected List<ProgrammaFedelta> getProgressAsList(Cliente cliente) {
-        return getProgress(cliente).stream().toList();
-    }
-
-    protected Set<ProgrammaFedelta> getProgress(Cliente cliente) {
-        return cliente
-                .mapCoalizione
-                .get(gruppoAppartenza);
-    }
-
-    protected boolean clientHaveProgram(Cliente cliente, ProgrammaFedelta pf) {
-        return getProgress(cliente)
-                .stream()
-                .map(Object::getClass)
-                .toList()
-                .contains(pf.getClass());
-    }
-
     protected String getLinkEsterno() {
         return linkEsterno;
     }
@@ -188,5 +160,4 @@ public class Commerciante extends Azienda {
 
         this.linkEsterno = link;
     }
-
 }

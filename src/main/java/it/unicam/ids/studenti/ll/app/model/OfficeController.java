@@ -78,7 +78,7 @@ public class OfficeController {
     public void aggiungiCliente(Cliente cliente) throws AuthorizationException {
         utente.authorize();
 
-        getCommerciante().addCliente(cliente);
+        getCommerciante().getCoalizione().addCliente(cliente);
     }
 
     public void aggiungiProgramma(ProgrammaFedelta pf) throws AuthorizationException, IllegalArgumentException {
@@ -113,10 +113,10 @@ public class OfficeController {
             throw new IllegalArgumentException("Il prezzo è inferiore a zero.");
         if (cliente == null)
             throw new IllegalArgumentException("Un cliente non può essere inesistente perl'azienda");
-        if (!getCommerciante().getClienti().contains(cliente))
+        if (!getCommerciante().getCoalizione().getListaClienti().contains(cliente))
             throw new IllegalArgumentException("Cliente non esistente nell'azienda");
 
-        cliente.getProgramsOf(getCommerciante().getCoalizione())
+        cliente.getProgressIn(getCommerciante().getCoalizione())
                 .stream()
                 .filter(
                         (programmaFedelta) -> (programmaFedelta instanceof UpdatableProgrammaFedelta)
